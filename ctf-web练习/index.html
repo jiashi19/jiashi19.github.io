@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  viewport-fit=cover" name="viewport" />
+    <meta name="description" content="ctf-web练习" />
+    <meta name="hexo-theme-A4" content="v1.7.1" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.JPG">
+    <title>Blog | from js19</title>
+
+    
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+    
+    
+<link rel="stylesheet" href="/css/ui.css">
+ 
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.webp" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Blog</a> 
+            <span class="description"></span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+
+    
+
+    <div class="post-md">
+        
+        <h1 id="ctf-web练习–待补充"><a href="#ctf-web练习–待补充" class="headerlink" title="ctf-web练习–待补充"></a>ctf-web练习–待补充</h1><h2 id="代码审计基础知识"><a href="#代码审计基础知识" class="headerlink" title="代码审计基础知识"></a>代码审计基础知识</h2><p>代码检查是审计工作中最常用的技术手段，实际应用中，采用“自动分析+人工验证”的方式进行。通常检查项目包括:系统所用开源框架、源代码设计、错误处理不当、直接对象引用、资源滥用、API滥用、后门代码发现等，通常能够识别如下代码中的风险点：</p>
+<p>跨站脚本漏洞、跨站请求伪装漏洞、SQL注入漏洞、命令执行漏洞、日志伪造漏洞、参数篡改、密码明文存储、配置文件缺陷、路径操作错误、资源管理、不安全的Ajax调用、系统信息泄露、调试程序残留、第三方控件漏洞、文件上传漏洞、远程命令执行、远程代码执行、越权下载、授权绕过漏洞。</p>
+<p><img src="https://s2.loli.net/2023/09/14/gY5Goj1kVz3eQ9b.png" alt="image-20230914165928110"></p>
+<h2 id="php知识"><a href="#php知识" class="headerlink" title="php知识"></a>php知识</h2><h3 id="php的一些方法"><a href="#php的一些方法" class="headerlink" title="php的一些方法"></a>php的一些方法</h3><ul>
+<li>__construct() 当一个对象创建时被调用 –构造函数</li>
+<li>__destruct() 当一个对象销毁时被调用 –析构函数</li>
+<li>__wakeup() 使用unserialize时触发</li>
+<li>__sleep() 使用serialize时触发</li>
+</ul>
+<h3 id="php序列化和反序列化"><a href="#php序列化和反序列化" class="headerlink" title="php序列化和反序列化"></a>php序列化和反序列化</h3><p>PHP序列化：serialize()</p>
+<p>序列化是将变量或对象转换成字符串的过程，用于存储或传递 PHP 的值的过程中，同时不丢失其类型和结构。</p>
+<p>而PHP反序列化：unserialize()</p>
+<p>反序列化是将字符串转换成变量或对象的过程</p>
+<pre><code class="php">&lt;?php  
+class TEST&#123;  
+ public $test1=&quot;11&quot;;  
+ private $test2=&quot;22&quot;;  
+ protected $test3=&quot;33&quot;;  
+ public function test4()  
+ &#123;  
+ echo $this-&gt;test1;  
+ &#125;  
+&#125;  
+$a=new TEST();  
+echo serialize($a); 
+?&gt;
+//O:4:&quot;TEST&quot;:3:&#123;s:5:&quot;test1&quot;;s:2:&quot;11&quot;;s:11:&quot;TESTtest2&quot;;s:2:&quot;22&quot;;s:8:&quot;*test3&quot;;s:2:&quot;33&quot;;&#125;
+//O代表类，然后后面4代表类名长度，接着双引号内是类名
+//然后是类中变量的个数：&#123;类型：长度:&quot;值&quot;；类型:长度:&quot;值&quot;...以此类推&#125;
+//有时候为了避免private和protected导致一些字符不可打印，通常会urlencode一下
+</code></pre>
+<p>学习链接：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/601673949">https://zhuanlan.zhihu.com/p/601673949</a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="1-ctf-web-“PHP2”"><a href="#1-ctf-web-“PHP2”" class="headerlink" title="1. ctf-web-“PHP2”"></a>1. ctf-web-“PHP2”</h3><ul>
+<li><p>phps文件就是php的<strong>源代码文件</strong>，通常用于提供给用户（访问者）查看php代码，因为用户无法直接通过Web浏览器看到php文件的内容，所以需要用<strong>phps</strong>文件代替。其实，只要不用php等已经在服务器中注册过的MIME类型为文件即可，但为了国际通用，所以才用了phps文件类型。</p>
+</li>
+<li><p>运用后台扫描工具</p>
+</li>
+</ul>
+<h3 id="2-ctf-web-unserialize3"><a href="#2-ctf-web-unserialize3" class="headerlink" title="2. ctf-web-unserialize3"></a>2. ctf-web-unserialize3</h3><h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a><strong>原理</strong></h5><p>PHP<strong>反序列化漏洞</strong>：执行unserialize()时，先会调用__wakeup()。</p>
+<p>当序列化字符串中属性值个数大于属性个数，就会导致反序列化异常，从而跳过__wakeup()。</p>
+<p>（<strong>影响版本</strong>php5&lt;5.6.25,php7&lt;7.010）已经测试过，在本机php8.2中，并不会有该漏洞的出现。</p>
+<h5 id="目的"><a href="#目的" class="headerlink" title="目的"></a><strong>目的</strong></h5><p>了解绕过常见的<strong>函数过滤</strong>机制</p>
+
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+        </i>
+    </div>
+    
+        
+
+     
+</div>
+
+
+
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+             
+
+            
+                
+
+            
+        </span>
+    
+</div>
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>stay hungry stay foolish</span>
+            
+    
+</div>
+
+
+    
+<link rel="stylesheet" href="/css/a11y-dark.min.css">
+
+    
+<script src="/js/highlight.min.js"></script>
+
+    
+<script src="/js/highlightjs-line-numbers.js"></script>
+
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+                </div>
+            
+    </body>
+</html>
