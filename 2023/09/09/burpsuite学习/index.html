@@ -86,44 +86,55 @@
 
     <div class="post-md">
         
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#BurpSuite"><span class="post-toc-text">BurpSuite</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Intruder%E6%A8%A1%E5%9D%97"><span class="post-toc-text">Intruder模块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="post-toc-text">模式介绍</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%9A%E9%95%BF%E6%95%B0%E5%AD%97%E7%88%86%E7%A0%B4"><span class="post-toc-text">定长数字爆破</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="post-toc-text">相关参考链接</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#BurpSuite"><span class="post-toc-text">BurpSuite</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Intruder%E6%A8%A1%E5%9D%97"><span class="post-toc-text">Intruder模块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="post-toc-text">模式介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Sniper"><span class="post-toc-text">Sniper:</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Battering-ram"><span class="post-toc-text">Battering ram:</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#pitchfork"><span class="post-toc-text">pitchfork:</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cluster-bomb"><span class="post-toc-text">Cluster bomb:</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%9A%E9%95%BF%E6%95%B0%E5%AD%97%E7%88%86%E7%A0%B4"><span class="post-toc-text">定长数字爆破</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="post-toc-text">相关参考链接</span></a></li></ol></li></ol>
         
         <h1 id="BurpSuite"><a href="#BurpSuite" class="headerlink" title="BurpSuite"></a>BurpSuite</h1><h2 id="Intruder模块"><a href="#Intruder模块" class="headerlink" title="Intruder模块"></a>Intruder模块</h2><h3 id="模式介绍"><a href="#模式介绍" class="headerlink" title="模式介绍"></a>模式介绍</h3><p>Intruder共有4种模式，如下图：</p>
 <p><img src="https://s2.loli.net/2023/09/10/J8FYCvIRSrzEGc7.png" alt="image-20230811154651214"></p>
+<ol>
+<li>Sniper:一个一个的替换；（单个list）</li>
+<li>battering ram：一对一对的替换；（单个list）</li>
+<li>pitchfork：<strong>一一对应</strong>；（<strong>多个list</strong>）</li>
+<li>cluster bomb：尝试到每个排列组合；（<strong>多个list</strong>）</li>
+</ol>
 <p>以crapi中的challenge3为例，在intruder中设置两个变量</p>
 <p><img src="https://s2.loli.net/2023/09/10/fu2JhWnRKU9vAdw.png" alt="image-20230811163011823"></p>
 <ul>
-<li><p><strong>Sniper</strong>:</p>
-<p>选择”payload type”:Simple list；创建一个简单的payload list</p>
-<p><img src="https://s2.loli.net/2023/09/10/axLUJ5FTe9PqzAR.png" alt="image-20230811163348523"></p>
+<li><h4 id="Sniper"><a href="#Sniper" class="headerlink" title="Sniper:"></a><strong>Sniper</strong>:</h4><p>选择”payload type”:Simple list；创建一个简单的payload list</p>
+<img src="https://s2.loli.net/2023/09/10/axLUJ5FTe9PqzAR.png" alt="image-20230811163348523" style="zoom:60%;" />
+
 <p>暂且称第一个变量为1，第二个为2，则替换过程为：先将1用 <strong>list</strong> 中的值逐次替换，2不变；再将2逐次替换，1不变</p>
-<p><img src="https://s2.loli.net/2023/09/10/1wvP4L35YixpCgD.png" alt="image-20230811163526674"></p>
+<img src="https://s2.loli.net/2023/09/10/1wvP4L35YixpCgD.png" alt="image-20230811163526674" style="zoom:50%;" />
+
 <p>RequestCount&#x3D; payloadCount*变量个数</p>
 </li>
-<li><p><strong>Battering ram:</strong></p>
-<p>将所有变量同时用 <strong>list</strong> 中的一个值替换</p>
-<p><img src="https://s2.loli.net/2023/09/10/45mg3MYHk7xNyec.png" alt="image-20230811164142769"></p>
+<li><h4 id="Battering-ram"><a href="#Battering-ram" class="headerlink" title="Battering ram:"></a><strong>Battering ram:</strong></h4><p>将所有变量同时用 <strong>list</strong> 中的一个值替换</p>
+<img src="https://s2.loli.net/2023/09/10/45mg3MYHk7xNyec.png" alt="image-20230811164142769" style="zoom: 65%;" />
+
 <p>RequestCount&#x3D; payloadCount</p>
 </li>
-<li><p><strong>pitchfork:</strong></p>
-<p>由于有两个变量，所以需要分别将两个变量的list（payload set）设置好，最上方的数字表示的是set，为1则表示当时在设置第一个set，为2则表示在设置第二个set</p>
-<p><img src="https://s2.loli.net/2023/09/10/4TZ8R7UiFLtjnO2.png" alt="image-20230811164936140"></p>
-<p><img src="https://s2.loli.net/2023/09/10/YoTOLp4MSuAUjRr.png" alt="image-20230811165016766"></p>
+<li><h4 id="pitchfork"><a href="#pitchfork" class="headerlink" title="pitchfork:"></a><strong>pitchfork:</strong></h4><p>由于有两个变量，所以需要分别将两个变量的list（payload set）设置好，最上方的数字表示的是set，为1则表示当时在设置第一个set，为2则表示在设置第二个set</p>
+<img src="https://s2.loli.net/2023/09/10/4TZ8R7UiFLtjnO2.png" alt="image-20230811164936140" style="zoom:67%;" />
+
+<img src="https://s2.loli.net/2023/09/10/YoTOLp4MSuAUjRr.png" alt="image-20230811165016766" style="zoom:67%;" />
+
 <p>由上可以看到，本人将两个set分别设置为小写和大写的26个字母。</p>
 <p>而启动attack则可以看到，每个元素是<strong>一一对应</strong>的</p>
 <p><img src="https://s2.loli.net/2023/09/10/1zcwWti7DJGHX2E.png" alt="image-20230811165126891"></p>
 <p>RequestCount&#x3D; payloadCount（单个set&#x2F;list）</p>
 </li>
-<li><p><strong>Cluster bomb:</strong></p>
-<p>类似于上一个，但是会尝试到每一个组合</p>
+<li><h4 id="Cluster-bomb"><a href="#Cluster-bomb" class="headerlink" title="Cluster bomb:"></a><strong>Cluster bomb:</strong></h4><p>类似于上一个，但是会尝试到每一个组合</p>
 <p><img src="https://s2.loli.net/2023/09/10/57kiSCZfuIsjEp8.png" alt="image-20230811165343094"></p>
 <p>RequestCount&#x3D; payloadCountOf_1*payloadCountOf_2(……)</p>
 </li>
 </ul>
 <h2 id="定长数字爆破"><a href="#定长数字爆破" class="headerlink" title="定长数字爆破"></a>定长数字爆破</h2><p>首先将type设置成Numbers</p>
-<p><img src="https://s2.loli.net/2023/09/10/sCUngh7l8pouZGV.png" alt="image-20230811165750670"></p>
+<img src="https://s2.loli.net/2023/09/10/sCUngh7l8pouZGV.png" alt="image-20230811165750670" style="zoom:70%;" />
+
 <p>比如这里的需求是需要实现0001到9999的爆破，那么就要如下图来设置，保证生成的数字如0001 为“0001”而不是“1“</p>
-<p><img src="https://s2.loli.net/2023/09/10/lNTP4btSQvzBVi8.png" alt="image-20230811165944026"></p>
+<img src="https://s2.loli.net/2023/09/10/lNTP4btSQvzBVi8.png" alt="image-20230811165944026" style="zoom:67%;" />
+
+
+
 <h2 id="相关参考链接"><a href="#相关参考链接" class="headerlink" title="相关参考链接"></a>相关参考链接</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zbj18314469395/article/details/115429675">https://blog.csdn.net/zbj18314469395/article/details/115429675</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tysec/p/15781784.html">https://www.cnblogs.com/tysec/p/15781784.html</a></p>
 

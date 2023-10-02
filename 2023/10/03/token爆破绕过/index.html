@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  viewport-fit=cover" name="viewport" />
+    <meta name="description" content="token爆破绕过" />
+    <meta name="hexo-theme-A4" content="v1.7.1" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.JPG">
+    <title>Blog | from js19</title>
+
+    
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+    
+    
+<link rel="stylesheet" href="/css/ui.css">
+ 
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/favicon.webp" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">Blog</a> 
+            <span class="description"></span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+
+    
+        <div class="post-main-title">
+            token爆破绕过
+        </div>
+      
+    
+
+    <div class="post-md">
+        
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#token%E7%BB%95%E8%BF%87"><span class="post-toc-text">token绕过</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%89%8D%E8%A8%80"><span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="post-toc-text">过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%BC%80%E5%A7%8B"><span class="post-toc-text">开始</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E6%96%BD-with-Intruder"><span class="post-toc-text">具体实施- with Intruder</span></a></li></ol></li></ol></li></ol>
+        
+        <h1 id="token绕过"><a href="#token绕过" class="headerlink" title="token绕过"></a>token绕过</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><p>知识点：</p>
+<p>token 验证：客户端每次请求服务器时，服务器会返回一个 token，下次请求时，客户端需要带上这个 token，否则服务器认为请求不合法。且这个 token 不可重复使用，每次请求都将生成新的 token，并导致旧的 token 失效。</p>
+</li>
+<li><p>实例：</p>
+<p>pikachu渗透测试平台–暴力破解–token防爆破</p>
+</li>
+</ul>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>使用burp抓包，可以注意到post请求携带参数token。repeater重复发送第二次就会发现出现“csrf token error”的提示符。</p>
+<p><img src="https://s2.loli.net/2023/10/03/goLb2NI5PfKUZCD.png" alt="image-20231003005919263"></p>
+<p>每次请求，token都会改变，而这个下一次请求的token值从每次的response中可以得到。</p>
+<p>具体：在response中搜索token找到有一个type为“hidden“的input标签，可以发现其value正是下一次的token值。</p>
+<img src="https://s2.loli.net/2023/10/03/YOcp3Tw5ksz2NRS.png" alt="image-20231003010510211" style="zoom:60%;" />
+
+<h3 id="具体实施-with-Intruder"><a href="#具体实施-with-Intruder" class="headerlink" title="具体实施- with Intruder"></a>具体实施- with Intruder</h3><p>利用burp抓包转入intruder模块，设置两个变量：password和token。选择<strong>pitchfork</strong>模式（为什么不设置username也为变量：这里已经默认自己知道username为admin了。然后选取pitchfork是因为token每个只能使用一次，其实是有不妥：如果在不知道username的情况下，设置三个变量，username和password的list就要额外设计，因为使用不重复的list就会错过很多username和password的组合，而这都是因为<strong>一一对应</strong>）</p>
+<p><img src="https://s2.loli.net/2023/10/03/oP4JavFzq3NwxcY.png" alt="image-20231003011542400"></p>
+<p>然后设置payload。重点在于设置token变量的payload时需要选择为<strong>recursive grep</strong></p>
+<p><img src="https://s2.loli.net/2023/10/03/PfAgn5hc78pt2xQ.png" alt="image-20231003012417416"></p>
+<p>然后在intruder的setting部分找到grep-extract部分</p>
+<img src="https://s2.loli.net/2023/10/03/wC1oJyc5SMjgEAL.png" alt="image-20231003012916995" style="zoom: 33%;" />
+
+<p>点击add：</p>
+<img src="https://s2.loli.net/2023/10/03/zRYIEVKTcWXbfC4.png" alt="image-20231003013125589" style="zoom: 53%;" />
+
+<p>下框中若无内容则点击fetch response&#x2F;refetch response</p>
+<img src="https://s2.loli.net/2023/10/03/Fw7OLCruMJWxsgd.png" alt="image-20231003013146189" style="zoom: 40%;" />
+
+<p>之后利用search框找到token，则会自动生成正则，然后选择ok填入。</p>
+<img src="https://s2.loli.net/2023/10/03/xVR9ELwoI4gycF7.png" alt="image-20231003013417675" style="zoom:40%;" />
+
+<p>之后还得设置线程数量为1</p>
+<img src="https://s2.loli.net/2023/10/03/sbfiAc3xZt7DlH4.png" alt="image-20231003013601503" style="zoom: 50%;" />
+
+
+
+<p>一切就绪之后开始爆破，可以看到payload2确实加载成功了，而其中的正确的response也显示login success</p>
+<p><img src="https://s2.loli.net/2023/10/03/xm9VFlWYhkRo6sI.png"></p>
+
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2023-10-03</span>
+            
+            
+             
+        
+        </i>
+    </div>
+    
+        
+
+     
+</div>
+
+
+
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+             
+
+            
+                
+
+            
+        </span>
+    
+</div>
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>stay hungry stay foolish</span>
+            
+    
+</div>
+
+
+    
+<link rel="stylesheet" href="/css/a11y-dark.min.css">
+
+    
+<script src="/js/highlight.min.js"></script>
+
+    
+<script src="/js/highlightjs-line-numbers.js"></script>
+
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+                </div>
+            
+    </body>
+</html>
