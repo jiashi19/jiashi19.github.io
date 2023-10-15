@@ -16,32 +16,36 @@
   <meta name="author" content="Jiashi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="token绕过前言 知识点： token 验证：客户端每次请求服务器时，服务器会返回一个 token，下次请求时，客户端需要带上这个 token，否则服务器认为请求不合法。且这个 token 不可重复使用，每次请求都将生成新的 token，并导致旧的 token 失效。  实例： pikachu渗透测试平台–暴力破解–token防爆破   过程开始使用burp抓包，可以注意到post请求携带参数t">
+    <meta name="description" content="1 静态分析基础技术引言 使用反病毒软件来确认程序样本的恶意性；  使用哈希来识别恶意代码；  从文件的字符串列表、函数和文件头信息中发掘有用信息。   1.1反病毒引擎扫描1.2 哈希值分析计算md5值并进行分析 1.3 查找字符串 Strings 程序中的字符串就是一段可打印的字符序列，从其中会包含很多信息，比如弹出的消息，读取的位置，链接的URL等等。 使用Strings程序搜索可执行文件的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爆破-token绕过">
-<meta property="og:url" content="https://jiashi19.gitee.io/2023/10/03/%E7%88%86%E7%A0%B4-token%E7%BB%95%E8%BF%87/index.html">
+<meta property="og:title" content="恶意代码分析">
+<meta property="og:url" content="https://jiashi19.gitee.io/2023/10/16/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Blog from js19">
-<meta property="og:description" content="token绕过前言 知识点： token 验证：客户端每次请求服务器时，服务器会返回一个 token，下次请求时，客户端需要带上这个 token，否则服务器认为请求不合法。且这个 token 不可重复使用，每次请求都将生成新的 token，并导致旧的 token 失效。  实例： pikachu渗透测试平台–暴力破解–token防爆破   过程开始使用burp抓包，可以注意到post请求携带参数t">
+<meta property="og:description" content="1 静态分析基础技术引言 使用反病毒软件来确认程序样本的恶意性；  使用哈希来识别恶意代码；  从文件的字符串列表、函数和文件头信息中发掘有用信息。   1.1反病毒引擎扫描1.2 哈希值分析计算md5值并进行分析 1.3 查找字符串 Strings 程序中的字符串就是一段可打印的字符序列，从其中会包含很多信息，比如弹出的消息，读取的位置，链接的URL等等。 使用Strings程序搜索可执行文件的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/goLb2NI5PfKUZCD.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/YOcp3Tw5ksz2NRS.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/oP4JavFzq3NwxcY.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/PfAgn5hc78pt2xQ.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/wC1oJyc5SMjgEAL.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/zRYIEVKTcWXbfC4.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/Fw7OLCruMJWxsgd.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/xVR9ELwoI4gycF7.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/sbfiAc3xZt7DlH4.png">
-<meta property="og:image" content="https://s2.loli.net/2023/10/03/xm9VFlWYhkRo6sI.png">
-<meta property="article:published_time" content="2023-10-02T17:47:54.000Z">
-<meta property="article:modified_time" content="2023-10-15T15:49:15.421Z">
+<meta property="og:image" content="https://s2.loli.net/2023/10/13/heJj67dS2GIwVyi.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/sJQyBRW7ujvAmiG.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/WIoJE16B7Mf4arP.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/9ESYuTQnzilvWDq.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/uovJiMQGqW6mUp1.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/yn4bHvJI2Y3D1AW.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/o7VDuWFgLf51RYe.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/h9eCVzFjiSpu5dv.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/2UyGgBNuHJtR1Fv.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/IZ8t2wgxJyODjPF.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/OPtT72pjD3ekBmA.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/2gVxmZKuB3Pklqs.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/14/qy4DaLAUxJhKXMn.png">
+<meta property="og:image" content="c:%5CUsers%5CWuFei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20231014111105454.png">
+<meta property="article:published_time" content="2023-10-15T16:11:31.000Z">
+<meta property="article:modified_time" content="2023-10-15T16:11:42.608Z">
 <meta property="article:author" content="Jiashi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2023/10/03/goLb2NI5PfKUZCD.png">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/13/heJj67dS2GIwVyi.png">
   
   
   
-  <title>爆破-token绕过 - Blog from js19</title>
+  <title>恶意代码分析 - Blog from js19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -207,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="爆破-token绕过"></span>
+            <span id="subtitle" data-typed-text="恶意代码分析"></span>
           
         </div>
 
@@ -218,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-03 01:47" pubdate>
-          2023年10月3日 凌晨
+        <time datetime="2023-10-16 00:11" pubdate>
+          2023年10月16日 凌晨
         </time>
       </span>
     
@@ -230,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          859 字
+          1.4k 字
         
       </span>
     
@@ -241,7 +245,7 @@
         
         
         
-          8 分钟
+          12 分钟
         
       </span>
     
@@ -278,48 +282,80 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">爆破-token绕过</h1>
+            <h1 id="seo-header">恶意代码分析</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="token绕过"><a href="#token绕过" class="headerlink" title="token绕过"></a>token绕过</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li><p>知识点：</p>
-<p>token 验证：客户端每次请求服务器时，服务器会返回一个 token，下次请求时，客户端需要带上这个 token，否则服务器认为请求不合法。且这个 token 不可重复使用，每次请求都将生成新的 token，并导致旧的 token 失效。</p>
+                <h1 id="1-静态分析基础技术"><a href="#1-静态分析基础技术" class="headerlink" title="1 静态分析基础技术"></a>1 静态分析基础技术</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><ol>
+<li><p>使用反病毒软件来确认程序样本的恶意性；</p>
 </li>
-<li><p>实例：</p>
-<p>pikachu渗透测试平台–暴力破解–token防爆破</p>
+<li><p>使用<strong>哈希</strong>来识别恶意代码；</p>
+</li>
+<li><p>从文件的<strong>字符串列表</strong>、<strong>函数</strong>和<strong>文件头</strong>信息中发掘有用信息。</p>
+</li>
+</ol>
+<h2 id="1-1反病毒引擎扫描"><a href="#1-1反病毒引擎扫描" class="headerlink" title="1.1反病毒引擎扫描"></a>1.1反病毒引擎扫描</h2><h2 id="1-2-哈希值分析"><a href="#1-2-哈希值分析" class="headerlink" title="1.2 哈希值分析"></a>1.2 哈希值分析</h2><p>计算md5值并进行分析</p>
+<h2 id="1-3-查找字符串-Strings"><a href="#1-3-查找字符串-Strings" class="headerlink" title="1.3 查找字符串 Strings"></a>1.3 查找字符串 Strings</h2><ul>
+<li>程序中的字符串就是一段可打印的字符序列，从其中会包含很多信息，比如弹出的消息，读取的位置，链接的URL等等。</li>
+<li>使用Strings程序搜索可执行文件的字符串，通常以Unicode和ASCII格式存储。</li>
+<li>两种类型格式都以NULL结束符，表示字符串是完整的。ASCII字符串每个字符使用一个字节，Unicode使用两个字节。</li>
+<li>有些时候检测到的也并非是真正的字符串，可能是内存地址，CPU指令序列。</li>
+</ul>
+<h2 id="1-4-加壳与混淆恶意代码"><a href="#1-4-加壳与混淆恶意代码" class="headerlink" title="1.4 加壳与混淆恶意代码"></a>1.4 加壳与混淆恶意代码</h2><ul>
+<li>如果strings搜索一个exe有很少的字符串就有可能是混淆的和加壳的。</li>
+<li>加壳和混淆代码通常至少包含LoadLibrary和GetProcAddress函数（用来加载和使用其他函数）。</li>
+<li>壳分为压缩壳和加密壳。</li>
+</ul>
+<p>文件加壳原理如下：</p>
+<img src="https://s2.loli.net/2023/10/13/heJj67dS2GIwVyi.png" srcset="/img/loading.gif" lazyload alt="image-20231013221204120" style="zoom:80%;" />
+
+<h3 id="用PEiD检测加壳"><a href="#用PEiD检测加壳" class="headerlink" title="用PEiD检测加壳"></a>用PEiD检测加壳</h3><p><img src="https://s2.loli.net/2023/10/14/sJQyBRW7ujvAmiG.png" srcset="/img/loading.gif" lazyload alt="image-20231014091712010"></p>
+<h2 id="1-5-PE文件格式"><a href="#1-5-PE文件格式" class="headerlink" title="1.5 PE文件格式"></a>1.5 PE文件格式</h2><ul>
+<li>PE（Portable Execute）文件是Windows下可执行文件的总称，常见的有DLL，EXE，OCX，SYS等；</li>
+<li>PE是指32位可执行文件，64位的可执行文件称为PE+或者PE32+，并非PE64；</li>
+<li>PE文件以一个文件头开始，其中包括：代码信息、应用程序类型、所需的库函数和空间要求。</li>
+</ul>
+<img src="https://s2.loli.net/2023/10/14/WIoJE16B7Mf4arP.png" srcset="/img/loading.gif" lazyload alt="image-20231014082433696" style="zoom:67%;" />
+
+<p><img src="https://s2.loli.net/2023/10/14/9ESYuTQnzilvWDq.png" srcset="/img/loading.gif" lazyload alt="image-20231014082548506"></p>
+<h2 id="1-6-链接库与函数"><a href="#1-6-链接库与函数" class="headerlink" title="1.6 链接库与函数"></a>1.6 链接库与函数</h2><p>导入函数相关信息都保存在PE文件中的导入表中。要找到PE文件的导入表，必须先找到data directory即<strong>数据目录</strong>。</p>
+<ul>
+<li><p><strong>静态链接</strong></p>
+<p>在生成可执行程序时，就把库中的内容加入到程序中。</p>
+</li>
+<li><p><strong>动态链接</strong></p>
+<p>源程序编译后得到的一组目标模块，在装入内存时釆用<strong>边装入边链接</strong>的链接方式。装入一个目标模块时，若发生一个外部模块调用，将引起装入程序去找出相应的外部目标模块，并将它装入内存，还要修改目标模中的相对地址。</p>
+</li>
+<li><p><strong>运行时链接</strong></p>
+<p>有些目标模块的链接，推迟到执行时才进行。即在执行过程中，若发现一个被调用模块尚未装入内存时，由OS去找到该模块，将它装入内存，并把它连接到调用者模块上。对某些目标模块的链接，是在程序执行中需要该目标模块时才进行链接。</p>
+<h3 id="查看链接函数"><a href="#查看链接函数" class="headerlink" title="查看链接函数"></a>查看链接函数</h3><p><strong>常见的dll程序</strong>：</p>
+<p><img src="https://s2.loli.net/2023/10/14/uovJiMQGqW6mUp1.png" srcset="/img/loading.gif" lazyload alt="image-20231014084030452"></p>
+<p>使用<strong>dependency walker</strong>示例：</p>
 </li>
 </ul>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>使用burp抓包，可以注意到post请求携带参数token。repeater重复发送第二次就会发现出现“csrf token error”的提示符。</p>
-<p><img src="https://s2.loli.net/2023/10/03/goLb2NI5PfKUZCD.png" srcset="/img/loading.gif" lazyload alt="image-20231003005919263"></p>
-<p>每次请求，token都会改变，而这个下一次请求的token值从每次的response中可以得到。</p>
-<p>具体：在response中搜索token找到有一个type为“hidden“的input标签，可以发现其value正是下一次的token值。</p>
-<img src="https://s2.loli.net/2023/10/03/YOcp3Tw5ksz2NRS.png" srcset="/img/loading.gif" lazyload alt="image-20231003010510211" style="zoom:60%;" />
+<p><img src="https://s2.loli.net/2023/10/14/yn4bHvJI2Y3D1AW.png" srcset="/img/loading.gif" lazyload alt="image-20231014083901616"></p>
+<p><img src="https://s2.loli.net/2023/10/14/o7VDuWFgLf51RYe.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="1-8-PE文件头与分节"><a href="#1-8-PE文件头与分节" class="headerlink" title="1.8 PE文件头与分节"></a>1.8 PE文件头与分节</h2><p><img src="https://s2.loli.net/2023/10/14/h9eCVzFjiSpu5dv.png" srcset="/img/loading.gif" lazyload alt="image-20231014091306904"></p>
+<h1 id="2-动态分析基础技术"><a href="#2-动态分析基础技术" class="headerlink" title="2 动态分析基础技术"></a>2 动态分析基础技术</h1><h2 id="2-1-沙箱"><a href="#2-1-沙箱" class="headerlink" title="2.1 沙箱"></a>2.1 沙箱</h2><h2 id="2-2-运行恶意代码"><a href="#2-2-运行恶意代码" class="headerlink" title="2.2 运行恶意代码"></a>2.2 运行恶意代码</h2><p>运行DLL：rundll32.exe</p>
+<h2 id="2-3-进程监视器-进程浏览器"><a href="#2-3-进程监视器-进程浏览器" class="headerlink" title="2.3 进程监视器&amp;进程浏览器"></a>2.3 进程监视器&amp;进程浏览器</h2><p>使用<strong>process explorer</strong> 查看动态链接的dll</p>
+<p><img src="https://s2.loli.net/2023/10/14/2UyGgBNuHJtR1Fv.png" srcset="/img/loading.gif" lazyload alt="image-20231014093759868"></p>
+<p><img src="https://s2.loli.net/2023/10/14/IZ8t2wgxJyODjPF.png" srcset="/img/loading.gif" lazyload alt="image-20231014103612399"></p>
+<p>使用<strong>process monitor</strong> 设置过滤查看指定进程 </p>
+<p><img src="https://s2.loli.net/2023/10/14/OPtT72pjD3ekBmA.png" srcset="/img/loading.gif" lazyload alt="image-20231014104428079"></p>
+<p><img src="https://s2.loli.net/2023/10/14/2gVxmZKuB3Pklqs.png" srcset="/img/loading.gif" lazyload alt="image-20231014104437688"></p>
+<p>根据上例，双击第三行的regsetvalue，可以查看写入注册表的信息。</p>
+<img src="https://s2.loli.net/2023/10/14/qy4DaLAUxJhKXMn.png" srcset="/img/loading.gif" lazyload alt="image-20231014104715318" style="zoom:67%;" />
 
-<h3 id="具体实施-with-Intruder"><a href="#具体实施-with-Intruder" class="headerlink" title="具体实施- with Intruder"></a>具体实施- with Intruder</h3><p>利用burp抓包转入intruder模块，设置两个变量：password和token。选择<strong>pitchfork</strong>模式（为什么不设置username也为变量：这里已经默认自己知道username为admin了。然后选取pitchfork是因为token每个只能使用一次，其实是有不妥：如果在不知道username的情况下，设置三个变量，username和password的list就要额外设计，因为使用不重复的list就会错过很多username和password的组合，而这都是因为<strong>一一对应</strong>）</p>
-<p><img src="https://s2.loli.net/2023/10/03/oP4JavFzq3NwxcY.png" srcset="/img/loading.gif" lazyload alt="image-20231003011542400"></p>
-<p>然后设置payload。重点在于设置token变量的payload时需要选择为<strong>recursive grep</strong></p>
-<p><img src="https://s2.loli.net/2023/10/03/PfAgn5hc78pt2xQ.png" srcset="/img/loading.gif" lazyload alt="image-20231003012417416"></p>
-<p>然后在intruder的setting部分找到grep-extract部分</p>
-<img src="https://s2.loli.net/2023/10/03/wC1oJyc5SMjgEAL.png" srcset="/img/loading.gif" lazyload alt="image-20231003012916995" style="zoom: 33%;" />
-
-<p>点击add：</p>
-<img src="https://s2.loli.net/2023/10/03/zRYIEVKTcWXbfC4.png" srcset="/img/loading.gif" lazyload alt="image-20231003013125589" style="zoom: 53%;" />
-
-<p>下框中若无内容则点击fetch response&#x2F;refetch response</p>
-<img src="https://s2.loli.net/2023/10/03/Fw7OLCruMJWxsgd.png" srcset="/img/loading.gif" lazyload alt="image-20231003013146189" style="zoom: 40%;" />
-
-<p>之后利用search框找到token，则会自动生成正则，然后选择ok填入。</p>
-<img src="https://s2.loli.net/2023/10/03/xVR9ELwoI4gycF7.png" srcset="/img/loading.gif" lazyload alt="image-20231003013417675" style="zoom:40%;" />
-
-<p>之后还得设置线程数量为1</p>
-<img src="https://s2.loli.net/2023/10/03/sbfiAc3xZt7DlH4.png" srcset="/img/loading.gif" lazyload alt="image-20231003013601503" style="zoom: 50%;" />
-
-
-
-<p>一切就绪之后开始爆破，可以看到payload2确实加载成功了，而其中的正确的response也显示login success</p>
-<p><img src="https://s2.loli.net/2023/10/03/xm9VFlWYhkRo6sI.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-4-regshot-注册表快照"><a href="#2-4-regshot-注册表快照" class="headerlink" title="2.4 regshot 注册表快照"></a>2.4 regshot 注册表快照</h2><p><img src="C:%5CUsers%5CWuFei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20231014111105454.png" srcset="/img/loading.gif" lazyload alt="image-20231014111105454"></p>
+<h2 id="2-5-模拟网络"><a href="#2-5-模拟网络" class="headerlink" title="2.5 模拟网络"></a>2.5 模拟网络</h2><p>使用apatedns和inetsim配置本地模拟服务器</p>
+<ul>
+<li><p>在kali中，修改 &#x2F;etc&#x2F;inetsim&#x2F;inetsim.conf，启动inetsim</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs .conf">#192.168.109.131为INetSim安装的虚拟机IP<br>service_bind_address 192.168.109.131<br>dns_default_ip  192.168.134.109.131 <br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在xp中，启动apatedns，配置dns reply IP为192.168.109.131（kali 的ip）</p>
+</li>
+</ul>
 
                 
               </div>
@@ -338,7 +374,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%B8%97%E9%80%8F/" class="category-chain-item">渗透</a>
+  <a href="/categories/others/" class="category-chain-item">others</a>
   
   
 
@@ -358,8 +394,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>爆破-token绕过</div>
-      <div>https://jiashi19.gitee.io/2023/10/03/爆破-token绕过/</div>
+      <div>恶意代码分析</div>
+      <div>https://jiashi19.gitee.io/2023/10/16/恶意代码分析/</div>
     </div>
     <div class="license-meta">
       
@@ -371,7 +407,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月3日</div>
+          <div>2023年10月16日</div>
         </div>
       
       
@@ -403,18 +439,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/10/12/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/" title="缓冲区溢出">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">缓冲区溢出</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/27/ctf-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="ctf-文件上传">
-                        <span class="hidden-mobile">ctf-文件上传</span>
+                      <a href="/2023/10/12/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/" title="缓冲区溢出">
+                        <span class="hidden-mobile">缓冲区溢出</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
