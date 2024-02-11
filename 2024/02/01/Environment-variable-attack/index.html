@@ -16,24 +16,24 @@
   <meta name="author" content="Jiashi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="恶意windows程序Windows APIWindows API 一个广泛的功能集合管理（恶意）代码与微软程序库之间的交互方式功能强大">
+    <meta name="description" content="环境变量攻击环境变量定义 一组动态的定义值； 操作系统运行环境的一部分； 影响正在运行进程的行为方式（加载哪些外部DLL）； 在Unix中提出，也被微软操作系统采用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="恶意windows程序">
-<meta property="og:url" content="https://jiashi19.gitee.io/2024/02/04/%E6%81%B6%E6%84%8Fwindows%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:title" content="Environment-variable-attack">
+<meta property="og:url" content="https://jiashi19.gitee.io/2024/02/01/Environment-variable-attack/index.html">
 <meta property="og:site_name" content="Blog from js19">
-<meta property="og:description" content="恶意windows程序Windows APIWindows API 一个广泛的功能集合管理（恶意）代码与微软程序库之间的交互方式功能强大">
+<meta property="og:description" content="环境变量攻击环境变量定义 一组动态的定义值； 操作系统运行环境的一部分； 影响正在运行进程的行为方式（加载哪些外部DLL）； 在Unix中提出，也被微软操作系统采用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jiashi19.gitee.io/img/WaskvQ6wDoymVPb.png">
-<meta property="og:image" content="https://s2.loli.net/2023/11/20/FGxRtw7n84gEfvS.png">
-<meta property="article:published_time" content="2024-02-04T08:49:47.000Z">
-<meta property="article:modified_time" content="2024-02-04T09:21:56.226Z">
+<meta property="og:image" content="https://jiashi19.gitee.io/2024/02/01/img/eva/FE5nAfvXcuP18br.png">
+<meta property="og:image" content="https://jiashi19.gitee.io/2024/02/01/img/eva/5rLOqIHSgAGn3TQ.png">
+<meta property="article:published_time" content="2024-02-01T01:09:18.000Z">
+<meta property="article:modified_time" content="2024-02-11T19:25:55.509Z">
 <meta property="article:author" content="Jiashi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jiashi19.gitee.io/img/WaskvQ6wDoymVPb.png">
+<meta name="twitter:image" content="https://jiashi19.gitee.io/2024/02/01/img/eva/FE5nAfvXcuP18br.png">
   
   
   
-  <title>恶意windows程序 - Blog from js19</title>
+  <title>Environment-variable-attack - Blog from js19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="恶意windows程序"></span>
+            <span id="subtitle" data-typed-text="Environment-variable-attack"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-02-04 16:49" pubdate>
-          2024年2月4日 下午
+        <time datetime="2024-02-01 09:09" pubdate>
+          2024年2月1日 上午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          1.7k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          23 分钟
+          14 分钟
         
       </span>
     
@@ -270,133 +270,54 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">恶意windows程序</h1>
+            <h1 id="seo-header">Environment-variable-attack</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="恶意windows程序"><a href="#恶意windows程序" class="headerlink" title="恶意windows程序"></a>恶意windows程序</h1><h2 id="Windows-API"><a href="#Windows-API" class="headerlink" title="Windows API"></a>Windows API</h2><h3 id="Windows-API-1"><a href="#Windows-API-1" class="headerlink" title="Windows API"></a>Windows API</h3><ul>
-<li>一个广泛的功能集合<br>管理（恶意）代码与微软程序库之间的交互方式<br>功能强大</li>
+                <h1 id="环境变量攻击"><a href="#环境变量攻击" class="headerlink" title="环境变量攻击"></a>环境变量攻击</h1><h2 id="环境变量定义"><a href="#环境变量定义" class="headerlink" title="环境变量定义"></a>环境变量定义</h2><ul>
+<li>一组动态的定义值；</li>
+<li>操作系统运行环境的一部分；</li>
+<li>影响正在运行进程的行为方式（加载哪些外部DLL）；</li>
+<li>在Unix中提出，也被微软操作系统采用</li>
 </ul>
 <span id="more"></span>
 
-<h3 id="类型与匈牙利表示法"><a href="#类型与匈牙利表示法" class="headerlink" title="类型与匈牙利表示法"></a>类型与匈牙利表示法</h3><ul>
-<li>多数Windows API使用自己的名字来表示C语言类型，标准C如int通常不使用</li>
-<li>Windows总体使用匈牙利表示法作为API函数标识符</li>
-<li>表达式使用一个前缀命名模式，来识别一个变量的类型</li>
-<li>一个32位无符号整数的变量，或DWORD，会以dw开头</li>
-</ul>
-<h3 id="句柄"><a href="#句柄" class="headerlink" title="句柄"></a>句柄</h3><ul>
-<li>在操作系统中被打开或被创建的项</li>
-<li>窗口、进程、模块、菜单、文件、管道、端口、互斥量等</li>
-<li>有点像引用对象或其他某个内存位置的指针，但不能进行数学操作，也不总是表示对象地址；后续可以使用它来引用同一对象</li>
-</ul>
-<h3 id="文件系统函数"><a href="#文件系统函数" class="headerlink" title="文件系统函数"></a>文件系统函数</h3><ul>
-<li>CreateFile和OpenFile（文件、管道、流，以及I&#x2F;O设备）</li>
-<li>ReadFile和WriteFile（对文件的读和写，都将文件作为流来操作）</li>
-<li>CreateFileMapping和MapViewofFile（文件映射）</li>
-</ul>
-<p>前者从磁盘加载文件到内存，后者返回一个指向映射的基地址的指针。可用来访问内存中的文件。</p>
-<h3 id="特殊文件"><a href="#特殊文件" class="headerlink" title="特殊文件"></a>特殊文件</h3><ul>
-<li>访问方式与普通文件不一样：不能通过盘符与文件夹进行访问；</li>
-<li>有些比普通文件更隐蔽：在列目录时不会显示出来；</li>
-<li>可以提供对系统硬件和内部数据更强的访问能力；</li>
-<li>可以作为字符串参数被传递给任何文件操作函数，并像普通文件一样进行操作。</li>
-</ul>
-<h2 id="Windows注册表"><a href="#Windows注册表" class="headerlink" title="Windows注册表"></a>Windows注册表</h2><ul>
-<li>根键：一共有 5 个顶层根键节点，每一个根键有一个特定的目的。</li>
-<li>子键：一个子键就像一个文件夹中的子文件夹。</li>
-<li>键值项：可以理解为文件。名称、类型、数据。</li>
-</ul>
-<h3 id="注册表根键"><a href="#注册表根键" class="headerlink" title="注册表根键"></a>注册表根键</h3><table>
-<thead>
-<tr>
-<th><strong>注册表根键</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>HKEY_LOCAL_MACHINE(HKLM)</strong></td>
-<td><strong>保存对本地机器全局设置；</strong></td>
-</tr>
-<tr>
-<td><strong>HKEY_CURRENT_USER(HKCU)</strong></td>
-<td><strong>保存当前用户特定的设置；</strong></td>
-</tr>
-<tr>
-<td><strong>HKEY_CLASSES_ROOT</strong></td>
-<td><strong>保存定义的类型信息；</strong></td>
-</tr>
-<tr>
-<td><strong>HKEY_CURRENT_CONTIG</strong></td>
-<td><strong>保存关于当前硬件配置的设置，特别是与当前和标准配置直接不同的部分；</strong></td>
-</tr>
-<tr>
-<td><strong>HKEY_USERS</strong></td>
-<td><strong>定义默认用户、新用户和当前用户的配置；</strong></td>
-</tr>
-</tbody></table>
-<h3 id="常用注册表函数"><a href="#常用注册表函数" class="headerlink" title="常用注册表函数"></a>常用注册表函数</h3><p>RegOpenKeyEx 打开一个注册表键进行编辑和查询<br>RegSetValueEx 添加一个新值，并设置数值<br>RegGetValue 返回注册表中一个键值</p>
-<p><strong>参考链接</strong><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/john-h/p/5886870.html">https://www.cnblogs.com/john-h/p/5886870.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kzloser/archive/2012/11/07/2758404.html">https://www.cnblogs.com/kzloser/archive/2012/11/07/2758404.html</a></p>
-<p><strong>使用.reg文件的注册表脚本</strong><br>用.reg作为扩展的文件包含一个可读的注册表数据<br>双击运行后，会自动地通过合并文件包含的信息到注册表中</p>
-<h2 id="网络API"><a href="#网络API" class="headerlink" title="网络API"></a>网络API</h2><p><img src="/../img/WaskvQ6wDoymVPb.png" srcset="/img/loading.gif" lazyload alt="image-20231120145550150"></p>
-<h3 id="WinINet-API"><a href="#WinINet-API" class="headerlink" title="WinINet API"></a>WinINet API</h3><ul>
-<li>保存在Wininet.dll中;</li>
-<li>比Windows API更高一级，实现了应用层协议，如HTTP和FTP;</li>
-<li>可以用来连接远程服务器，并获取指令。</li>
-<li>InternetOpen被用来初始化一个到互联网的连接。</li>
-<li>InternetOpenUrl被用来访问一个URL(它可以是一个HTTP页面或一个FTP资源）。</li>
-<li>InternetReadFile和ReadFile函数工作原理相似，允许程序从一个来自互联网的下载文件中读取数据。</li>
-</ul>
-<h2 id="跟踪恶意代码的运行"><a href="#跟踪恶意代码的运行" class="headerlink" title="跟踪恶意代码的运行"></a>跟踪恶意代码的运行</h2><h3 id="DLL"><a href="#DLL" class="headerlink" title="DLL"></a>DLL</h3><ul>
-<li>保存恶意代码（保存为DLL比EXE更有利，可以附加到其他进程）；</li>
-<li>使用Windows DLL；</li>
-<li>使用第三方DLL（借其他程度的DLL文件来完成恶意代码自己的功能）</li>
-</ul>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
-<li>恶意代码可以通过创建一个新进程，或修改一个已经存在的进程，来执行当前程序之外的代码。目前的恶意代码普遍<strong>将自身代码作为其他进程的一部分</strong>执行。</li>
-<li>创建一个新的进程使用CreateProcess函数，让进程（恶意代码）共享系统内存。</li>
-</ul>
-<h3 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h3><p>执行附加代码的另一种方式是将它作为服务安装</p>
+<p> 示例：PATH变量<br> 当执行一个程序时，如果没有提供完整的路径，shell进程将使用环境变量来找到程序的位置。</p>
+<h2 id="进程与环境变量"><a href="#进程与环境变量" class="headerlink" title="进程与环境变量"></a>进程与环境变量</h2><p>进程可以通过以下两种方式来获取环境变量：<br>如果使用<strong>fork()<strong>创建了一个新进程，则子进程将继承其父进程的环境变量。<br>如果进程使用</strong>execve()<strong>启动一个新程序，在此场景中内存空间被覆盖，</strong>所有旧环境变量将丢失</strong>。但是可以通过传参的方式传递旧的环境变量。</p>
+<img src="../img/eva/FE5nAfvXcuP18br.png" srcset="/img/loading.gif" lazyload alt="image-20240102154328886" style="zoom: 50%;" />
+
+<h2 id="shell命令变量与环境变量"><a href="#shell命令变量与环境变量" class="headerlink" title="shell命令变量与环境变量"></a>shell命令变量与环境变量</h2><p><strong>相关命令</strong>：</p>
 <ul>
-<li><p>Windows允许通过使用服务，来使任务作为后台应用程序运行，而不需要它们自己的进程或线程；</p>
-</li>
-<li><p>代码被Windows服务管理调度和运行，不需要用户输入；</p>
-</li>
-<li><p>服务通常作为<strong>SYSTEM或其他特权账户</strong>运行；</p>
-<p>（需要一个管理员权限才能安装一个服务）</p>
-</li>
-<li><p>能够当操作系统启动时自动运行，在系统上持久化驻留；</p>
-</li>
-<li><p>在任务管理器中<strong>不作为一个进程显示</strong>出来。</p>
-</li>
+<li>env命令：显示当前用户的环境变量</li>
+<li>set命令：不加参数可以显示当前shell的所有本地设置的<strong>Shell变量</strong>，否则设置shell变量</li>
+<li>unset命令：unset为shell内建指令，删除变量或函数。</li>
+<li>export命令：显示(设置)当前导出成环境变量的shell变量(注意：export为bash或类bash私有的命令)</li>
+<li>echo $变量名：查看变量值(其中，$变量：引用变量的意思)</li>
 </ul>
-<p>通过Windows API 来安装和操作服务</p>
+<p>当shell程序启动时，它会将环境变量复制到自己的shell变量中。对shell变量所做的更改将不会反映出在环境变量上。</p>
+<img src="../img/eva/5rLOqIHSgAGn3TQ.png" srcset="/img/loading.gif" lazyload alt="image-20240102155752108" style="zoom:67%;" />
+
+<h3 id="proc文件系统"><a href="#proc文件系统" class="headerlink" title="&#x2F;proc文件系统"></a>&#x2F;proc文件系统</h3><p>&#x2F;proc是linux中的一个虚拟文件系统（放在内存中）。它包含每个进程的一个目录，使用进程ID作为目录的名称。<br>每个进程目录都有一个名为environ的虚拟文件，其中包含进程的环境变量。<br>例如：虚拟文件&#x2F;proc&#x2F;932&#x2F;environ 包含进程932的环境变量<br>命令“<code>strings /proc/$$/environ</code>”将打印出<strong>当前进程的环境变量</strong>(shell将把$$替换为它自己的进程ID)<br>当在bash shell中<strong>调用env</strong>程序时，它将在子进程中运行。因此，它打印出shell子进程的环境变量，而不是它自己的环境变量。</p>
+<p>总结：</p>
 <ul>
-<li>OpenSCManager 返回一个服务控制管理器<strong>句柄</strong>，用来进行后续与服务相关的函数调用。</li>
-<li>CreateService 添加一个新服务到服务控制管理器，并且允许调用者制定服务是否在引导时自动启动，或者必须手动启动。</li>
-<li>StartService 启动一个服务，并且仅在服务被设置成手动启动时使用。</li>
+<li>set（无参数）可以打印当前的shell变量</li>
+<li>export（无参数）可以显示当前导出成环境变量的shell变量</li>
+<li><code>strings /proc/$$/environ</code>可以打印当前进程的环境变量</li>
+<li>env可以打印当前进程的子进程的环境变量</li>
 </ul>
-<p>服务类型：</p>
+<h2 id="set-UID"><a href="#set-UID" class="headerlink" title="set-UID"></a>set-UID</h2><p>允许用户以程序所有者的权限运行程序。 </p>
+<p>每个进程都有两个用户ID。<br>Real UID (<strong>RUID</strong>):确定进程的真正所有者	<br>Effective UID (<strong>EUID</strong>): 标识进程的权限<br>访问控制基于EUID<br>当执行正常程序时 , RUID &#x3D; EUID, 它们都等于运行程序的用户的ID<br>当执行Set-UID时, RUID ≠ EUID. RUID还是用户 ID, 但是 EUID 是程序 owner的 ID.普通用户运行root用户所有的程序，以root权限运行。<br>如果程序归root所有，则程序以root权限运行。</p>
+<h3 id="通过动态链接器进行攻击"><a href="#通过动态链接器进行攻击" class="headerlink" title="通过动态链接器进行攻击"></a>通过动态链接器进行攻击</h3><p>动态链接-使用环境变量，它将成为攻击面的一部分。</p>
 <ul>
-<li>WIN32_SHARE_PROCESS类型<br>以<strong>DLL</strong>形式，并且在一个共享的进程中组合多个不同的服务。</li>
-<li>WIN32_OWN_PROCESS类型<br>以EXE形式，作为一个独立进程运行。</li>
-<li>KERNEL_DRIVER<br>以SYS形式，被用来加载代码到内核中执行。</li>
+<li>动态链接节省内存</li>
+<li>这意味着程序在编译期间未决定部分代码</li>
+<li>如果用户可以影响丢失的代码，它们可能会损害程序的完整性</li>
+<li>LD_PRELOAD 包含一个共享库的列表，链接器将首先搜索它；<br>如果没有找到所有函数，链接器将在几个文件夹列表中搜索，包括LD_LIBRARY_PATH指定的文件夹；<br>这两个变量都可以由用户设置，因此使他们有机会控制链接过程结果；<br>如果该程序是一个Set-UID程序，它可能会导致安全漏洞。</li>
 </ul>
-<h3 id="组件对象模型COM"><a href="#组件对象模型COM" class="headerlink" title="组件对象模型COM"></a>组件对象模型COM</h3><p>COM是什么：</p>
-<ul>
-<li>一个接口标准<br>使不同软件组件在不知道其他组件代码的接口规范时，相互之间可以进行调用。</li>
-<li>分析使用COM的恶意代码<br>要能够判断哪段代码会被作为一个COM函数进行调用运行。</li>
-<li>支持任何编程语言<br>被设计成一种可复用的软件组件，并可以被所有程序利用。</li>
-</ul>
-<p>COM被实现成C&#x2F;S框架：<br>客户端是使用COM对象的程序；<br>服务器是可复用的组件，就是COM对象本身。</p>
-<h2 id="内核模式、用户模式和原生API"><a href="#内核模式、用户模式和原生API" class="headerlink" title="内核模式、用户模式和原生API"></a>内核模式、用户模式和原生API</h2><h3 id="内核与用户模式"><a href="#内核与用户模式" class="headerlink" title="内核与用户模式"></a>内核与用户模式</h3><p>通常，用户模式不能直接访问硬件，并且它被限制只能访问CPU上所有寄存器和可用指令的一个子集。为了在用户模式中操作硬件或改变内核中的状态，你必须依赖于Windows API。</p>
-<h3 id="原生API"><a href="#原生API" class="headerlink" title="原生API"></a>原生API</h3><p><img src="https://s2.loli.net/2023/11/20/FGxRtw7n84gEfvS.png" srcset="/img/loading.gif" lazyload alt="image-20231120151956422"></p>
-<p>原生API是用来和Windows进行交互的底层API，它们很少被非恶意程序使用，但是在恶意代码作者之间却很受欢迎。调用原生API函数可以绕过普通的Windows API。</p>
-<p>当调用Windows API中的一个函数时,这个函数通常<strong>不会直接执行请求的动作</strong>，因为大多数重要数据结构都被保存在内核中，在内核外面的代码（用户模式代码) 是无法访问它们的。微软为了使用户应用程序能够达到必需的功能，创建了一个多步骤的调用过程。上图说明了对于大多数API调用来说，这是如何工作的。</p>
-<p>用户应用程序被给予对<strong>用户API</strong>(比如kernel32.dll和其他DLL)的访问，这些DLL会调用<strong>ntdll.dll</strong>，这是一个特殊的DLL程序，它管理用户空间与内核的交互。然后处理器切换到内核模式,</p>
-<p>ntdll函数像内核中的函数一样，使用API和结构体。这些函数组成了<strong>原生API</strong>。</p>
-<p><strong>绕过检测</strong>：直接使用ntdll中的函数。</p>
+<p><strong>机制：</strong></p>
+<p>现代编译器基本默认为动态链接,而动态链接就需要使用支持动态链接的程序库,而 <strong>LD_LIBRARY_PATH 和 LD_PRELOAD</strong> 就是与动态链接相关的两个环境变量，而这个两个环境变量可以被修改，那么结合 Set-UID 程序,便会导致安全问题,攻击者可能会编写 root 权限下运行的不安全函数,通过环境变量在链接阶段冒充真实函数来运行。</p>
+<p>而动态链接器程序有一个防御机制,当进程的真实用户 ID 与有效用户 ID不 一 样 时 , 或 者 真 实 组 ID 与 有 效 组 ID 不 一 致 时 , 进 程 将 会 忽 LD_PRELOAD,LD_LIBRARY_PATH 环境变量。</p>
 
                 
               </div>
@@ -415,7 +336,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" class="category-chain-item">恶意代码分析</a>
+  <a href="/categories/others/" class="category-chain-item">others</a>
   
   
 
@@ -435,8 +356,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>恶意windows程序</div>
-      <div>https://jiashi19.gitee.io/2024/02/04/恶意windows程序/</div>
+      <div>Environment-variable-attack</div>
+      <div>https://jiashi19.gitee.io/2024/02/01/Environment-variable-attack/</div>
     </div>
     <div class="license-meta">
       
@@ -448,7 +369,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年2月4日</div>
+          <div>2024年2月1日</div>
         </div>
       
       
@@ -480,9 +401,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/02/04/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/" title="恶意代码注入">
+                      <a href="/2024/02/04/%E6%81%B6%E6%84%8Fwindows%E7%A8%8B%E5%BA%8F/" title="恶意windows程序">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">恶意代码注入</span>
+                        <span class="hidden-mobile">恶意windows程序</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -490,8 +411,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/01/Environment-variable-attack/" title="Environment-variable-attack">
-                        <span class="hidden-mobile">Environment-variable-attack</span>
+                      <a href="/2023/11/23/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7%E6%80%BB%E7%BB%93/" title="渗透工具总结">
+                        <span class="hidden-mobile">渗透工具总结</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>SSRF</title>
+    <link href="/2024/02/11/ssrf/"/>
+    <url>/2024/02/11/ssrf/</url>
+    
+    <content type="html"><![CDATA[<h1 id="SSRF漏洞"><a href="#SSRF漏洞" class="headerlink" title="SSRF漏洞"></a>SSRF漏洞</h1><h2 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。</p><span id="more"></span><p>（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）</p><p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。</p><p>比如,黑客操作服务端从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。利用的是服务端的请求伪造。ssrf是利用存在缺陷的web应用作为代理攻击远程和本地的服务器。</p><h3 id="可能场景-漏洞点挖掘"><a href="#可能场景-漏洞点挖掘" class="headerlink" title="可能场景-漏洞点挖掘"></a>可能场景-漏洞点挖掘</h3><ol><li><p>分享：通过URL地址分享网页内容</p><p>获取超链接的标题等内容进行显示</p></li><li><p>转码服务:通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览:由于手机屏幕大小的关系，直接浏览网页内容的时候会造成许多不便，因此有些公司提供了转码功能，把网页内容通过相关手段转为适合手机屏幕浏览的样式。例如百度、腾讯、搜狗等公司都有提供在线转码服务。</p></li><li><p>在线翻译:通过URL地址翻译对应文本的内容。提供此功能的国内公司有百度、有道等。</p></li><li><p>图片、文章收藏功能:此处的图片、文章收藏中的文章收藏就类似于分享功能中获取URL地址中title以及文本的内容作为显示，目的还是为了更好的用户体验，而图片收藏就类似于图片加载。</p></li><li><p>图片加载与下载:通过URL地址加载或下载图片。</p></li><li><p>从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</p></li></ol><p>简单来说：<strong>所有目标服务器会从自身发起请求的功能点，且我们可以控制地址的参数，都可能造成SSRF漏洞</strong>。</p><h3 id="产生SSRF漏洞的函数"><a href="#产生SSRF漏洞的函数" class="headerlink" title="产生SSRF漏洞的函数"></a>产生SSRF漏洞的函数</h3><p>php中有例如以下函数：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">file_get_contents</span>()<br><span class="hljs-title function_ invoke__">fsockopen</span>()<br><span class="hljs-title function_ invoke__">curl_exec</span>()<br><span class="hljs-title function_ invoke__">fopen</span>()<br><span class="hljs-title function_ invoke__">readfile</span>()<br><br><span class="hljs-comment">//curl_exec() 默认不跟踪跳转</span><br><span class="hljs-comment">//file_get_contents支持php://input协议</span><br></code></pre></td></tr></table></figure><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h3><p>file:&#x2F;&#x2F;&#x2F; 从文件系统中获取文件内容（访问本地文件系统），如，file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd<br>dict:&#x2F;&#x2F; dict协议一般常用来探测<strong>内网主机以及端口开放</strong>情况，既然能够探测端口，那么可以探测不同端口对应的服务的指纹信息<br>sftp:&#x2F;&#x2F; SSH文件传输协议或安全文件传输协议<br>ldap:&#x2F;&#x2F; 轻量级目录访问协议<br>tftp:&#x2F;&#x2F; 简单文件传输协议<br>gopher:&#x2F;&#x2F; 分布式文档传递服务，可使用gopherus生成payload</p><p><img src="https://img2020.cnblogs.com/blog/1937992/202005/1937992-20200527101703916-1706063347.png" alt="img"></p><p><strong>file</strong></p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">file:<span class="hljs-regexp">//</span><span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure><p><img src="https://s2.loli.net/2024/01/20/sWouUSLvE9qCxhy.png" alt="image-20240120202626265"></p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">file:<span class="hljs-regexp">//</span><span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/i</span>ndex.php<br></code></pre></td></tr></table></figure><p><strong>dict</strong></p><p>1、探测内网主机</p><p>2、探测端口的开放情况和指纹信息</p><p>3、执行命令 dict:&#x2F;&#x2F;serverip:port&#x2F;命令:参数 （每次只能执行一条命令）</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dict:<span class="hljs-regexp">//</span><span class="hljs-number">172.18</span>.<span class="hljs-number">240.5</span>:<span class="hljs-number">80</span>/<br></code></pre></td></tr></table></figure><p>dict协议直接攻击未授权 <strong>Redis</strong> 服务（即无密码，有密码的话无法实现，因为每次执行命令还需要先认证）：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">dict://x.x.x.x:6379/&lt;Redis 命令&gt;<br></code></pre></td></tr></table></figure><p><strong>gopher</strong></p><p>gopher支持发出get，post请求（万能协议）</p><p>gopher协议在ssrf的利用中一般用来攻击redis，mysql，fastcgi，smtp等服务。</p><p>gopher协议数据格式：</p><p>gopher:&#x2F;&#x2F;ip:port&#x2F;_{TCP&#x2F;IP数据流}</p><p>注意：</p><p>gopher协议数据流中，url编码使用%0d%0a替换字符串中的回车换行<br>数据流末尾使用%0d%0a代表消息结束</p><p>gopher协议是个tcp&#x2F;ip协议，通过gopher协议可以发送tcp stream，payload使用%+16进制编码，（原理比较简单，可以用tcpdump或者wireshark把stream一段段复制出来）</p><h2 id="漏洞bypass"><a href="#漏洞bypass" class="headerlink" title="漏洞bypass"></a>漏洞bypass</h2><p>在通常情况下，对SSRF的防御措施是对URL特征参数进行检测和过滤、设置可访问URL白名单或使用户无法控制URL的参数，一但过滤的措施不够严密，就会存在多种Bypass方式。</p><ol><li><p>@　　　　　　　　　　<a href="http://abc.com@127.0.0.1/">http://abc.com@127.0.0.1</a></p></li><li><p>添加端口号　　　　　　<a href="http://127.0.0.1:8080/">http://127.0.0.1:8080</a></p></li><li><p>短地址　　　　　　　　<a href="https://0x9.me/cuGfD">https://0x9.me/cuGfD</a>      </p></li><li><p>可以指向任意ip的域名　 xip.io                     原理是DNS解析。xip.io可以指向任意域名，即127.0.0.1.xip.io，可解析为127.0.0.1</p></li><li><p>ip地址转换成进制来访问 192.168.0.1&#x3D;3232235521（十进制） </p></li><li><p>非HTTP协议</p></li><li><p>DNS Rebinding</p></li><li><p>本地回环地址的其他表现形式      </p><p>localhost        </p><p>http:&#x2F;&#x2F;[::]:80&#x2F;</p><p>::1 &#x2F; http:&#x2F;&#x2F;[::1]   （ipv6的地址使用http访问需要加[]）</p></li><li><p>句号绕过                  127。0。0。1 &gt;&gt;&gt; 127.0.0.1</p></li><li><p>利用302跳转绕过</p></li></ol><h2 id="SSRF防御"><a href="#SSRF防御" class="headerlink" title="SSRF防御"></a>SSRF防御</h2><ul><li><p>禁止302跳转，或者每跳转一次都进行校验目的地址是否为内网地址或合法地址。</p></li><li><p>过滤返回信息，验证远程服务器对请求的返回结果，是否合法。</p></li><li><p>禁用高危协议，例如：gopher、dict、ftp、file等，只允许http&#x2F;https。</p></li><li><p>设置URL白名单或者限制内网IP。</p></li><li><p>限制请求的端口为http的常用端口，或者根据业务需要开放远程调用服务的端口。</p></li><li><p>对错误信息返回进行处理和统一设计，避免黑客通过错误信息判断端口对应的服务。</p></li></ul><p>参考：</p><p><a href="https://blog.csdn.net/qq_61237064/article/details/123006424">用SSRF打穿内网_国光ssrf-CSDN博客</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>渗透</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>恶意代码注入</title>
     <link href="/2024/02/04/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/"/>
     <url>/2024/02/04/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/</url>
@@ -33,6 +52,25 @@
     <categories>
       
       <category>恶意代码分析</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Environment-variable-attack</title>
+    <link href="/2024/02/01/Environment-variable-attack/"/>
+    <url>/2024/02/01/Environment-variable-attack/</url>
+    
+    <content type="html"><![CDATA[<h1 id="环境变量攻击"><a href="#环境变量攻击" class="headerlink" title="环境变量攻击"></a>环境变量攻击</h1><h2 id="环境变量定义"><a href="#环境变量定义" class="headerlink" title="环境变量定义"></a>环境变量定义</h2><ul><li>一组动态的定义值；</li><li>操作系统运行环境的一部分；</li><li>影响正在运行进程的行为方式（加载哪些外部DLL）；</li><li>在Unix中提出，也被微软操作系统采用</li></ul><span id="more"></span><p> 示例：PATH变量<br> 当执行一个程序时，如果没有提供完整的路径，shell进程将使用环境变量来找到程序的位置。</p><h2 id="进程与环境变量"><a href="#进程与环境变量" class="headerlink" title="进程与环境变量"></a>进程与环境变量</h2><p>进程可以通过以下两种方式来获取环境变量：<br>如果使用<strong>fork()<strong>创建了一个新进程，则子进程将继承其父进程的环境变量。<br>如果进程使用</strong>execve()<strong>启动一个新程序，在此场景中内存空间被覆盖，</strong>所有旧环境变量将丢失</strong>。但是可以通过传参的方式传递旧的环境变量。</p><img src="../img/eva/FE5nAfvXcuP18br.png" alt="image-20240102154328886" style="zoom: 50%;" /><h2 id="shell命令变量与环境变量"><a href="#shell命令变量与环境变量" class="headerlink" title="shell命令变量与环境变量"></a>shell命令变量与环境变量</h2><p><strong>相关命令</strong>：</p><ul><li>env命令：显示当前用户的环境变量</li><li>set命令：不加参数可以显示当前shell的所有本地设置的<strong>Shell变量</strong>，否则设置shell变量</li><li>unset命令：unset为shell内建指令，删除变量或函数。</li><li>export命令：显示(设置)当前导出成环境变量的shell变量(注意：export为bash或类bash私有的命令)</li><li>echo $变量名：查看变量值(其中，$变量：引用变量的意思)</li></ul><p>当shell程序启动时，它会将环境变量复制到自己的shell变量中。对shell变量所做的更改将不会反映出在环境变量上。</p><img src="../img/eva/5rLOqIHSgAGn3TQ.png" alt="image-20240102155752108" style="zoom:67%;" /><h3 id="proc文件系统"><a href="#proc文件系统" class="headerlink" title="&#x2F;proc文件系统"></a>&#x2F;proc文件系统</h3><p>&#x2F;proc是linux中的一个虚拟文件系统（放在内存中）。它包含每个进程的一个目录，使用进程ID作为目录的名称。<br>每个进程目录都有一个名为environ的虚拟文件，其中包含进程的环境变量。<br>例如：虚拟文件&#x2F;proc&#x2F;932&#x2F;environ 包含进程932的环境变量<br>命令“<code>strings /proc/$$/environ</code>”将打印出<strong>当前进程的环境变量</strong>(shell将把$$替换为它自己的进程ID)<br>当在bash shell中<strong>调用env</strong>程序时，它将在子进程中运行。因此，它打印出shell子进程的环境变量，而不是它自己的环境变量。</p><p>总结：</p><ul><li>set（无参数）可以打印当前的shell变量</li><li>export（无参数）可以显示当前导出成环境变量的shell变量</li><li><code>strings /proc/$$/environ</code>可以打印当前进程的环境变量</li><li>env可以打印当前进程的子进程的环境变量</li></ul><h2 id="set-UID"><a href="#set-UID" class="headerlink" title="set-UID"></a>set-UID</h2><p>允许用户以程序所有者的权限运行程序。 </p><p>每个进程都有两个用户ID。<br>Real UID (<strong>RUID</strong>):确定进程的真正所有者<br>Effective UID (<strong>EUID</strong>): 标识进程的权限<br>访问控制基于EUID<br>当执行正常程序时 , RUID &#x3D; EUID, 它们都等于运行程序的用户的ID<br>当执行Set-UID时, RUID ≠ EUID. RUID还是用户 ID, 但是 EUID 是程序 owner的 ID.普通用户运行root用户所有的程序，以root权限运行。<br>如果程序归root所有，则程序以root权限运行。</p><h3 id="通过动态链接器进行攻击"><a href="#通过动态链接器进行攻击" class="headerlink" title="通过动态链接器进行攻击"></a>通过动态链接器进行攻击</h3><p>动态链接-使用环境变量，它将成为攻击面的一部分。</p><ul><li>动态链接节省内存</li><li>这意味着程序在编译期间未决定部分代码</li><li>如果用户可以影响丢失的代码，它们可能会损害程序的完整性</li><li>LD_PRELOAD 包含一个共享库的列表，链接器将首先搜索它；<br>如果没有找到所有函数，链接器将在几个文件夹列表中搜索，包括LD_LIBRARY_PATH指定的文件夹；<br>这两个变量都可以由用户设置，因此使他们有机会控制链接过程结果；<br>如果该程序是一个Set-UID程序，它可能会导致安全漏洞。</li></ul><p><strong>机制：</strong></p><p>现代编译器基本默认为动态链接,而动态链接就需要使用支持动态链接的程序库,而 <strong>LD_LIBRARY_PATH 和 LD_PRELOAD</strong> 就是与动态链接相关的两个环境变量，而这个两个环境变量可以被修改，那么结合 Set-UID 程序,便会导致安全问题,攻击者可能会编写 root 权限下运行的不安全函数,通过环境变量在链接阶段冒充真实函数来运行。</p><p>而动态链接器程序有一个防御机制,当进程的真实用户 ID 与有效用户 ID不 一 样 时 , 或 者 真 实 组 ID 与 有 效 组 ID 不 一 致 时 , 进 程 将 会 忽 LD_PRELOAD,LD_LIBRARY_PATH 环境变量。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>others</category>
       
     </categories>
     
