@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Blog from js19">
 <meta property="og:description" content="SSRF漏洞漏洞介绍SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img2020.cnblogs.com/blog/1937992/202005/1937992-20200527101703916-1706063347.png">
+<meta property="og:image" content="https://jiashi19.gitee.io/img/1937992-20200527101703916-1706063347.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/20/sWouUSLvE9qCxhy.png">
 <meta property="article:published_time" content="2024-02-11T01:23:07.000Z">
-<meta property="article:modified_time" content="2024-02-11T19:25:42.897Z">
+<meta property="article:modified_time" content="2024-02-11T19:29:55.717Z">
 <meta property="article:author" content="Jiashi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1937992/202005/1937992-20200527101703916-1706063347.png">
+<meta name="twitter:image" content="https://jiashi19.gitee.io/img/1937992-20200527101703916-1706063347.png">
   
   
   
@@ -301,7 +301,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">file_get_contents</span>()<br><span class="hljs-title function_ invoke__">fsockopen</span>()<br><span class="hljs-title function_ invoke__">curl_exec</span>()<br><span class="hljs-title function_ invoke__">fopen</span>()<br><span class="hljs-title function_ invoke__">readfile</span>()<br><br><span class="hljs-comment">//curl_exec() 默认不跟踪跳转</span><br><span class="hljs-comment">//file_get_contents支持php://input协议</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h3><p>file:&#x2F;&#x2F;&#x2F; 从文件系统中获取文件内容（访问本地文件系统），如，file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd<br>dict:&#x2F;&#x2F; dict协议一般常用来探测<strong>内网主机以及端口开放</strong>情况，既然能够探测端口，那么可以探测不同端口对应的服务的指纹信息<br>sftp:&#x2F;&#x2F; SSH文件传输协议或安全文件传输协议<br>ldap:&#x2F;&#x2F; 轻量级目录访问协议<br>tftp:&#x2F;&#x2F; 简单文件传输协议<br>gopher:&#x2F;&#x2F; 分布式文档传递服务，可使用gopherus生成payload</p>
-<p><img src="https://img2020.cnblogs.com/blog/1937992/202005/1937992-20200527101703916-1706063347.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/../img/1937992-20200527101703916-1706063347.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p><strong>file</strong></p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">file:<span class="hljs-regexp">//</span><span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure>
 

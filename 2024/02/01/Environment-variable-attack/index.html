@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Blog from js19">
 <meta property="og:description" content="环境变量攻击环境变量定义 一组动态的定义值； 操作系统运行环境的一部分； 影响正在运行进程的行为方式（加载哪些外部DLL）； 在Unix中提出，也被微软操作系统采用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jiashi19.gitee.io/2024/02/01/img/eva/FE5nAfvXcuP18br.png">
-<meta property="og:image" content="https://jiashi19.gitee.io/2024/02/01/img/eva/5rLOqIHSgAGn3TQ.png">
+<meta property="og:image" content="https://s2.loli.net/2024/02/12/ZSOTq4bIvodnzNG.png">
+<meta property="og:image" content="https://jiashi19.gitee.io/2024/02/01/img/5rLOqIHSgAGn3TQ.png">
 <meta property="article:published_time" content="2024-02-01T01:09:18.000Z">
-<meta property="article:modified_time" content="2024-02-11T19:25:55.509Z">
+<meta property="article:modified_time" content="2024-02-11T19:35:31.524Z">
 <meta property="article:author" content="Jiashi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jiashi19.gitee.io/2024/02/01/img/eva/FE5nAfvXcuP18br.png">
+<meta name="twitter:image" content="https://s2.loli.net/2024/02/12/ZSOTq4bIvodnzNG.png">
   
   
   
@@ -285,7 +285,7 @@
 
 <p> 示例：PATH变量<br> 当执行一个程序时，如果没有提供完整的路径，shell进程将使用环境变量来找到程序的位置。</p>
 <h2 id="进程与环境变量"><a href="#进程与环境变量" class="headerlink" title="进程与环境变量"></a>进程与环境变量</h2><p>进程可以通过以下两种方式来获取环境变量：<br>如果使用<strong>fork()<strong>创建了一个新进程，则子进程将继承其父进程的环境变量。<br>如果进程使用</strong>execve()<strong>启动一个新程序，在此场景中内存空间被覆盖，</strong>所有旧环境变量将丢失</strong>。但是可以通过传参的方式传递旧的环境变量。</p>
-<img src="../img/eva/FE5nAfvXcuP18br.png" srcset="/img/loading.gif" lazyload alt="image-20240102154328886" style="zoom: 50%;" />
+<img src="https://s2.loli.net/2024/02/12/ZSOTq4bIvodnzNG.png" srcset="/img/loading.gif" lazyload alt="image-20240102154328886" style="zoom: 50%;" />
 
 <h2 id="shell命令变量与环境变量"><a href="#shell命令变量与环境变量" class="headerlink" title="shell命令变量与环境变量"></a>shell命令变量与环境变量</h2><p><strong>相关命令</strong>：</p>
 <ul>
@@ -296,7 +296,7 @@
 <li>echo $变量名：查看变量值(其中，$变量：引用变量的意思)</li>
 </ul>
 <p>当shell程序启动时，它会将环境变量复制到自己的shell变量中。对shell变量所做的更改将不会反映出在环境变量上。</p>
-<img src="../img/eva/5rLOqIHSgAGn3TQ.png" srcset="/img/loading.gif" lazyload alt="image-20240102155752108" style="zoom:67%;" />
+<img src="../img/5rLOqIHSgAGn3TQ.png" srcset="/img/loading.gif" lazyload alt="image-20240102155752108" style="zoom:67%;" />
 
 <h3 id="proc文件系统"><a href="#proc文件系统" class="headerlink" title="&#x2F;proc文件系统"></a>&#x2F;proc文件系统</h3><p>&#x2F;proc是linux中的一个虚拟文件系统（放在内存中）。它包含每个进程的一个目录，使用进程ID作为目录的名称。<br>每个进程目录都有一个名为environ的虚拟文件，其中包含进程的环境变量。<br>例如：虚拟文件&#x2F;proc&#x2F;932&#x2F;environ 包含进程932的环境变量<br>命令“<code>strings /proc/$$/environ</code>”将打印出<strong>当前进程的环境变量</strong>(shell将把$$替换为它自己的进程ID)<br>当在bash shell中<strong>调用env</strong>程序时，它将在子进程中运行。因此，它打印出shell子进程的环境变量，而不是它自己的环境变量。</p>
 <p>总结：</p>
