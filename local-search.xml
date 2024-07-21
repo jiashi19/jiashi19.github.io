@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>linux基础</title>
+    <link href="/2024/07/21/linux%E5%9F%BA%E7%A1%80/"/>
+    <url>/2024/07/21/linux%E5%9F%BA%E7%A1%80/</url>
+    
+    <content type="html"><![CDATA[<h1 id="linux基础知识点"><a href="#linux基础知识点" class="headerlink" title="linux基础知识点"></a>linux基础知识点</h1><p>ps -ef| grep name 查看相关进程.</p><p>cat log |grep info 读取日志，查看相关信息.</p><span id="more"></span><p>tail -n 100 -f log  -n 100行，-f 实时更新显示.</p><p>lsof -i:3306 查看对应端口.</p><p>curl -k xx.com -k&#x2F;–insecure 设置允许不安全连接</p><p>curl -v xx.com 显示通信的整个过程信息</p><p>环境变量相关的两个文件： &#x2F;etc&#x2F;profile &#x2F;etc&#x2F;profile：此文件为系统的每个用户设置环境信息，当用户第一次登录时，该文件被执行，并从&#x2F;etc&#x2F;profile.d目录的配置文件中搜集shell的设置。</p><p>~&#x2F;.bash_profile 每个用户都可使用该文件输入专用于自己使用的shell信息，当用户登录时，该文件仅仅执行一次!默认情况下，他设置一些环境变量，执行用户的.bashrc文件。是交互式login 方式进入 bash 运行的。</p><p>环境变量配置： 修改&#x2F;etc&#x2F;profile</p><p>export PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;tomcat&#x2F;bin&#x2F;:$PATH<br>source &#x2F;etc&#x2F;profile<br>netstat -tunlp 用于显示 tcp，udp 的端口和进程等相关情况。 -t (tcp) 仅显示tcp相关选项 -u (udp)仅显示udp相关选项 -n 拒绝显示别名，能显示数字的全部转化为数字 -l 仅列出在Listen(监听)的服务状态 -p 显示建立相关链接的程序名</p><p>netstat -tunlp | grep 8000 查看8000端口</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>others</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>git</title>
+    <link href="/2024/07/21/git/"/>
+    <url>/2024/07/21/git/</url>
+    
+    <content type="html"><![CDATA[<h1 id="git基础知识点"><a href="#git基础知识点" class="headerlink" title="git基础知识点"></a>git基础知识点</h1><p><img src="/../img/1c4f058675fa4bba88b1426c8bfdf3fd.png" alt="git流程图"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#查看当前工作区和暂存区的状态</span><br>git status <br></code></pre></td></tr></table></figure><span id="more"></span><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#列出所有本地分支</span><br>git branch<br><span class="hljs-comment">#列出所有本地分支和远程分支</span><br>git branch -a<br><span class="hljs-comment">#列出远程分支</span><br>git branch -r<br><span class="hljs-comment">#查看本地分支与远程分支的关联关系</span><br>git branch -vv <br></code></pre></td></tr></table></figure><p>以上命令在windows的git bash使用时按q键退出。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#check out 远程的master分支，在本地起名为master分支，**并切换到** 本地的master分支</span><br>git checkout -b master origin/master<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>others</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>java多线程</title>
     <link href="/2024/07/21/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     <url>/2024/07/21/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
@@ -13,7 +51,7 @@
     
     <categories>
       
-      <category>others</category>
+      <category>java</category>
       
     </categories>
     
@@ -32,7 +70,7 @@
     
     <categories>
       
-      <category>others</category>
+      <category>java</category>
       
     </categories>
     
