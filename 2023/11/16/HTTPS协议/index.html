@@ -1,0 +1,752 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="JiAshi">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HTTPS协议（TLS v1.2）概括介绍总体流程： 四次握手     TLS&#x2F;SSL协议结构分层： 网图如下：       Handshake 协议有很多种类：Client Hello，Server Hello，Server Certificate 等，是握手的核心。 Change Cipher Spec 协议是有点独立的协议，也是握手必须的。用于告诉对方，我要使用我们商量好的会话">
+<meta property="og:type" content="article">
+<meta property="og:title" content="aboutHTTPS">
+<meta property="og:url" content="https://jiashi19.github.io/2023/11/16/HTTPS%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Blog from jiAshi19">
+<meta property="og:description" content="HTTPS协议（TLS v1.2）概括介绍总体流程： 四次握手     TLS&#x2F;SSL协议结构分层： 网图如下：       Handshake 协议有很多种类：Client Hello，Server Hello，Server Certificate 等，是握手的核心。 Change Cipher Spec 协议是有点独立的协议，也是握手必须的。用于告诉对方，我要使用我们商量好的会话">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/11/08/V4uDORrZh6xEP81.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/08/YrgFohC96buVGNw.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/08/QPN3vGwd9sgJYph.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ba6918091113c294b1ae0a94500e1d24_1440w.webp">
+<meta property="article:published_time" content="2023-11-16T01:43:54.000Z">
+<meta property="article:modified_time" content="2024-07-21T11:16:59.138Z">
+<meta property="article:author" content="JiAshi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2023/11/08/V4uDORrZh6xEP81.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>aboutHTTPS - Blog from jiAshi19</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiashi19.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>jiashi&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="aboutHTTPS"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-16 09:43" pubdate>
+          2023年11月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          878 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">aboutHTTPS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <span id="more"></span>
+
+<h1 id="HTTPS协议（TLS-v1-2）"><a href="#HTTPS协议（TLS-v1-2）" class="headerlink" title="HTTPS协议（TLS v1.2）"></a>HTTPS协议（TLS v1.2）</h1><h2 id="概括介绍"><a href="#概括介绍" class="headerlink" title="概括介绍"></a>概括介绍</h2><p>总体流程：</p>
+<p>四次握手</p>
+<img src="https://s2.loli.net/2023/11/08/V4uDORrZh6xEP81.png" srcset="/img/loading.gif" lazyload alt="image-20231108200139162" style="zoom:55%;" />
+
+
+
+<p>TLS&#x2F;SSL协议结构分层：</p>
+<p>网图如下：</p>
+<img src="https://s2.loli.net/2023/11/08/YrgFohC96buVGNw.png" srcset="/img/loading.gif" lazyload alt="image-20231108201059958" style="zoom:55%;" />
+
+<img src="https://s2.loli.net/2023/11/08/QPN3vGwd9sgJYph.png" srcset="/img/loading.gif" lazyload alt="image-20231108201124713" style="zoom:55%;" />
+
+
+
+<p>Handshake 协议有很多种类：Client Hello，Server Hello，Server Certificate 等，是握手的核心。</p>
+<p>Change Cipher Spec 协议是有点独立的协议，也是握手必须的。用于告诉对方，我要使用我们商量好的会话秘钥了。</p>
+<p>Alert 协议用于警告双方握手过程没有成功。</p>
+<h2 id="具体握手过程"><a href="#具体握手过程" class="headerlink" title="具体握手过程"></a>具体握手过程</h2><p>注，一次握手可包含多个 Message，比如 server 一次握手可能包含 Server Hello、Server Certificate、Server Key Exchange 等，以此类推。</p>
+<p>主要是RSA和ECDHE两种密钥交换算法。</p>
+<p>下面介绍<strong>ECDHE</strong>:</p>
+<h3 id="client第一次握手：Client-Hello"><a href="#client第一次握手：Client-Hello" class="headerlink" title="client第一次握手：Client Hello"></a>client第一次握手：Client Hello</h3><ul>
+<li><p>Version</p>
+</li>
+<li><p>Random：<strong>客户端随机数</strong>，我们称之为随机数 1，这个随机数是为了后面生成对称的<strong>会话秘钥</strong>。</p>
+</li>
+<li><p>Session ID：可选的字段。</p>
+</li>
+<li><p>Cipher Suites：加密套件。提供一组，可供选择</p>
+</li>
+<li><p>Compression Methods：压缩算法，<strong>在加密之前数据压缩</strong>。取值 00 代表不压缩。因为会弱化加密数据的安全性，所以在未来的版本已经不推荐使用了。</p>
+</li>
+</ul>
+<h3 id="server第一次握手"><a href="#server第一次握手" class="headerlink" title="server第一次握手"></a>server第一次握手</h3><h4 id="Server-Hello"><a href="#Server-Hello" class="headerlink" title="Server Hello"></a>Server Hello</h4><ul>
+<li><p>Version：选定的协议。没协商好会有alert协议</p>
+</li>
+<li><p>Cipher Suite：选定的加密套件。</p>
+</li>
+<li><p>random：<strong>服务端随机数</strong>。</p>
+</li>
+<li><p>compression method</p>
+</li>
+</ul>
+<h4 id="server-Certificate"><a href="#server-Certificate" class="headerlink" title="server Certificate"></a>server Certificate</h4><ul>
+<li>the hostname of the server</li>
+<li>the public key used by this server</li>
+<li>proof from a trusted third party that the owner of this hostname holds the private key for this public key</li>
+</ul>
+<h4 id="（Server-Key-Exchange）"><a href="#（Server-Key-Exchange）" class="headerlink" title="（Server Key Exchange）"></a>（Server Key Exchange）</h4><p>交换公钥</p>
+<h4 id="Server-Hello-Done"><a href="#Server-Hello-Done" class="headerlink" title="Server Hello Done"></a>Server Hello Done</h4><p>后面三条封装在一个包中</p>
+<h3 id="client第二次握手"><a href="#client第二次握手" class="headerlink" title="client第二次握手"></a>client第二次握手</h3><h4 id="Client-Key-Exchange"><a href="#Client-Key-Exchange" class="headerlink" title="Client Key Exchange"></a>Client Key Exchange</h4><p>交换公钥</p>
+<p>The client provides information for key exchange. As part of the key exchange process both the server and the client will have a keypair of public and private keys, and will send the other party their public key. The shared encryption key will then be generated using a combination of each party’s private key and the other party’s public key.</p>
+<p>The parties have agreed on a cipher suite using ECDHE, meaning the keypairs will be based on a selected <strong>E</strong>lliptic <strong>C</strong>urve, <strong>D</strong>iffie-<strong>H</strong>ellman will be used, and the keypairs are <strong>E</strong>phemeral (generated for each connection) rather than using the public&#x2F;private key from the certificate.</p>
+<h4 id="Change-Cipher-Spec"><a href="#Change-Cipher-Spec" class="headerlink" title="Change Cipher Spec"></a>Change Cipher Spec</h4><p>{</p>
+<p>客户端计算密钥：</p>
+<p>The client now has the information to calculate the encryption keys that will be used by each side. It uses the following information in this calculation:</p>
+<ul>
+<li>server random (from Server Hello)</li>
+<li>client random (from Client Hello)</li>
+<li>server public key (from Server Key Exchange)</li>
+<li>client private key (from Client Key Generation)</li>
+</ul>
+<p>}</p>
+<p>告诉 server，要使用商量好的对称秘钥了。请注意，这里是独立的协议，即 Change Cipher Spec Protocol。</p>
+<h4 id="Encrypted-Handshake-Message"><a href="#Encrypted-Handshake-Message" class="headerlink" title="Encrypted Handshake Message"></a>Encrypted Handshake Message</h4><p>为了验证握手是否成功且未被篡改。加密之前的握手消息的哈希值。</p>
+<h3 id="server第二次握手"><a href="#server第二次握手" class="headerlink" title="server第二次握手"></a>server第二次握手</h3><h4 id="Change-Cipher-Spec-1"><a href="#Change-Cipher-Spec-1" class="headerlink" title="Change Cipher Spec"></a>Change Cipher Spec</h4><h4 id="Encrypted-Handshake-Message-1"><a href="#Encrypted-Handshake-Message-1" class="headerlink" title="Encrypted Handshake Message"></a>Encrypted Handshake Message</h4><p>验证数据根据所有握手消息的哈希值构建，用于验证握手过程的完整性</p>
+<p><strong>使用RSA密钥交换算法</strong>：</p>
+<p>使用 RSA 秘钥交换算法的四次握手的过程和 ECDHE 过程大体一样，如下：</p>
+<ul>
+<li>Bob 第一次握手：Bob 请求建立 TLS 连接，发送<strong>协议版本、加密套件、</strong>一个随机数 <strong>client random</strong> 以及支持的压缩算法给 Alice；</li>
+<li>Alice 第一次握手：Alice 根据 Bob 提供的加密套件和自己支持的情况，选择其中的一种加密套件，选定协议版本，加上<strong>第二个随机数 server random</strong>，和<strong>数字证书（其中有公钥）</strong>，发送给 Bob；</li>
+<li>Bob 第二次握手：Bob 确认这个<strong>数字证书是有效的</strong>，并且再生成第三个随机数-<strong>预秘钥</strong>，即PreMaster key（premastersecret）。将这个PreMaster key用服务器发送给它的数字证书中的<strong>公钥进行加密</strong>发送给服务器；以及放一个<strong>ChangeCipherSpec消息即编码改变</strong>的消息，还有<u>整个前面所有消息的hash值</u>。客户端使用前面的两个随机数以及刚刚新生成的新随机数，使用与服务器确定的加密算法，生成会话秘钥Session key。</li>
+</ul>
+<p>这里，没有发送 ECDHE 算法交换中的消息 <strong>Server Key Exchange</strong>。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-ba6918091113c294b1ae0a94500e1d24_1440w.webp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>Alice 第二次握手：Alice 收到 Bob 的回复，利用自己的<strong>私钥进行解密</strong>，获得这个随机数，然后通过将前面这<strong>三个随机数</strong>以及他们协商的加密方式，计算生成一个会话密钥 session key（session secret）。服务端也会使用 Session key 加密一段 Finish 消息发送给客户端，以验证之前通过握手建立起来的加解密通道是否成功。</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/421446218">https://zhuanlan.zhihu.com/p/421446218</a></p>
+<p><a target="_blank" rel="noopener" href="https://tls12.xargs.org/">https://tls12.xargs.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wusanga/p/17383505.html">https://www.cnblogs.com/wusanga/p/17383505.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/others/" class="category-chain-item">others</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>aboutHTTPS</div>
+      <div>https://jiashi19.github.io/2023/11/16/HTTPS协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>JiAshi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/16/SQL%E6%B3%A8%E5%85%A5/" title="SQL-injection">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SQL-injection</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/16/xss/" title="XSS">
+                        <span class="hidden-mobile">XSS</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

