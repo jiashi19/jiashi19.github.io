@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Java泛型</title>
+    <link href="/2024/07/25/Java%E6%B3%9B%E5%9E%8B/"/>
+    <url>/2024/07/25/Java%E6%B3%9B%E5%9E%8B/</url>
+    
+    <content type="html"><![CDATA[<span id="more"></span><h1 id="Java泛型"><a href="#Java泛型" class="headerlink" title="Java泛型"></a>Java泛型</h1><p>例子：</p><p><code>Class&lt;T&gt;</code>：泛型类。即<code>ArrayList&lt;T&gt;</code>，就是泛型类</p><p><strong>T</strong>（Type）: java类</p><p><strong>?</strong> :  泛型通配符</p><p>碰到过的与java反射结合的运用：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">clz</span> <span class="hljs-operator">=</span> ((Class&lt;T&gt;) ((ParameterizedType) getClass().getGenericSuperclass())).getActualTypeArguments()[<span class="hljs-number">0</span>];<br></code></pre></td></tr></table></figure><p>**getGenericSuperclass()**：返回表示由此类表示的实体（类、接口、基元类型或void）的直接超类的<code>Type</code>。<br>如果超类是泛型类，则返回<code>ParameterizedType</code>。</p><p>**getActualTypeArguments()**：返回表示此类型的实际类型参数的Type对象的数组。</p><p>代码例子：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//BaseTest</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BaseTest</span>&lt;T, I&gt;&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-comment">//ResultTest</span><br><span class="hljs-keyword">import</span> java.lang.reflect.ParameterizedType;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ResultTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BaseTest</span>&lt;String,Integer&gt;&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        System.out.println(((ParameterizedType)<span class="hljs-keyword">new</span> <span class="hljs-title class_">ResultTest</span>().getClass().getGenericSuperclass()).getActualTypeArguments()[<span class="hljs-number">0</span>]);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//输出</span><br><span class="hljs-comment">//class java.lang.String</span><br><br></code></pre></td></tr></table></figure><h2 id="运用场景"><a href="#运用场景" class="headerlink" title="运用场景"></a>运用场景</h2><p><strong>泛型DAO（数据访问对象）模式</strong></p><p>在持久层（如使用JPA或Hibernate）中，泛型DAO可以用来操作各种实体类，但在运行时需要知道实际的实体类类型以便执行查询操作。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>java</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Redis</title>
     <link href="/2024/07/22/Redis/"/>
     <url>/2024/07/22/Redis/</url>
@@ -110,9 +129,9 @@
     
     <categories>
       
-      <category>秋招</category>
-      
       <category>java</category>
+      
+      <category>秋招</category>
       
     </categories>
     
@@ -321,9 +340,9 @@
     
     <categories>
       
-      <category>ctf-web</category>
-      
       <category>渗透</category>
+      
+      <category>ctf-web</category>
       
     </categories>
     
@@ -342,9 +361,9 @@
     
     <categories>
       
-      <category>ctf-web</category>
-      
       <category>渗透</category>
+      
+      <category>ctf-web</category>
       
     </categories>
     
@@ -420,9 +439,9 @@
     
     <categories>
       
-      <category>ctf-web</category>
-      
       <category>渗透</category>
+      
+      <category>ctf-web</category>
       
     </categories>
     
@@ -441,9 +460,9 @@
     
     <categories>
       
-      <category>ctf-web</category>
-      
       <category>渗透</category>
+      
+      <category>ctf-web</category>
       
     </categories>
     
