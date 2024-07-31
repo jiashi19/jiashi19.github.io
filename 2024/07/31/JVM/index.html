@@ -16,23 +16,27 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="password is required.">
+    <meta name="description" content="JVMJVM背景 编译器负责把Java源代码编译成字节码，JVM负责把字节码转换成机器码。转换的时候，可以做一些压缩或者优化（JIT），提高程序运行效率。 JIT: just-in-time:即时编译器。 如项目遇到内存泄露、CPU飙升的问题，需要通过 JVM 的性能监控进行定位和解决。 目前最常见最广泛：HotSpot VM—— 热点代码探测 和 准确式内存管理。  JVM结构 类加载器（Cl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis">
-<meta property="og:url" content="https://jiashi19.github.io/2024/07/22/Redis/index.html">
+<meta property="og:title" content="JVM">
+<meta property="og:url" content="https://jiashi19.github.io/2024/07/31/JVM/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="password is required.">
+<meta property="og:description" content="JVMJVM背景 编译器负责把Java源代码编译成字节码，JVM负责把字节码转换成机器码。转换的时候，可以做一些压缩或者优化（JIT），提高程序运行效率。 JIT: just-in-time:即时编译器。 如项目遇到内存泄露、CPU飙升的问题，需要通过 JVM 的性能监控进行定位和解决。 目前最常见最广泛：HotSpot VM—— 热点代码探测 和 准确式内存管理。  JVM结构 类加载器（Cl">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-07-22T12:56:40.000Z">
-<meta property="article:modified_time" content="2024-07-30T10:04:23.829Z">
+<meta property="og:image" content="https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/overview/seven-06.png">
+<meta property="og:image" content="https://cdn.tobebetterjavaer.com/stutymore/what-is-jvm-20231030185742.png">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/29/16eb7c5ca9064ab4~tplv-t2oaga2asx-jj-mark:3024:0:0:0:q75.png">
+<meta property="article:published_time" content="2024-07-31T09:48:01.000Z">
+<meta property="article:modified_time" content="2024-07-31T09:49:53.465Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/overview/seven-06.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Redis - Blog from jiAshi19</title>
+  <title>JVM - Blog from jiAshi19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +202,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Redis"></span>
+            <span id="subtitle" data-typed-text="JVM"></span>
           
         </div>
 
@@ -209,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-22 20:56" pubdate>
-          2024年7月22日 晚上
+        <time datetime="2024-07-31 17:48" pubdate>
+          2024年7月31日 下午
         </time>
       </span>
     
@@ -221,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          837 字
+          624 字
         
       </span>
     
@@ -232,7 +236,7 @@
         
         
         
-          7 分钟
+          6 分钟
         
       </span>
     
@@ -269,25 +273,47 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Redis</h1>
+            <h1 id="seo-header">JVM</h1>
             
             
-              
-              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="wrong password." data-whm="Oh, these decrypted content cannot be verified, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="61f709d3ec243acfa85767a6c1a46607cd39ae262226267b02b82da0490684d1">df6f987593e69ea373e1cbbe8b656fef4655d9a5d7852e61d026d91a27e55a44e8da7ca897c4f407fcb9dd1a7aa858f9e13f401da8734c3d1401c381686d1e5aaac327d27eb43d794edb405c45c15136561aa3b4b2be534045a947e384080d145832deda57236786bdd65396a048c90edfc4aecc12c789d36b54bda7fdeb8aa8f8e4aa9b3e5c695739a536012a8f80b937b242f10a76824e66b881ceb985448663f24354e91aea97a4704199de56389525e00d0984061057e578bfbaae87913f6878c093e46efd384b9987d873e33506fdf109c8b4164697a7a23fb30a17111f7381ab4d29d4119973c8356e34bd148191e16eb9d52c30e4e9bdfd163fffebd40606be8ddd788774392df962010b5b808146dd0be6e71c2ef7ebf49342aa3c9d7bbb9b6e0fedc96f5be5bbd24637301adb3227108bd78acca6d861b0a3a878c10b4ad90f117f6ddc63d5b1d7fe2645374d3ea2b7507996fcbfefe71a3cf11a024beda8002aaf6a05b8323f2d1452c546f33d4655c4ca0d4da7696f3e48204f0abbac328269d20fd77dd409d8716bc4f78c34563c9e482406fad475873170a0a60340ba5cf00e8bea534635eba9e6374bd01051908f948bbf2fb53ab63dd5feea04b2eab04458e5f8fa148fd28dd616969f5641c9fb69434bf6d43dd2903e6e2a2e58c7854091e88c234b6fe5bb35e6e1b1bad3095b867257809abc2ab7d05ed21ae7db7b1eee804357e691cf423a25eecef7cd914f8a3937044667c230d7278263589091ac6d5b95834882df5e0f78803db7867d739b067714bfa736aa3f81f73f38b1f7a8ecbfae89e6cccc1f4d04fb968d574e81087c05970a353ab47057eee1979092008cb417f49ed727d103fce3f67ea98d2344cf4d5e4a01434162dfd4d8a561f3f49533b4ea250b253fb316e246e1cb10e82d3989b6c667048fde0611a455fd6abb4c9c0d5e1db98efac34240f06e6ff7dc8630b7e78b93ca2de8cfa7a97d11abf65cd5d42c5671093f999bdc0927771bf3df40a5d95acee194c503ee297cd127167722523801bd42e3eb082d41922133eace9acba206ab11b40c9ef9234e9b81608762a8b2b0a0fd3348232894e7e9fa0eb2cc1c53468d61e3447f73f7cd8c5b164db5a915948657078225fd060bc21e2bde8cb7d5777b16c9c760a46d9b00f58102cbb2bcf3a55013a9139a6dddf92b8c5503ddc84470fae9551af7d708f9c75f54b6dc3072937dec29bef0dc18491237467cbef500a69582bf60d0e65cf8cc04a2e9a4d85fbc3556e32f48ed2dd708de4826d02115bd82f4ca8be5cbf4399d9b2b84ba0589749e5a2e7feec25ce0e0d5f5ce498dbd09412fe5a97b68ac197b1daf57dde796ff21dc82fafeea00367a6bd30152801efecda1f0b20519ccf2846e22632f23258f6e50c0621ac46080ee7f78e4f57ae367f7ae7d29be5549894cbdac29e21b1838dd6d3af5253b2a5bc1769ccaad280c7113b466a34e40bd623aa23db7df4ddca42b2e9f7fe2be2dc72cce7a439015b2099fa90216b6c0eb22818341ee0bfa21a2a6646ca46a49ac2818922a40fd4a1fbed6769c5b617fa198c88c95700c35678ec125ee41c9194503b3d2ff5d470ff04f1b05c0e03a52ee3f929b2d42689666d02568801a5aa4c4bb35463d06a4567219e4ed3a55974d18db728f3772645422b7dcebef27d2177ab0b1475afa6aa9140cab91fbeecf306bcbb9a37202f51a3a9d9c3f6321eae95ec4a59c34642b9dcc6039e402921f2b1f1d897787c32fd4448c790553967289b056837dcc2bc08569071e6e0aa5494b6427d90f85d14848c767293ce758c78a0a64f66f1efb6e0e2cd1cd5e6694122a3837de16d6452a73def056740dcc066192478ee391651ca76772659682ae89059efba3a85c12c21aafe49d47c25baba93b3154e648fe43eef63379b00aaea6f44dade3f2adbcf6946971c2f3be9eed13f501cdb8ea1eeac4ea694ad029f9507f9f491692883f19341760bff0af3d9f133d659ad002e5edb6e96bb1885263b2dc8315c1661d27b8882b0ca67ec5ae99c82e96530896ea35c9c826bb94243a00f5f9363e5276ba539f0a5d7701472d125b3cd980f03952c617f1af19e7e5599cf30b9909fdf1328db99fd8e3fe50ed1d5c716ed52339dd8a5b4f79a77b4aa7212b95d61a9f476143d99b23c5f247da810d53353130b1bab370c3109fa6487cea3fde3ff7735162a18f65c618a69fa79790bd76d1070b76711ca93a8e55013a040bef42efcb533e4408ee84997ef21454cea702d1fd6c5ff05acb6ed804b14299766ef6446d0d16b36bf96a1602f46c391ab9275cc21349a3e6a868ca8f15ec89ee5d266c738c26f796cb173672fc7b394a72a833b8ac45f17184ee00d4b2c753eb08883fc67757c9b4a88be96f9ec52a6b913a6facbdaf30156b981669214c1af48d409a2c2eeb357ceadb543857df7a84e7ac2635cdb720de406f36527dc99159dc46a7781d15108be4d1cdb50ca365e4e40318183718a2a5e1aab6413deca65c1732009ddbf3750e2c569353c8335528635b7f87d408df151926dfb554f145c377eb28bb467d983a905b981b80ba5c4338727991bcce036cfd7361a8ed1e6aba4eb419aaed5a8fae12e8b6ca946a75d7be0dbe51aa318efc9a4350c4257745b13c896bb4a5cee7432838ef7098bef6ecb0dfb97d012bca2bcdcfc4e5906e30b12fb83259cb41b6104626bfb45cba10ccecf3ac89002e3ce815c2a182e9f7945d70c8ac022179912e4d80956c63e9c0970feaf254e8dbfe2db64a37934e3f02be918611cab947e53a05647b62632020390088ff0aee6899c4a9a53aa1af827a790542f76557bfae11271d6b470f58f7bd4694d2374fd9c0cf8bbfeed595eba25cb06956c7313adaeef149bcfe195ac2db9d2b7a9fa94fddd514286295d041dfd6777ad7462f0b83aaa82e4c7b4fb2cd54c8461129e8d165bc625bd3bf8e97980f7dae85a9756042ee16f189eaafd2e46bc7c504d0f136c09d9709b8aa2462053f06db3e05dc8bf6778f7503d7d96d173aff4f2b4b203a9e1670edc15925abaaf821c6c21cb020f129e940ba024437684d5af4e34171f52496b3983a1018979c5e0930debf06cb612cb72fc7d00089af0d4ab4264e321b1b682ec3275b2f65619fb8010af67ee7daca6fd82fef04beec85edd7350472f01b207fee6405e40c0866a19d6d70483792a7e2a7a703c2f4928d288b24c18f81a1af72fcda7be8da616def2f525209d46fd3dbb9fc19368c24c8c1eccdfe351a9cd0441ad854adc36546a820f18db1a79109aeb7f476610036d5e49433f97ce579e98ab0d5af875385a447f4fd143acc840efe07f5202072547ae4c23aa21980ab65fbadf7f8d08b372579f886b382ed4fe21334b3540f3f2d48d2eefab1aeaba1caa446e1e213a8880271a774a1a5d97750676f92b7f2620f1bb56b06cc37e87b35741b5af084d029157abc2ae8e1a938708cf910d171af60925743ab00e26d26a936b0f62e7c058d3870916a740c522e9ef481f195e8eded3b5dae9eaebb93c55824290aa27b13bad37b2d55163e9475e5ed16f5c8f26b527b1900a5016c320f39bb69bb4ca1e1ce05f3bb169af5ece2a3f2811f6fc8c98903509478f29c04cf9e028532a1a8652e5fda470881b197b24fa96e7710c0c8d488771174c6c49ffbcc736dd1e2311a3e869e8fdf0d4d3b4eb7cf183c4dedf5dffea04f6f912c0dae71daaa55cbdcad5a71c7f19eadde02419d58a0ee748f3ff6ab3fb67e58f8a674dec91ca7c3f8a24f5d3b9e0a393da4dabdea6de3085845c426576605575a8e50358b688fb29aed577cdd84c28c5918a3dbad34edc276842caa286f96bf0ead289f794ebc88c96e1ed5cba50deb5809275e0d7ca28e9e036750e97c625beea3b4b1f5f1ebbe5aefdfca1448984cf08a6da91d15a961441ed80ed070ad40f45669a5c3ca59dcdf4d41e9612ac475b250c0afba938648903a28c17a5f8e0e9afeb35234bde2638683d2028cf3251d34508524c8677023e5b7154519d3a453e8baed8fa350435a81cf32c8fa3e62f5ef2793a9902fe5e8318298be81a647192c4d64da67432409cc1ab3e8c5b6e86afd4542b637c1c0221f8c8cae345508e610c474f6285938b8d1de73dfa8f6d0e5090de00410b698a67ad6583100f8dd9fd935a931297de446280e301cd9abd2a8828a2ac810899fb571d6c54a533e50b4baf2167fe6b26dc20495efddacc7d04f2b7586da3bbafd39706abfb4f81188f85694fc31557f81d453f07385c8d8786715ac3f6205ef809cf0c4ed0a9831b6b91a5bbd9920d2bc87fa372706ce4a9851713533f169b9d5fb8ce2ebb63f32ce325c50647f44abb9cbca851c5309357905b6b23e6d68c66f8ca759232709da3d930c5ff6c869472672e43be4e53f5872ceea0ca1557099228fbd47a9946676020b718a281406be50276949de02d68bc6c2aed7b82a21b647900388510bf59e556e639ff9ac85d38683ffe722705f85f43ddaf53afba942934dea907d43917cb7f3b9cd4f30c6d239ffeeb113e43aaeaef814bb6d37071beb96db7e6a45379f966b383f6da4eb25db44ead9c7a5dd8fdcb4a6aeac927c69762b198f1fefc30fea8bcfcc7fb064b68ece5094b18fada7e9bfbf3ffb5bfa7f15eba6164476d1ea45b197cb9500361d15a51f7d85979aaee683b8fb516f44cb1e8a5230284cab6683e9a292e18bf1626b453e14ba848e7c3de7d5159b96895cee631042e8c913072b1aca5bb11f0e552196ddef6d987d236bc7e2d4a39a864b489f9bfa91ac0da49e85101a10ecdd266dc46890e0cd4f2a37c3e3270cb471d3dd3b97834839e8ff982b2037cfa4aca6f97e942b6df5cc92d4ad919e42100d956d8e1889e0732aa77970d78a8fd4b47b95ebe208427cf07067be548d25bc82332a2e21b923a9a7e1d139424ebbf7822d0a10144c1d1a58f7cc40c4d337a512f66d8efb7efa9b454109ed32e66c5ef0c7cc2c99d4d65623012e0a95ba8a7049a123d0c7fa50285dcbcaf2e7d71721168a5723ec2905ce3f4453bfa762ad3e6246665a7822d14b02dadd257f1f699c094f41933d8ac452ef5b12a059f99e5a728441d3dbea0dd8e0ee0ddbdd29835a60897aa80cad068d9c392f2ac77afade2e0b6364025ce9ce967c707d7e36fdbb2d5c3f010cc6de060d46e3ff9bc6aca50d04b14c7832370dfc6994da8732e910f2051c780691c83629a08f334fcef31d690ec4a0d0e25560596cc50c0bd1890dc6615b60d59e7eb9c63b06f2d35f1fdf3ca1c8a982433ef4efffe54a4a7bfbac269dd7b6192e19e57308526b671abca8fc70354429dad22bc8c7b5c74cae59fe15e8eac1eda17ea0ce79c65f764b68e29e1b255141bfccf165cd89e16bf16bc9dbb895762ccf89996f9bc29e4d87d37b61a45f63c5a1ff7428462155a0d2f0b42cf271fc4c9951eee94a5609722c9b5862a99f3cc6e230a1098144e785210650560be0349ba9ba71adeebc6af676803d69fa63a203343c95521f68baa02b72eae4d8a252ca9650ec6046207e3b69ffa52967ee740498c31a7615196e1eb66b8b06d23c935dfc31fc11e8d42a3062a4f47270190450eaf74c8f78566130ca9b31a570bbdcbbd12ffd5eea766fa8c979803594004a504052cad257eed75711db255928439904b247339ce6c7b8d3af6195485e8f25ebd29185ca966dbf2901a7eb2b454d66a9a6829b9f7e9b826376e6da920747334146e83cc174f2d67de71e08fe32ea697f92eadeb5d5f72770855fef20af6e08b44c5ac892dab9a1e02e4bf4503ef442ee8a7baf7d0cb62d2c95b9dcfbf910acb3fc24da88698de8f3b9621bc789899c44ab875ae023ae0f094f19ac8976e77bf9c2ccd4988fc520b6d8e5523df5acf8747afd0b840d361cb39cc04b7269f5cc4369f4a7495448dd30a6297baf777402e70406e2a2c12a83453e39e491a7dd5a39d4e56d62a9174b400343fe2026ff17d3c905ecc3d05751be06916d5bc562ccfb377068f65c1c282486c6a9eef5d7fd3e383258a54ac527b5504533fe952c667bc0316d8e3c8265a18397dc499e166e4316f70bbf1be944f398aedc47a8aeec94787e9e4cfff4ab040bb2a96af3c0d407ccfee454b7e862c93ddbc3d4263206e529954adea46921bef764d9da9c3cbaf4774a00b3a3a5811942e189a9b1a67bb845a74579f6029ee54df2e88946a391161ca995310db0d02238ea2b5b04733ed2c2cb0e79ca9f642133cea613b32da78a6171d0e2288625b90f63b03f34b8e3fc1504b8921685731aaec5db25b4044ea321eaff435b47ba2def6470c70aec839c71cea9e4c9cb8fffd10487f45f84fb6ff45839cc4cfbef92aea0e024e6a361a27f8f4cb217163ff5e4c36484ee4f0f325cb0707970c2fe4818ae10169dca2c3ff42c5d7f648c0f857557c122a580ca6cce796b4c472663fd44d5020f5b51b6882b400c36fb51d1c0fb7b0f898c553c7b6ea5fe5a5bc9873832bfe501aaab3581c0ca6ec1ce643a702104d4b59cd837f01a817173c31cc88f2ed842d1d9d8f767b11ca3f79828cedf7a5d435aa7758b4af0525e6f340aa522d4638a6535c417179a980f6c82bdbfe7150fcdb73704e9387577470fa16cecb378cff359d38bbd0f3cbca3a8e8282385881716660058d1755c3dd21cf7fd9a5ad1072510543e89c9cdf9d212f66bc1f10d53887aea4bba8e7bf334a839a4d9a4ef78689770d281b0a0961c8fffe15506f4cd944c4a8789aace7ea72e8170cdc0ac9270945a19fd0a8a01149914bf1893fe163a4461ca881f12e7a43184a6347bc41d2dcfaf6aaf2bb0830ca3f5ef0b4baf4c844f1fa96776882ef1e882555072ff7c4013bb69e209e11ad05c6bca01773cd700046bfb6203e9691690695f60154633109023d62439524aa01b233847dc3695dc068dc0c734dd4d2c490f651dc30763c3a95389bcea20ceaed4a01cdd3e9797da62d9b975d3f5872985cefa90a6aed000e41291dd3d831f8697c2f110789ca39ebcfa808d889e74b7d97d4436f5da2a190cd5423c93d0d31aa1156715990c7a1bb9e13fabdfe7520a5351fec9d081036759e03d8b1a0ae3e472a422fa9c2da9b32ce62731ac7f48d6208cf315f5d90a9ac416b9f24d5fbb41a78d39035ef3640efaa92ff508d68d415c815f774f8e71aafb44076a0a3114</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
-              
+              <div class="markdown-body">
+                
+                <span id="more"></span>
+<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="JVM背景"><a href="#JVM背景" class="headerlink" title="JVM背景"></a>JVM背景</h2><ul>
+<li>编译器负责把Java源代码编译成<strong>字节码</strong>，JVM负责把字节码转换成机器码。转换的时候，可以做一些压缩或者优化（<strong>JIT</strong>），提高程序运行效率。</li>
+<li>JIT: just-in-time:即时编译器。</li>
+<li>如项目遇到内存泄露、CPU飙升的问题，需要通过 JVM 的性能监控进行定位和解决。</li>
+<li>目前最常见最广泛：HotSpot VM—— 热点代码探测 和 准确式内存管理。</li>
+</ul>
+<h2 id="JVM结构"><a href="#JVM结构" class="headerlink" title="JVM结构"></a>JVM结构</h2><ol>
+<li><strong>类加载器</strong>（Class Loader） <strong>加载-&gt;连接-&gt;实例化</strong></li>
+<li><strong>运行时数据区</strong>(类比国库)       <a target="_blank" rel="noopener" href="https://javabetter.cn/jvm/what-is-jvm.html#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA">结构</a>       </li>
+<li><strong>执行引擎</strong><br>解释器， JIT， 垃圾回收器<br><img src="https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/overview/seven-06.png" srcset="/img/loading.gif" lazyload></li>
+</ol>
+<p><img src="https://cdn.tobebetterjavaer.com/stutymore/what-is-jvm-20231030185742.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="java代码运行"><a href="#java代码运行" class="headerlink" title="java代码运行"></a>java代码运行</h2><p>编译期-&gt;运行时<br>编译期：编译成字节码文件<br>运行时：类加载器把bytecode加载到运行时数据区，然后执行引擎执行：</p>
+<ul>
+<li>解释执行：逐条</li>
+<li>JIT即时编译，<strong>运行时</strong>将热点代码优化并缓存，下次直接用缓存起来的的<strong>机器码</strong></li>
+</ul>
+<h2 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h2><p><strong>运行时数据区哪些部分是线程私有，哪些是共享数据区</strong>：<br>运行数据区有什么：</p>
+<ul>
+<li>虚拟机内存：堆，栈（虚拟机栈，本地方法栈），PC(程序计数器)等</li>
+<li>本地内存：元空间等</li>
+</ul>
+<p>[方法区-&gt;(jdk1.8)元空间]</p>
+<p>线程私有：程序计数器、虚拟机栈、本地方法栈；<br>共享：虚拟机内存中堆的字符串常量池，本地内存中的元空间</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/29/16eb7c5ca9064ab4~tplv-t2oaga2asx-jj-mark:3024:0:0:0:q75.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>堆区</strong><br>堆中存对象，栈中存基本数据类型和堆中对象的引用<br><strong>元空间区（方法区）</strong><br>存放已被加载的类信息、常量、静态变量、即编译器编译后的代码等。</p>
+<h2 id="垃圾收集机制"><a href="#垃圾收集机制" class="headerlink" title="垃圾收集机制"></a>垃圾收集机制</h2><p>垃圾回收问题主要发生在 Java 堆上。主要内容：死亡的对象。</p>
+<ol>
+<li>引用计数法<br>在对象中添加一个引用计数器，对象每次被引用时，该计数器加一；当引用失效时，计数器的值减一；只要计数器的值为零，则代表对应的对象不可能再被使用。该方法的缺点在于无法避免相互引用的问题：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">objA.instance = objB<br>objB.instance = <span class="hljs-type">objA</span>    <br><span class="hljs-variable">objA</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>objB = <span class="hljs-literal">null</span>;<br>System.gc();<br></code></pre></td></tr></table></figure>
+<p>如上所示，此时两个对象已经不能再被访问，但其互相持有对对方的引用，如果采用引用计数法，则两个对象都无法被回收。<br>2. 可达性分析<br>主流的虚拟机采用的可达性分析.</p>
 
-              
+                
+              </div>
             
             <hr/>
             <div>
@@ -303,17 +329,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/others/" class="category-chain-item">others</a>
-  
-  
-
-      </span>
-    
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%A7%8B%E6%8B%9B/" class="category-chain-item">秋招</a>
+  <a href="/categories/java/" class="category-chain-item">java</a>
   
   
 
@@ -333,8 +349,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Redis</div>
-      <div>https://jiashi19.github.io/2024/07/22/Redis/</div>
+      <div>JVM</div>
+      <div>https://jiashi19.github.io/2024/07/31/JVM/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +362,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月22日</div>
+          <div>2024年7月31日</div>
         </div>
       
       
@@ -378,18 +394,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/25/Java%E6%B3%9B%E5%9E%8B/" title="Java泛型,Java IO">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java泛型,Java IO</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/21/linux%E5%9F%BA%E7%A1%80/" title="linux基础">
-                        <span class="hidden-mobile">linux基础</span>
+                      <a href="/2024/07/25/elasticSearch/" title="elasticSearch">
+                        <span class="hidden-mobile">elasticSearch</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -569,23 +579,6 @@
   
 
 
-
-
-  
-  <script defer>
-    if (document.getElementById('hbePass') || document.querySelector('hbe-prefix')) {
-      Fluid.utils.waitElementLoaded('hbe-prefix', function() {
-        var hbePrefix = document.querySelector('hbe-prefix');
-        hbePrefix.parentElement.classList.add('markdown-body');
-        Fluid.utils.retry(function() {
-          if (Fluid.boot && Fluid.boot.refresh) {
-            Fluid.boot.refresh();
-            return true;
-          }
-        }, 100, 10);
-      })
-    }
-  </script>
 
 
   
