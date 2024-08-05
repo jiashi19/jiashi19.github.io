@@ -16,27 +16,26 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="JVMJVM背景 编译器负责把Java源代码编译成字节码，JVM负责把字节码转换成机器码。转换的时候，可以做一些压缩或者优化（JIT），提高程序运行效率。 JIT: just-in-time:即时编译器。 如项目遇到内存泄露、CPU飙升的问题，需要通过 JVM 的性能监控进行定位和解决。 目前最常见最广泛：HotSpot VM—— 热点代码探测 和 准确式内存管理。  JVM结构 类加载器（Cl">
+    <meta name="description" content="SSRF漏洞漏洞介绍SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM">
-<meta property="og:url" content="https://jiashi19.github.io/2024/07/31/JVM/index.html">
+<meta property="og:title" content="SSRF">
+<meta property="og:url" content="https://jiashi19.github.io/2024/02/04/ssrf/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="JVMJVM背景 编译器负责把Java源代码编译成字节码，JVM负责把字节码转换成机器码。转换的时候，可以做一些压缩或者优化（JIT），提高程序运行效率。 JIT: just-in-time:即时编译器。 如项目遇到内存泄露、CPU飙升的问题，需要通过 JVM 的性能监控进行定位和解决。 目前最常见最广泛：HotSpot VM—— 热点代码探测 和 准确式内存管理。  JVM结构 类加载器（Cl">
+<meta property="og:description" content="SSRF漏洞漏洞介绍SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/overview/seven-06.png">
-<meta property="og:image" content="https://cdn.tobebetterjavaer.com/stutymore/what-is-jvm-20231030185742.png">
-<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/29/16eb7c5ca9064ab4~tplv-t2oaga2asx-jj-mark:3024:0:0:0:q75.png">
-<meta property="article:published_time" content="2024-07-31T09:48:01.000Z">
-<meta property="article:modified_time" content="2024-07-31T09:49:53.465Z">
+<meta property="og:image" content="https://jiashi19.github.io/img/1937992-20200527101703916-1706063347.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/20/sWouUSLvE9qCxhy.png">
+<meta property="article:published_time" content="2024-02-04T01:23:07.000Z">
+<meta property="article:modified_time" content="2024-08-03T07:40:02.350Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/overview/seven-06.png">
+<meta name="twitter:image" content="https://jiashi19.github.io/img/1937992-20200527101703916-1706063347.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>JVM - Blog from jiAshi19</title>
+  <title>SSRF - Blog from jiAshi19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -202,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="JVM"></span>
+            <span id="subtitle" data-typed-text="SSRF"></span>
           
         </div>
 
@@ -213,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-31 17:48" pubdate>
-          2024年7月31日 下午
+        <time datetime="2024-02-04 09:23" pubdate>
+          2024年2月4日 上午
         </time>
       </span>
     
@@ -225,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          624 字
+          1.4k 字
         
       </span>
     
@@ -236,7 +235,7 @@
         
         
         
-          6 分钟
+          12 分钟
         
       </span>
     
@@ -273,44 +272,103 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">JVM</h1>
+            <h1 id="seo-header">SSRF</h1>
             
             
               <div class="markdown-body">
                 
-                <span id="more"></span>
-<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="JVM背景"><a href="#JVM背景" class="headerlink" title="JVM背景"></a>JVM背景</h2><ul>
-<li>编译器负责把Java源代码编译成<strong>字节码</strong>，JVM负责把字节码转换成机器码。转换的时候，可以做一些压缩或者优化（<strong>JIT</strong>），提高程序运行效率。</li>
-<li>JIT: just-in-time:即时编译器。</li>
-<li>如项目遇到内存泄露、CPU飙升的问题，需要通过 JVM 的性能监控进行定位和解决。</li>
-<li>目前最常见最广泛：HotSpot VM—— 热点代码探测 和 准确式内存管理。</li>
-</ul>
-<h2 id="JVM结构"><a href="#JVM结构" class="headerlink" title="JVM结构"></a>JVM结构</h2><ol>
-<li><strong>类加载器</strong>（Class Loader） <strong>加载-&gt;连接-&gt;实例化</strong></li>
-<li><strong>运行时数据区</strong>(类比国库)       <a target="_blank" rel="noopener" href="https://javabetter.cn/jvm/what-is-jvm.html#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA">结构</a>       </li>
-<li><strong>执行引擎</strong><br>解释器， JIT， 垃圾回收器<br><img src="https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/overview/seven-06.png" srcset="/img/loading.gif" lazyload></li>
+                <h1 id="SSRF漏洞"><a href="#SSRF漏洞" class="headerlink" title="SSRF漏洞"></a>SSRF漏洞</h1><h2 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。</p>
+<span id="more"></span>
+
+<p>（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）</p>
+<p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。</p>
+<p>比如,黑客操作服务端从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。利用的是服务端的请求伪造。ssrf是利用存在缺陷的web应用作为代理攻击远程和本地的服务器。</p>
+<h3 id="可能场景-漏洞点挖掘"><a href="#可能场景-漏洞点挖掘" class="headerlink" title="可能场景-漏洞点挖掘"></a>可能场景-漏洞点挖掘</h3><ol>
+<li><p>分享：通过URL地址分享网页内容</p>
+<p>获取超链接的标题等内容进行显示</p>
+</li>
+<li><p>转码服务:通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览:由于手机屏幕大小的关系，直接浏览网页内容的时候会造成许多不便，因此有些公司提供了转码功能，把网页内容通过相关手段转为适合手机屏幕浏览的样式。例如百度、腾讯、搜狗等公司都有提供在线转码服务。</p>
+</li>
+<li><p>在线翻译:通过URL地址翻译对应文本的内容。提供此功能的国内公司有百度、有道等。</p>
+</li>
+<li><p>图片、文章收藏功能:此处的图片、文章收藏中的文章收藏就类似于分享功能中获取URL地址中title以及文本的内容作为显示，目的还是为了更好的用户体验，而图片收藏就类似于图片加载。</p>
+</li>
+<li><p>图片加载与下载:通过URL地址加载或下载图片。</p>
+</li>
+<li><p>从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</p>
+</li>
 </ol>
-<p><img src="https://cdn.tobebetterjavaer.com/stutymore/what-is-jvm-20231030185742.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="java代码运行"><a href="#java代码运行" class="headerlink" title="java代码运行"></a>java代码运行</h2><p>编译期-&gt;运行时<br>编译期：编译成字节码文件<br>运行时：类加载器把bytecode加载到运行时数据区，然后执行引擎执行：</p>
-<ul>
-<li>解释执行：逐条</li>
-<li>JIT即时编译，<strong>运行时</strong>将热点代码优化并缓存，下次直接用缓存起来的的<strong>机器码</strong></li>
-</ul>
-<h2 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h2><p><strong>运行时数据区哪些部分是线程私有，哪些是共享数据区</strong>：<br>运行数据区有什么：</p>
-<ul>
-<li>虚拟机内存：堆，栈（虚拟机栈，本地方法栈），PC(程序计数器)等</li>
-<li>本地内存：元空间等</li>
-</ul>
-<p>[方法区-&gt;(jdk1.8)元空间]</p>
-<p>线程私有：程序计数器、虚拟机栈、本地方法栈；<br>共享：虚拟机内存中堆的字符串常量池，本地内存中的元空间</p>
-<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/29/16eb7c5ca9064ab4~tplv-t2oaga2asx-jj-mark:3024:0:0:0:q75.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>堆区</strong><br>堆中存对象，栈中存基本数据类型和堆中对象的引用<br><strong>元空间区（方法区）</strong><br>存放已被加载的类信息、常量、静态变量、即编译器编译后的代码等。</p>
-<h2 id="垃圾收集机制"><a href="#垃圾收集机制" class="headerlink" title="垃圾收集机制"></a>垃圾收集机制</h2><p>垃圾回收问题主要发生在 Java 堆上。主要内容：死亡的对象。</p>
+<p>简单来说：<strong>所有目标服务器会从自身发起请求的功能点，且我们可以控制地址的参数，都可能造成SSRF漏洞</strong>。</p>
+<h3 id="产生SSRF漏洞的函数"><a href="#产生SSRF漏洞的函数" class="headerlink" title="产生SSRF漏洞的函数"></a>产生SSRF漏洞的函数</h3><p>php中有例如以下函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">file_get_contents</span>()<br><span class="hljs-title function_ invoke__">fsockopen</span>()<br><span class="hljs-title function_ invoke__">curl_exec</span>()<br><span class="hljs-title function_ invoke__">fopen</span>()<br><span class="hljs-title function_ invoke__">readfile</span>()<br><br><span class="hljs-comment">//curl_exec() 默认不跟踪跳转</span><br><span class="hljs-comment">//file_get_contents支持php://input协议</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h3><p>file:&#x2F;&#x2F;&#x2F; 从文件系统中获取文件内容（访问本地文件系统），如，file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd<br>dict:&#x2F;&#x2F; dict协议一般常用来探测<strong>内网主机以及端口开放</strong>情况，既然能够探测端口，那么可以探测不同端口对应的服务的指纹信息<br>sftp:&#x2F;&#x2F; SSH文件传输协议或安全文件传输协议<br>ldap:&#x2F;&#x2F; 轻量级目录访问协议<br>tftp:&#x2F;&#x2F; 简单文件传输协议<br>gopher:&#x2F;&#x2F; 分布式文档传递服务，可使用gopherus生成payload</p>
+<p><img src="/../img/1937992-20200527101703916-1706063347.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>file</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">file:<span class="hljs-regexp">//</span><span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2024/01/20/sWouUSLvE9qCxhy.png" srcset="/img/loading.gif" lazyload alt="image-20240120202626265"></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">file:<span class="hljs-regexp">//</span><span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/i</span>ndex.php<br></code></pre></td></tr></table></figure>
+
+<p><strong>dict</strong></p>
+<p>1、探测内网主机</p>
+<p>2、探测端口的开放情况和指纹信息</p>
+<p>3、执行命令 dict:&#x2F;&#x2F;serverip:port&#x2F;命令:参数 （每次只能执行一条命令）</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dict:<span class="hljs-regexp">//</span><span class="hljs-number">172.18</span>.<span class="hljs-number">240.5</span>:<span class="hljs-number">80</span>/<br></code></pre></td></tr></table></figure>
+
+<p>dict协议直接攻击未授权 <strong>Redis</strong> 服务（即无密码，有密码的话无法实现，因为每次执行命令还需要先认证）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">dict://x.x.x.x:6379/&lt;Redis 命令&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>gopher</strong></p>
+<p>gopher支持发出get，post请求（万能协议）</p>
+<p>gopher协议在ssrf的利用中一般用来攻击redis，mysql，fastcgi，smtp等服务。</p>
+<p>gopher协议数据格式：</p>
+<p>gopher:&#x2F;&#x2F;ip:port&#x2F;_{TCP&#x2F;IP数据流}</p>
+<p>注意：</p>
+<p>gopher协议数据流中，url编码使用%0d%0a替换字符串中的回车换行<br>数据流末尾使用%0d%0a代表消息结束</p>
+<p>gopher协议是个tcp&#x2F;ip协议，通过gopher协议可以发送tcp stream，payload使用%+16进制编码，（原理比较简单，可以用tcpdump或者wireshark把stream一段段复制出来）</p>
+<h2 id="漏洞bypass"><a href="#漏洞bypass" class="headerlink" title="漏洞bypass"></a>漏洞bypass</h2><p>在通常情况下，对SSRF的防御措施是对URL特征参数进行检测和过滤、设置可访问URL白名单或使用户无法控制URL的参数，一但过滤的措施不够严密，就会存在多种Bypass方式。</p>
 <ol>
-<li>引用计数法<br>在对象中添加一个引用计数器，对象每次被引用时，该计数器加一；当引用失效时，计数器的值减一；只要计数器的值为零，则代表对应的对象不可能再被使用。该方法的缺点在于无法避免相互引用的问题：</li>
+<li><p>@　　　　　　　　　　<a target="_blank" rel="noopener" href="http://abc.com@127.0.0.1/">http://abc.com@127.0.0.1</a></p>
+</li>
+<li><p>添加端口号　　　　　　<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/">http://127.0.0.1:8080</a></p>
+</li>
+<li><p>短地址　　　　　　　　<a target="_blank" rel="noopener" href="https://0x9.me/cuGfD">https://0x9.me/cuGfD</a>      </p>
+</li>
+<li><p>可以指向任意ip的域名　 xip.io                     原理是DNS解析。xip.io可以指向任意域名，即127.0.0.1.xip.io，可解析为127.0.0.1</p>
+</li>
+<li><p>ip地址转换成进制来访问 192.168.0.1&#x3D;3232235521（十进制） </p>
+</li>
+<li><p>非HTTP协议</p>
+</li>
+<li><p>DNS Rebinding</p>
+</li>
+<li><p>本地回环地址的其他表现形式      </p>
+<p>localhost        </p>
+<p>http:&#x2F;&#x2F;[::]:80&#x2F;</p>
+<p>::1 &#x2F; http:&#x2F;&#x2F;[::1]   （ipv6的地址使用http访问需要加[]）</p>
+</li>
+<li><p>句号绕过                  127。0。0。1 &gt;&gt;&gt; 127.0.0.1</p>
+</li>
+<li><p>利用302跳转绕过</p>
+</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">objA.instance = objB<br>objB.instance = <span class="hljs-type">objA</span>    <br><span class="hljs-variable">objA</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>objB = <span class="hljs-literal">null</span>;<br>System.gc();<br></code></pre></td></tr></table></figure>
-<p>如上所示，此时两个对象已经不能再被访问，但其互相持有对对方的引用，如果采用引用计数法，则两个对象都无法被回收。<br>2. 可达性分析<br>主流的虚拟机采用的可达性分析.</p>
+<h2 id="SSRF防御"><a href="#SSRF防御" class="headerlink" title="SSRF防御"></a>SSRF防御</h2><ul>
+<li><p>禁止302跳转，或者每跳转一次都进行校验目的地址是否为内网地址或合法地址。</p>
+</li>
+<li><p>过滤返回信息，验证远程服务器对请求的返回结果，是否合法。</p>
+</li>
+<li><p>禁用高危协议，例如：gopher、dict、ftp、file等，只允许http&#x2F;https。</p>
+</li>
+<li><p>设置URL白名单或者限制内网IP。</p>
+</li>
+<li><p>限制请求的端口为http的常用端口，或者根据业务需要开放远程调用服务的端口。</p>
+</li>
+<li><p>对错误信息返回进行处理和统一设计，避免黑客通过错误信息判断端口对应的服务。</p>
+</li>
+</ul>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_61237064/article/details/123006424">用SSRF打穿内网_国光ssrf-CSDN博客</a></p>
 
                 
               </div>
@@ -329,7 +387,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/java/" class="category-chain-item">java</a>
+  <a href="/categories/%E6%B8%97%E9%80%8F/" class="category-chain-item">渗透</a>
   
   
 
@@ -349,8 +407,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>JVM</div>
-      <div>https://jiashi19.github.io/2024/07/31/JVM/</div>
+      <div>SSRF</div>
+      <div>https://jiashi19.github.io/2024/02/04/ssrf/</div>
     </div>
     <div class="license-meta">
       
@@ -362,7 +420,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月31日</div>
+          <div>2024年2月4日</div>
         </div>
       
       
@@ -394,12 +452,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/02/04/%E6%81%B6%E6%84%8Fwindows%E7%A8%8B%E5%BA%8F/" title="恶意windows程序">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">恶意windows程序</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/25/elasticSearch/" title="elasticSearch">
-                        <span class="hidden-mobile">elasticSearch</span>
+                      <a href="/2024/02/01/Environment-variable-attack/" title="Environment-variable-attack">
+                        <span class="hidden-mobile">Environment-variable-attack</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
