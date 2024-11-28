@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="JiAshi">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Spring Cloud 学习微服务与Cloud 版本[初识Spring Cloud与微服务 | MrBird](https:&#x2F;&#x2F;mrbird.cc&#x2F;Spring-Cloud and MicroService.html) 简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件. Eureka服务治理Spring Cloud Eureka服务治理 |">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务">
+<meta property="og:url" content="https://jiashi19.github.io/2024/11/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Blog from jiAshi19">
+<meta property="og:description" content="Spring Cloud 学习微服务与Cloud 版本[初识Spring Cloud与微服务 | MrBird](https:&#x2F;&#x2F;mrbird.cc&#x2F;Spring-Cloud and MicroService.html) 简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件. Eureka服务治理Spring Cloud Eureka服务治理 |">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiashi19.github.io/img/687474703a2f2f6e6f74652e796f7564616f2e636f6d2f7977732f6170692f706572736f6e616c2f66696c652f33363341343841303839344634334330394143433739433042443237383335443f6d6574686f643d646f776e6c6f61642673686172654b65793d61.png">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241107170832838.png">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241107173622272.png">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241107180326290.png">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241107194606889.png">
+<meta property="og:image" content="https://jiashi19.github.io/img/image-20241126151915802.png">
+<meta property="article:published_time" content="2024-11-28T13:42:31.000Z">
+<meta property="article:modified_time" content="2024-11-28T13:44:31.222Z">
+<meta property="article:author" content="JiAshi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiashi19.github.io/img/687474703a2f2f6e6f74652e796f7564616f2e636f6d2f7977732f6170692f706572736f6e616c2f66696c652f33363341343841303839344634334330394143433739433042443237383335443f6d6574686f643d646f776e6c6f61642673686172654b65793d61.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>微服务 - Blog from jiAshi19</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiashi19.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>jiashi&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="微服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-28 21:42" pubdate>
+          2024年11月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">微服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <span id="more"></span>
+<h1 id="Spring-Cloud-学习"><a href="#Spring-Cloud-学习" class="headerlink" title="Spring Cloud 学习"></a>Spring Cloud 学习</h1><h2 id="微服务与Cloud-版本"><a href="#微服务与Cloud-版本" class="headerlink" title="微服务与Cloud 版本"></a>微服务与Cloud 版本</h2><p>[初识Spring Cloud与微服务 | MrBird](<a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud">https://mrbird.cc/Spring-Cloud</a> and MicroService.html)</p>
+<p>简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件.</p>
+<h2 id="Eureka服务治理"><a href="#Eureka服务治理" class="headerlink" title="Eureka服务治理"></a>Eureka服务治理</h2><p><a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud-Eureka.html">Spring Cloud Eureka服务治理 | MrBird</a></p>
+<p>Eureka, 由netflix开发的一款开源服务治理框架。</p>
+<p><strong>Eureka Server</strong>：服务注册中心</p>
+<p><strong>Eureka Provider</strong>:  服务提供者</p>
+<p><img src="/../img/687474703a2f2f6e6f74652e796f7564616f2e636f6d2f7977732f6170692f706572736f6e616c2f66696c652f33363341343841303839344634334330394143433739433042443237383335443f6d6574686f643d646f776e6c6f61642673686172654b65793d61.png" srcset="/img/loading.gif" lazyload alt="eureka示意"></p>
+<p><strong>搭建服务注册中心</strong></p>
+<p>yml配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span><br>  <br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhost</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka/</span><br><br></code></pre></td></tr></table></figure>
+
+<p>版本变更：升级cloud的版本以适应更新版本的spring boot，eukera的包的名称在新版本中更名。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencyManagement</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-comment">&lt;!--        &lt;version&gt;Edgware.SR3&lt;/version&gt; --&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2021.0.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencyManagement</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br><span class="hljs-comment">&lt;!--        &lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt; --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>搭建服务提供者</strong></p>
+<p>版本变更同上。</p>
+<p>其中涉及到的变化：getLocalServiceInstance方法已经弃用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> DiscoveryClient client;<br><br><span class="hljs-meta">@GetMapping(&quot;/info&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">info</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-meta">@SuppressWarnings(&quot;deprecation&quot;)</span><br>    <span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> client.getLocalServiceInstance();<span class="hljs-comment">//该方法已经弃用</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;host：&quot;</span> + instance.getHost() + <span class="hljs-string">&quot;，service_id：&quot;</span> + instance.getServiceId();<br>    log.info(info);<br>    <span class="hljs-keyword">return</span> info;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>更新的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Qualifier(&quot;eurekaRegistration&quot;)</span><br><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> Registration registration;<br><br><span class="hljs-meta">@GetMapping(&quot;/info&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">info</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-meta">@SuppressWarnings(&quot;deprecation&quot;)</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;host：&quot;</span> + registration.getHost() + <span class="hljs-string">&quot;，service_id：&quot;</span> + registration.getServiceId();<br>    log.info(info);<br>    <span class="hljs-keyword">return</span> info;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>搭建服务注册中心的集群</strong></p>
+<p>即搭建两个Eukera-Server组成集群。在之前我们设置了<strong>register-with-eureka</strong>与 <strong>fetch-registry</strong>两个参数为false，这里设置为true（默认为true，即可以不额外设置），则eukera-server的俩个（多个）节点之间会进行信息同步。</p>
+<p>配置如下：（编写application-peer1.yml,application-peer2.yml, 文件命名为固定格式application-{}）</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment">#单个服务注册中心为如下</span><br><span class="hljs-comment">#eureka:</span><br><span class="hljs-comment">#  instance:</span><br><span class="hljs-comment">#    hostname: localhost</span><br><span class="hljs-comment">#  client:</span><br><span class="hljs-comment">#    register-with-eureka: false</span><br><span class="hljs-comment">#    fetch-registry: false</span><br><span class="hljs-comment">#    serviceUrl:</span><br><span class="hljs-comment">#      defaultZone: http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka/</span><br><br><span class="hljs-comment">#eukera.client.serviceUrl.defaultZone配置成另一个服务器的url，peer1中填写peer2，peer2中填写peer1</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">peer1</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://peer2:8081/eureka/</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span><br><br></code></pre></td></tr></table></figure>
+
+<p><strong>启动集群</strong></p>
+<p>将spring项目打包成jar，然后使用以下命令启动peer1,peer2两个节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">java -jar Eureka-Service-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer1<br>java -jar Eureka-Service-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer2<br></code></pre></td></tr></table></figure>
+
+<p>问题：这里的副本显示为不可用。</p>
+<p><img src="/../img/image-20241107170832838.png" srcset="/img/loading.gif" lazyload alt="image-20241107170832838"></p>
+<p>解决方案参考网址: <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43872111/article/details/118426384">搭建eureka集群时出现“unavailable-replicas”问题的解决办法</a></p>
+<p>更改配置application-peer1.yml文件(peer2类似):</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span><br><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">Eureka-Server</span><br><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">peer1</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">false</span>  <span class="hljs-comment">#add</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://peer2:8081/eureka/</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#add</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span>      <span class="hljs-comment">#add</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>没有搞懂的是，这三个点明明都是默认值，但为什么需要设置出来才有效果呢。。（idea显示）</p>
+<p><img src="/../img/image-20241107173622272.png" srcset="/img/loading.gif" lazyload alt="image-20241107173622272"></p>
+<p><strong>搭建服务消费者</strong></p>
+<p>ribbon 负载均衡。在新版本中已经不再使用。被springcloud中的Loadbalancer所替代。如下图。</p>
+<p><img src="/../img/image-20241107180326290.png" srcset="/img/loading.gif" lazyload alt="image-20241107180326290"></p>
+<p>参考的老代码中使用@LoadBalanced注解来启用负载均衡功能。新版本中依旧使用该注解，与RestTemplate这个bean一起使用。</p>
+<h2 id="ribbon负载均衡"><a href="#ribbon负载均衡" class="headerlink" title="ribbon负载均衡"></a>ribbon负载均衡</h2><p><a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud-Ribbon-LoadBalance.html">Spring Cloud Ribbon客户端负载均衡 | MrBird</a></p>
+<p>之前已经提到，ribbon在新版本中已经不再使用，而是使用Spring cloud框架下的<strong>Loadbalancer</strong>。</p>
+<h2 id="Hystrix服务容错"><a href="#Hystrix服务容错" class="headerlink" title="Hystrix服务容错"></a>Hystrix服务容错</h2><p><a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud-Hystrix-Circuit-Breaker.html">Spring Cloud Hystrix服务容错 | MrBird</a></p>
+<h2 id="组件的对应"><a href="#组件的对应" class="headerlink" title="组件的对应"></a>组件的对应</h2><p>前面提到的组件全由neflix开源和维护，有些已经停止更新, 而阿里自己开发了新的一套组件, 配合spring cloud Alibaba进行使用.</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30713721/article/details/135309626">一篇文章掌握SpringCloud与SpringCloud Alibaba的区别_springcloud和springcloudalibaba-CSDN博客</a></p>
+<p><img src="/../img/image-20241107194606889.png" srcset="/img/loading.gif" lazyload alt="image-20241107194606889"></p>
+<h2 id="Nacos注册中心"><a href="#Nacos注册中心" class="headerlink" title="Nacos注册中心"></a>Nacos注册中心</h2><p>需要搭配数据库进行使用。自定义启动docker需要配置好数据库参数，或者其他方式。</p>
+<p>8848port为管理GUI端。</p>
+<h2 id="OpenFeign"><a href="#OpenFeign" class="headerlink" title="OpenFeign"></a>OpenFeign</h2><p>本身是对http Restful访问方式的进一步封装。Dubbo还未学习。</p>
+<p>除了本身的依赖，还要引入负载均衡的依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>编写FeignClient</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;item-service&quot;, fallbackFactory = ItemClientFallbackFactory.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ItemClient</span> &#123;<br>    <span class="hljs-meta">@GetMapping(&quot;/items&quot;)</span><br>    List&lt;ItemDTO&gt; <span class="hljs-title function_">queryItemByIds</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;ids&quot;)</span>Collection&lt;Long&gt; ids)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用FeignClient 实现远程调用</li>
+<li>client的代码封装在子module xxx-api中，某种规范（未深入研究）</li>
+</ul>
+<p><strong>连接池</strong></p>
+<p>OpenFeign整合OKHttp</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.openfeign<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>feign-okhttp<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">#application.yaml设置开启连接池</span><br><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">okhttp:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>日志</strong></p>
+<p>可以控制openFeign输出日志的级别。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefaultFeignConfig</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> Logger.Level <span class="hljs-title function_">fullFeignLoggerLevel</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> Logger.Level.FULL;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>自定义Bean，而且还需要指定该Bean才能生效。</p>
+<ol>
+<li>全局生效（微服务的一个服务）：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//增加一个defaultConfiguration</span><br><span class="hljs-meta">@EnableFeignClients(basePackages = &quot;com.hmall.api.client&quot;, defaultConfiguration = DefaultFeignConfig.class)</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>单个client生效：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;item-service&quot;,configuration = DefaultFeignConfig.class)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h2><p>场景：用户信息传递</p>
+<p>gateway在拦截校验后可以将用户的token传给某个微服务A（存入Threadlocal），但如果微服务A调用微服务B的服务（利用openFeign调用），如何将token再从A传到B？</p>
+<p>即，token在微服务之间如何进行传递？</p>
+<p>Feign中提供的一个拦截器接口：<code>feign.RequestInterceptor</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">RequestInterceptor</span> &#123;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * Called for every request. </span><br><span class="hljs-comment">   * Add data using methods on the supplied &#123;<span class="hljs-doctag">@link</span> RequestTemplate&#125;.</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">apply</span><span class="hljs-params">(RequestTemplate template)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="nacos配置中心"><a href="#nacos配置中心" class="headerlink" title="nacos配置中心"></a>nacos配置中心</h2><p>通过nacos，我们可以更方便的进行配置管理，可以实现配置的<strong>热更新</strong>而无需重启微服务。</p>
+<p><strong>配置共享</strong></p>
+<p><img src="/../img/image-20241126151915802.png" srcset="/img/loading.gif" lazyload alt="image-20241126151915802"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/java/" class="category-chain-item">java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>微服务</div>
+      <div>https://jiashi19.github.io/2024/11/28/微服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>JiAshi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年11月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/28/docker/" title="docker">
+                        <span class="hidden-mobile">docker</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
