@@ -16,21 +16,22 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Spring Cloud 学习微服务与Cloud 版本[初识Spring Cloud与微服务 | MrBird](https:&#x2F;&#x2F;mrbird.cc&#x2F;Spring-Cloud and MicroService.html) 简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件. Eureka服务治理Spring Cloud Eureka服务治理 |">
+    <meta name="description" content="Spring Cloud 学习微服务与Cloud 版本初识Spring Cloud与微服务 | MrBird 简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件. Eureka服务治理Spring Cloud Eureka服务治理 | MrBird Eureka, 由netflix开发的一款开源服务治理框架。 Eureka Server：服务注">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务">
 <meta property="og:url" content="https://jiashi19.github.io/2024/11/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="Spring Cloud 学习微服务与Cloud 版本[初识Spring Cloud与微服务 | MrBird](https:&#x2F;&#x2F;mrbird.cc&#x2F;Spring-Cloud and MicroService.html) 简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件. Eureka服务治理Spring Cloud Eureka服务治理 |">
+<meta property="og:description" content="Spring Cloud 学习微服务与Cloud 版本初识Spring Cloud与微服务 | MrBird 简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件. Eureka服务治理Spring Cloud Eureka服务治理 | MrBird Eureka, 由netflix开发的一款开源服务治理框架。 Eureka Server：服务注">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jiashi19.github.io/img/687474703a2f2f6e6f74652e796f7564616f2e636f6d2f7977732f6170692f706572736f6e616c2f66696c652f33363341343841303839344634334330394143433739433042443237383335443f6d6574686f643d646f776e6c6f61642673686172654b65793d61.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241107170832838.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241107173622272.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241107180326290.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241107194606889.png">
+<meta property="og:image" content="https://foruda.gitee.com/images/1688697862044724829/f19c5fa3_1815095.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241126151915802.png">
 <meta property="article:published_time" content="2024-11-28T13:42:31.000Z">
-<meta property="article:modified_time" content="2024-11-28T13:44:31.222Z">
+<meta property="article:modified_time" content="2024-11-29T01:50:59.194Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiashi19.github.io/img/687474703a2f2f6e6f74652e796f7564616f2e636f6d2f7977732f6170692f706572736f6e616c2f66696c652f33363341343841303839344634334330394143433739433042443237383335443f6d6574686f643d646f776e6c6f61642673686172654b65793d61.png">
@@ -228,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.4k 字
         
       </span>
     
@@ -282,7 +283,7 @@
               <div class="markdown-body">
                 
                 <span id="more"></span>
-<h1 id="Spring-Cloud-学习"><a href="#Spring-Cloud-学习" class="headerlink" title="Spring Cloud 学习"></a>Spring Cloud 学习</h1><h2 id="微服务与Cloud-版本"><a href="#微服务与Cloud-版本" class="headerlink" title="微服务与Cloud 版本"></a>微服务与Cloud 版本</h2><p>[初识Spring Cloud与微服务 | MrBird](<a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud">https://mrbird.cc/Spring-Cloud</a> and MicroService.html)</p>
+<h1 id="Spring-Cloud-学习"><a href="#Spring-Cloud-学习" class="headerlink" title="Spring Cloud 学习"></a>Spring Cloud 学习</h1><h2 id="微服务与Cloud-版本"><a href="#微服务与Cloud-版本" class="headerlink" title="微服务与Cloud 版本"></a>微服务与Cloud 版本</h2><p><a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud%20and%20MicroService.html">初识Spring Cloud与微服务 | MrBird</a></p>
 <p>简单学习下neflix的几个组件，后面主要学习spring cloud Alibaba的几个更新的组件.</p>
 <h2 id="Eureka服务治理"><a href="#Eureka服务治理" class="headerlink" title="Eureka服务治理"></a>Eureka服务治理</h2><p><a target="_blank" rel="noopener" href="https://mrbird.cc/Spring-Cloud-Eureka.html">Spring Cloud Eureka服务治理 | MrBird</a></p>
 <p>Eureka, 由netflix开发的一款开源服务治理框架。</p>
@@ -333,6 +334,8 @@
 <p><img src="/../img/image-20241107194606889.png" srcset="/img/loading.gif" lazyload alt="image-20241107194606889"></p>
 <h2 id="Nacos注册中心"><a href="#Nacos注册中心" class="headerlink" title="Nacos注册中心"></a>Nacos注册中心</h2><p>需要搭配数据库进行使用。自定义启动docker需要配置好数据库参数，或者其他方式。</p>
 <p>8848port为管理GUI端。</p>
+<p>基本原理与eureka一致。</p>
+<p><img src="https://foruda.gitee.com/images/1688697862044724829/f19c5fa3_1815095.png" srcset="/img/loading.gif" lazyload alt="Nacos注册中心"></p>
 <h2 id="OpenFeign"><a href="#OpenFeign" class="headerlink" title="OpenFeign"></a>OpenFeign</h2><p>本身是对http Restful访问方式的进一步封装。Dubbo还未学习。</p>
 <p>除了本身的依赖，还要引入负载均衡的依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -340,6 +343,7 @@
 <ul>
 <li>编写FeignClient</li>
 </ul>
+<p>OpenFeign与普通的Feigin的区别便在于<strong>支持了<code>Spring MVC</code>的注解</strong>，如<code>@RequestMapping</code>，<code>@PathVariable</code>等等，可以方便开发者编写代码。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;item-service&quot;, fallbackFactory = ItemClientFallbackFactory.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ItemClient</span> &#123;<br>    <span class="hljs-meta">@GetMapping(&quot;/items&quot;)</span><br>    List&lt;ItemDTO&gt; <span class="hljs-title function_">queryItemByIds</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;ids&quot;)</span>Collection&lt;Long&gt; ids)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
@@ -375,7 +379,8 @@
 
 
 
-<h2 id="nacos配置中心"><a href="#nacos配置中心" class="headerlink" title="nacos配置中心"></a>nacos配置中心</h2><p>通过nacos，我们可以更方便的进行配置管理，可以实现配置的<strong>热更新</strong>而无需重启微服务。</p>
+<h2 id="nacos配置中心"><a href="#nacos配置中心" class="headerlink" title="nacos配置中心"></a>nacos配置中心</h2><p>剥离配置，对配置进行统一管理，减少冗余；</p>
+<p>通过nacos，我们可以更方便的进行配置管理，可以实现配置的<strong>热更新</strong>而无需重启微服务。</p>
 <p><strong>配置共享</strong></p>
 <p><img src="/../img/image-20241126151915802.png" srcset="/img/loading.gif" lazyload alt="image-20241126151915802"></p>
 
