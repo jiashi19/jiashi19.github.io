@@ -16,17 +16,17 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="docker命令基础的命令： 12345docker imagesdocker ps -adocker rm xxxdocker rmi xxxdocker pull xxx  启动容器： 123456docker run -d \  --name mysql \  -p 3306:3306 \  -e TZ&#x3D;Asia&#x2F;Shanghai \  -e MYSQL_ROOT_PASSWORD&#x3D;123">
+    <meta name="description" content="docker基础知识及docker网络问题解决docker命令基础的命令： 12345docker imagesdocker ps -adocker rm xxxdocker rmi xxxdocker pull xxx  启动容器： 123456docker run -d \  --name mysql \  -p 3306:3306 \  -e TZ&#x3D;Asia&#x2F;Shanghai \  -e">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker">
+<meta property="og:title" content="docker学习及vmware中docker网络问题与解决方案">
 <meta property="og:url" content="https://jiashi19.github.io/2024/11/28/docker/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="docker命令基础的命令： 12345docker imagesdocker ps -adocker rm xxxdocker rmi xxxdocker pull xxx  启动容器： 123456docker run -d \  --name mysql \  -p 3306:3306 \  -e TZ&#x3D;Asia&#x2F;Shanghai \  -e MYSQL_ROOT_PASSWORD&#x3D;123">
+<meta property="og:description" content="docker基础知识及docker网络问题解决docker命令基础的命令： 12345docker imagesdocker ps -adocker rm xxxdocker rmi xxxdocker pull xxx  启动容器： 123456docker run -d \  --name mysql \  -p 3306:3306 \  -e TZ&#x3D;Asia&#x2F;Shanghai \  -e">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241116191321608.png">
-<meta property="article:published_time" content="2024-11-28T13:38:43.000Z">
-<meta property="article:modified_time" content="2024-11-29T01:51:18.419Z">
+<meta property="article:published_time" content="2024-11-28T12:38:43.000Z">
+<meta property="article:modified_time" content="2024-12-16T14:25:01.094Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
@@ -35,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>docker - Blog from jiAshi19</title>
+  <title>docker学习及vmware中docker网络问题与解决方案 - Blog from jiAshi19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="docker"></span>
+            <span id="subtitle" data-typed-text="docker学习及vmware中docker网络问题与解决方案"></span>
           
         </div>
 
@@ -212,7 +212,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-28 21:38" pubdate>
+        <time datetime="2024-11-28 20:38" pubdate>
           2024年11月28日 晚上
         </time>
       </span>
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.5k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          11 分钟
+          13 分钟
         
       </span>
     
@@ -272,13 +272,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">docker</h1>
+            <h1 id="seo-header">docker学习及vmware中docker网络问题与解决方案</h1>
             
             
               <div class="markdown-body">
                 
                 <span id="more"></span>
-<h2 id="docker命令"><a href="#docker命令" class="headerlink" title="docker命令"></a>docker命令</h2><p>基础的命令：</p>
+<h1 id="docker基础知识及docker网络问题解决"><a href="#docker基础知识及docker网络问题解决" class="headerlink" title="docker基础知识及docker网络问题解决"></a>docker基础知识及docker网络问题解决</h1><h2 id="docker命令"><a href="#docker命令" class="headerlink" title="docker命令"></a>docker命令</h2><p>基础的命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker images<br>docker ps -a<br>docker <span class="hljs-built_in">rm</span> xxx<br>docker rmi xxx<br>docker pull xxx<br></code></pre></td></tr></table></figure>
 
 <p>启动容器：</p>
@@ -369,10 +369,10 @@
 <p>根据Dockerfile在本地构建镜像的命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker build -t myjava:1.0 .  <span class="hljs-comment"># .表示在当前目录下找Dockerfile</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="docker网络"><a href="#docker网络" class="headerlink" title="docker网络"></a>docker网络</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network xxx<br></code></pre></td></tr></table></figure>
+<h2 id="docker网络"><a href="#docker网络" class="headerlink" title="docker网络"></a>docker网络</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network <span class="hljs-built_in">help</span><br></code></pre></td></tr></table></figure>
 
 <p>docker的bridge网络模式是Docker的默认网络模式。当Docker进程启动时，它会在主机上创建一个名为<strong>docker0的虚拟网桥</strong>。此主机上启动的Docker容器会连接到这个虚拟网桥上。这个虚拟网桥的工作方式类似于物理交换机，使得主机上的所有容器都通过交换机连接在一个二层网络中。<br>容器内部会有一个虚拟网卡，名为eth0，容器之间可以通过这个虚拟网卡和内部的IP地址进行通信。另外，从docker0子网中分配一个IP给容器使用，并设置docker0的IP地址为容器的默认网关。</p>
-<p>创建的两个容器如果没有指定相同的网络，会使用默认的bridge 模式的名为bridge的网络，只能通过ip访问，如果指定了自定义的网络（bridge模式），也可以进行dns解析。（q:通过容器名访问是怎么实现的？）</p>
+<p>创建的两个容器如果没有指定相同的网络，会使用默认的bridge 模式的名为bridge的网络，只能通过ip访问，如果指定了自定义的网络（bridge模式），也可以进行dns解析。（q:通过容器名访问是怎么实现的？–通过dns解析）</p>
 <p>如果要部署自己的一个多容器微服务，最好创建一个新的虚拟bridge网络：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network create net1<br></code></pre></td></tr></table></figure>
 
@@ -380,22 +380,32 @@
 <p>docker网络进阶1：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiongzaiqiren/p/18177383/docker-network">docker网络配置：bridge模式、host模式、container模式、none模式 - 熊仔其人 - 博客园 (cnblogs.com)</a></p>
 <p>docker网络进阶2：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7041923410649153543">全网最详细的Docker网络教程详解Docker网络详解 Docker网路基础理论 docker使用Linux桥接网卡， - 掘金 (juejin.cn)</a></p>
 <p>创建新的bridge网络与默认的bridge网络有什么区别：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/258939355">两个或多个docker容器之间通过名字相互访问 - 知乎 (zhihu.com)</a></p>
-<h3 id="docker网络问题解决"><a href="#docker网络问题解决" class="headerlink" title="docker网络问题解决"></a>docker网络问题解决</h3><ol>
+<h3 id="docker网络问题解决-vm虚拟机中的docker网络"><a href="#docker网络问题解决-vm虚拟机中的docker网络" class="headerlink" title="docker网络问题解决-vm虚拟机中的docker网络"></a>docker网络问题解决-vm虚拟机中的docker网络</h3><ol>
 <li><p>docker网络疑难杂症解决：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1416790">【docker】重建docker0网桥-阿里云开发者社区 (aliyun.com)</a></p>
 </li>
 <li><p>虚拟机docker断连问题：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46439731/article/details/128124219">解决每次挂起VM虚拟机后，docker容器无法访问的问题</a> –[原文 stackoverflow](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/57874055/cant-connect-to-docker-after-resuming-vm">Can’t connect to docker after resuming VM - Stack Overflow</a>)</p>
 </li>
 </ol>
 <p>总结：如果发现连接不上docker，可以先用<code>ifconfig -a</code>检查docker0，发现其down了，可以临时用1方法解决。但每次vmware挂起似乎都会导致docker0网卡down，长久的解决方案参考2方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/NetworkManager/conf.d/10-unmanage-docker-interfaces.conf<br></code></pre></td></tr></table></figure>
+
+<p>填写内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs conf">[keyfile]<br>unmanaged-devices=interface-name:docker*;interface-name:veth*;interface-name:br-*;interface-name:vmnet*;interface-name:vboxnet*<br></code></pre></td></tr></table></figure>
+
 <h2 id="DockerCompose"><a href="#DockerCompose" class="headerlink" title="DockerCompose"></a>DockerCompose</h2><p>通过docker-compose.yml来实现<strong>多个</strong>互相关联的docker容器的快速部署。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up -d<br>docker compose down<br>docker compose ps <span class="hljs-comment">#查看当前项目下所有容器</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#docker compose v2使用中间没有“-” ，很多老教程写的命令都是docker-compose</span><br>docker compose up -d <br>docker compose down<br>docker compose ps <span class="hljs-comment"># 查看当前项目下所有容器</span><br></code></pre></td></tr></table></figure>
 
 <p>Docker Compose 会检查每个服务的镜像是否已经存在。<strong>如果镜像已经存在，它不会重新构建镜像</strong>，而是直接使用现有的镜像来启动容器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up --build //强制重新构建镜像<br></code></pre></td></tr></table></figure>
 
 
 
-<p>记一句：如果真遇到什么连接不通或者其他疑难杂症，直接<strong>重启</strong>解决80%问题！</p>
+<h2 id="容器的CPU和内存的限制"><a href="#容器的CPU和内存的限制" class="headerlink" title="容器的CPU和内存的限制"></a>容器的CPU和内存的限制</h2><p>默认情况下，Docker容器是没有资源限制的，它会尽可能地使用宿主机能够分配给它的资源。而对容器内存与CPU使用上限进行一定的限制，可以防止docker负载过大对宿主机造成影响。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#查看某container的资源使用情况</span><br>docker container stats containerId<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#允许该容器最多使用200MB的内存和100MB 的swap。</span><br>docker run -m 200M --memory-swap=300M containerId<br></code></pre></td></tr></table></figure>
+
+<h2 id="万能破局方案"><a href="#万能破局方案" class="headerlink" title="万能破局方案"></a>万能破局方案</h2><p>如果真遇到什么连接不通或者其他疑难杂症，直接<strong>重启</strong>解决80%问题！</p>
 
                 
               </div>
@@ -434,7 +444,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>docker</div>
+      <div>docker学习及vmware中docker网络问题与解决方案</div>
       <div>https://jiashi19.github.io/2024/11/28/docker/</div>
     </div>
     <div class="license-meta">
@@ -479,9 +489,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务">
+                      <a href="/2024/11/28/springCloudStudy/" title="微服务Spring cloud框架简单总结">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">微服务</span>
+                        <span class="hidden-mobile">微服务Spring cloud框架简单总结</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -489,8 +499,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/21/git/" title="git">
-                        <span class="hidden-mobile">git</span>
+                      <a href="/2024/07/21/git/" title="git超简记录">
+                        <span class="hidden-mobile">git超简记录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
