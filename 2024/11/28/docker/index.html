@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241116191321608.png">
 <meta property="article:published_time" content="2024-11-28T12:38:43.000Z">
-<meta property="article:modified_time" content="2024-12-16T14:25:01.094Z">
+<meta property="article:modified_time" content="2024-12-23T06:35:50.400Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.7k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          13 分钟
+          15 分钟
         
       </span>
     
@@ -289,7 +289,18 @@
 <p>-e: 环境变量</p>
 <p>-p: 宿主机端口映射到容器内端口   </p>
 <p>镜像名称结构：Repository:TAG</p>
-<p><img src="/../img/image-20241116170056787.png" srcset="/img/loading.gif" lazyload alt="image-20241116170056787"></p>
+<p>{</p>
+<p><strong>曾经在run命令中出现的错误操作</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --name system123 -d  docker-ruoyi-modules-system --network=docker_rynet --spring.cloud.nacos.discovery.server-addr=192.168.12.128:8848 --spring.cloud.nacos.config.server-addr=192.168.12.128:8848<br></code></pre></td></tr></table></figure>
+
+<p>命令格式问题：在<code>docker run</code>命令中，选项和参数的顺序非常重要。所有容器内执行的命令应该放在所有其他选项之后。在上述命令中，<code>--network=docker_rynet</code>和Spring Cloud Nacos相关的参数被放在了镜像名称之后，这通常会导致这些参数被视为容器内执行命令的一部分，而不是Docker的选项。</p>
+<p>所以该问题导致容器并没有被附加到我想要的docker_rynet网络下，导致微服务启动异常。</p>
+<p>利用<code>docker inspect xxx</code>排查找到问题。</p>
+<p>正确命令：–network放到前面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --name system123 --network=docker_rynet -d docker-ruoyi-modules-system \<br>  java -jar ruoyi-modules-system.jar \<br>  --spring.cloud.nacos.discovery.server-addr=192.168.12.128:8848 \<br>  --spring.cloud.nacos.config.server-addr=192.168.12.128:8848<br></code></pre></td></tr></table></figure>
+
+<p>}</p>
+<p><img src="/../img/image-20241116170056787.png" srcset="/img/loading.gif" lazyload alt="docker生命周期"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker save -o nginx.tar<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker load -i nginx.tar <br></code></pre></td></tr></table></figure>
@@ -362,7 +373,7 @@
 </tr>
 </tbody></table>
 <p>例：构建一个运行springboot的jar项目，Dockerfile内容如下：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">FROM</span> openjdk:<span class="hljs-number">11.0</span>-jre-buster<br><span class="hljs-comment"># 设定时区</span><br><span class="hljs-keyword">ENV</span> TZ=Asia/Shanghai<br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">ln</span> -snf /usr/share/zoneinfo/<span class="hljs-variable">$TZ</span> /etc/localtime &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-variable">$TZ</span> &gt; /etc/timezone</span><br><span class="hljs-comment"># 拷贝jar包</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> project.jar /app.jar</span><br><span class="hljs-comment"># 入口</span><br><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;java&quot;</span>, <span class="hljs-string">&quot;-jar&quot;</span>, <span class="hljs-string">&quot;/app.jar&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">FROM</span> openjdk:<span class="hljs-number">11.0</span>-jre-buster<br><span class="hljs-comment"># 设定时区</span><br><span class="hljs-keyword">ENV</span> TZ=Asia/Shanghai<br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">ln</span> -snf /usr/share/zoneinfo/<span class="hljs-variable">$TZ</span> /etc/localtime &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-variable">$TZ</span> &gt; /etc/timezone</span><br><span class="hljs-comment"># 拷贝jar包</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> project.jar /app.jar</span><br><span class="hljs-comment"># 入口</span><br><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;java&quot;</span>, <span class="hljs-string">&quot;-jar&quot;</span>, <span class="hljs-string">&quot;/app.jar&quot;</span>]</span><br></code></pre></td></tr></table></figure>
 
 
 
