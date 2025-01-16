@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241116191321608.png">
 <meta property="article:published_time" content="2024-11-28T12:38:43.000Z">
-<meta property="article:modified_time" content="2024-12-23T06:35:50.400Z">
+<meta property="article:modified_time" content="2025-01-16T18:32:10.882Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiashi19.github.io/img/image-20241116170056787.png">
@@ -412,9 +412,13 @@
 
 
 <h2 id="容器的CPU和内存的限制"><a href="#容器的CPU和内存的限制" class="headerlink" title="容器的CPU和内存的限制"></a>容器的CPU和内存的限制</h2><p>默认情况下，Docker容器是没有资源限制的，它会尽可能地使用宿主机能够分配给它的资源。而对容器内存与CPU使用上限进行一定的限制，可以防止docker负载过大对宿主机造成影响。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#查看某container的资源使用情况</span><br>docker container stats containerId<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#检查当前container设定 比如Memory和MemorySwap值为0时则说明未做限制</span><br>docker inspect containerId<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#允许该容器最多使用200MB的内存和100MB 的swap。</span><br>docker run -m 200M --memory-swap=300M containerId<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#查看某container的资源使用情况</span><br>docker stats --no-stream containerId<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#允许该容器最多使用200MB的内存和100MB 的swap。</span><br>docker run -m 200M --memory-swap=300M containerId <span class="hljs-comment">#memory-swap得设置为200+100</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#动态更新docker容器的资源限制</span><br>docker update [OPTIONS] containerId<br></code></pre></td></tr></table></figure>
 
 <h2 id="万能破局方案"><a href="#万能破局方案" class="headerlink" title="万能破局方案"></a>万能破局方案</h2><p>如果真遇到什么连接不通或者其他疑难杂症，直接<strong>重启</strong>解决80%问题！</p>
 
