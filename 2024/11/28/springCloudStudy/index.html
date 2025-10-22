@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://foruda.gitee.com/images/1688697862044724829/f19c5fa3_1815095.png">
 <meta property="og:image" content="https://jiashi19.github.io/img/image-20241126151915802.png">
 <meta property="article:published_time" content="2024-11-28T13:42:31.000Z">
-<meta property="article:modified_time" content="2025-01-21T03:50:04.795Z">
+<meta property="article:modified_time" content="2025-03-19T12:16:40.788Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiashi19.github.io/img/687474703a2f2f6e6f74652e796f7564616f2e636f6d2f7977732f6170692f706572736f6e616c2f66696c652f33363341343841303839344634334330394143433739433042443237383335443f6d6574686f643d646f776e6c6f61642673686172654b65793d61.png">
@@ -336,6 +336,9 @@
 <p>8848port为管理GUI端。</p>
 <p>基本原理与eureka一致。</p>
 <p><img src="https://foruda.gitee.com/images/1688697862044724829/f19c5fa3_1815095.png" srcset="/img/loading.gif" lazyload alt="Nacos注册中心"></p>
+<p>NacosNamingService，名字服务，可以获取实例信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@NacosInjected</span><br><span class="hljs-keyword">private</span> NamingService namingService;<br></code></pre></td></tr></table></figure>
+
 <h2 id="OpenFeign"><a href="#OpenFeign" class="headerlink" title="OpenFeign"></a>OpenFeign</h2><p>本身是对http Restful访问方式的进一步封装。Dubbo还未学习。</p>
 <p>除了本身的依赖，还要引入负载均衡的依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -371,15 +374,18 @@
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;item-service&quot;,configuration = DefaultFeignConfig.class)</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p><strong>路由（Route）</strong>：路由是网关最基础的部分，路由信息由 ID、<strong>目标 URI</strong>、一组断言和一组过滤器组成。如果断言 路由为真，则说明请求的 URI 和配置匹配。</p>
+<h2 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p>(1)<strong>路由（Route）</strong>：路由是网关最基础的部分，路由信息由 ID、<strong>目标 URI</strong>、一组断言和一组过滤器组成。如果断言 路由为真，则说明请求的 URI 和配置匹配。</p>
 <p>ps：URI写成<code>lb://xxxx</code>的格式，lb代表负载均衡。</p>
-<p><strong>断言（Predicate）</strong>：Java8 中的断言函数。Spring Cloud Gateway 中的断言函数输入类型是 Spring 5.0 框架中的 <strong>ServerWebExchange</strong>。Spring Cloud Gateway 中的断言函数允许开发者去定义匹配来自于 Http Request 中的任何信息，比如请求头和参数等。<br><strong>过滤器（Filter）</strong>：一个标准的 Spring Web Filter。Gateway 中的 Filter 分为<strong>两种</strong>类型，分别是 Gateway Filter 和 Global Filter。过滤器将会对请求和响应进行处理。</p>
+<p>(2)<strong>断言（Predicate）</strong>：Java8 中的断言函数。Spring Cloud Gateway 中的断言函数输入类型是 Spring 5.0 框架中的 <strong>ServerWebExchange</strong>。Spring Cloud Gateway 中的断言函数允许开发者去定义匹配来自于 Http Request 中的任何信息，比如请求头和参数等。</p>
+<p>(3)<strong>过滤器（Filter）</strong>：一个标准的 Spring Web Filter。Gateway 中的 Filter 分为<strong>两种</strong>类型，分别是 Gateway Filter 和 Global Filter。过滤器将会对请求和响应进行处理。</p>
 <ul>
 <li><strong>GlobalFilters</strong>：全局过滤器，自动应用于所有路由。它们根据<code>@Order</code>注解或实现<code>Ordered</code>接口来确定执行顺序。</li>
 <li><strong>GatewayFilters</strong>：针对特定路由配置的过滤器。它们同样可以根据<code>@Order</code>注解或实现<code>Ordered</code>接口来指定顺序。如果没有指定顺序，则默认顺序为0。</li>
 </ul>
 <p>config示例：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">gateway:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">locator:</span><br>          <span class="hljs-attr">lowerCaseServiceId:</span> <span class="hljs-literal">true</span><br>          <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">routes:</span><br>        <span class="hljs-comment"># 认证中心</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">ruoyi-auth</span>           <br>          <span class="hljs-attr">uri:</span> <span class="hljs-string">lb://ruoyi-auth</span><br>          <span class="hljs-attr">predicates:</span><br>            <span class="hljs-bullet">-</span> <span class="hljs-string">Path=/auth/**</span><br>          <span class="hljs-attr">filters:</span><br>            <span class="hljs-comment"># 验证码处理</span><br>            <span class="hljs-bullet">-</span> <span class="hljs-string">CacheRequestFilter</span><br>            <span class="hljs-bullet">-</span> <span class="hljs-string">ValidateCodeFilter</span><br>            <span class="hljs-bullet">-</span> <span class="hljs-string">StripPrefix=1</span>        <span class="hljs-comment">#移除匹配路径的第一个前缀（即/auth），使得转发到后端服务的请求路径不包含这个前缀。</span><br></code></pre></td></tr></table></figure>
+
+
 
 <p><strong>场景应用：用户信息传递</strong></p>
 <p>gateway在拦截校验后可以将用户的token传给某个微服务A（存入Threadlocal），但如果微服务A调用微服务B的服务（利用openFeign调用），如何将token再从A传到B？</p>
