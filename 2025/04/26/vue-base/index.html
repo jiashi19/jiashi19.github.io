@@ -16,26 +16,23 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文介绍两种方法来访问内网的服务。 用ssh访问内网服务器的服务情况：服务器是虚拟化分出来的，本身没有公网地址，ssh的22端口是通过端口转发&#x2F;映射到公网IP上的某个端口，可以ssh user@公网IP -p 33333，但想从外面访问服务器的一些服务（如3306的mysql，80的nginx），因为这些端口没有设置映射（自己没有权限），没有直接映射到公网上。 solv：ssh本地转">
+    <meta name="description" content="vue简介">
 <meta property="og:type" content="article">
-<meta property="og:title" content="访问内网服务器的服务">
-<meta property="og:url" content="https://jiashi19.github.io/2024/12/22/sshlocalfoward/index.html">
+<meta property="og:title" content="vue-base">
+<meta property="og:url" content="https://jiashi19.github.io/2025/04/26/vue-base/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="本文介绍两种方法来访问内网的服务。 用ssh访问内网服务器的服务情况：服务器是虚拟化分出来的，本身没有公网地址，ssh的22端口是通过端口转发&#x2F;映射到公网IP上的某个端口，可以ssh user@公网IP -p 33333，但想从外面访问服务器的一些服务（如3306的mysql，80的nginx），因为这些端口没有设置映射（自己没有权限），没有直接映射到公网上。 solv：ssh本地转">
+<meta property="og:description" content="vue简介">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jiashi19.github.io/img/image-20241228110909032.png">
-<meta property="og:image" content="https://jiashi19.github.io/img/image-20241228110932254.png">
-<meta property="article:published_time" content="2024-12-22T06:01:02.000Z">
-<meta property="article:modified_time" content="2025-01-16T13:41:38.583Z">
+<meta property="article:published_time" content="2025-04-26T06:33:48.000Z">
+<meta property="article:modified_time" content="2025-10-26T06:41:56.377Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jiashi19.github.io/img/image-20241228110909032.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>访问内网服务器的服务 - Blog from jiAshi19</title>
+  <title>vue-base - Blog from jiAshi19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="访问内网服务器的服务"></span>
+            <span id="subtitle" data-typed-text="vue-base"></span>
           
         </div>
 
@@ -212,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-22 14:01" pubdate>
-          2024年12月22日 下午
+        <time datetime="2025-04-26 14:33" pubdate>
+          2025年4月26日 下午
         </time>
       </span>
     
@@ -224,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          718 字
+          749 字
         
       </span>
     
@@ -235,7 +232,7 @@
         
         
         
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -272,53 +269,43 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">访问内网服务器的服务</h1>
+            <h1 id="seo-header">vue-base</h1>
             
             
               <div class="markdown-body">
                 
-                <span id="more"></span>
+                <h2 id="vue简介"><a href="#vue简介" class="headerlink" title="vue简介"></a>vue简介</h2><span id="more"></span>
 
-<p>本文介绍两种方法来访问内网的服务。</p>
-<h1 id="用ssh访问内网服务器的服务"><a href="#用ssh访问内网服务器的服务" class="headerlink" title="用ssh访问内网服务器的服务"></a>用ssh访问内网服务器的服务</h1><p>情况：服务器是虚拟化分出来的，本身没有公网地址，ssh的22端口是通过端口转发&#x2F;映射到公网IP上的某个端口，可以<code>ssh user@公网IP -p 33333</code>，但想从外面访问服务器的一些服务（如3306的mysql，80的nginx），因为这些端口没有设置映射（自己没有权限），没有直接映射到公网上。</p>
-<p>solv：<strong>ssh本地转发</strong>（-L 参数）。</p>
-<p>本地转发（local forwarding）指的是，SSH 服务器作为中介的跳板机，建立本地计算机与特定目标网站之间的加密连接。本地转发是在本地计算机的 SSH 客户端建立的转发规则。</p>
-<p>效果：指定一个本地端口（local-port），所有发向那个端口的请求，都会转发到 SSH 跳板机（tunnel-host），然后 SSH 跳板机作为中介，将收到的请求发到目标服务器（target-host）的目标端口（target-port）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -L local-port:target-host:target-port tunnel-host <br></code></pre></td></tr></table></figure>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; createApp, ref &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-title function_">createApp</span>(&#123;<br>  <span class="hljs-title function_">setup</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">count</span>: <span class="hljs-title function_">ref</span>(<span class="hljs-number">0</span>)<br>    &#125;<br>  &#125;<br>&#125;).<span class="hljs-title function_">mount</span>(<span class="hljs-string">&#x27;#app&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
-<p>实际应用如下，访问内网服务器的8080开放的http服务。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -L 8080:127.0.0.1:8080 user@222.222.222.222 -p 55322  -N<br><span class="hljs-comment">#222.222.222.222指代公网IP，55322是内网服务器映射的外网端口</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;count++&quot;</span>&gt;</span><br>    Count is: &#123;&#123; count &#125;&#125;<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<ul>
-<li><code>-N</code>参数，表示不在 SSH 跳板机执行远程命令，让 SSH 只充当隧道。</li>
-<li><code>-f</code>参数表示 SSH 连接在后台运行。</li>
-</ul>
-<h2 id="使用finalshell配置本地转发"><a href="#使用finalshell配置本地转发" class="headerlink" title="使用finalshell配置本地转发"></a>使用finalshell配置本地转发</h2><p>编辑连接，配置ssh连接隧道。</p>
-<p><img src="/../img/image-20241228110909032.png" srcset="/img/loading.gif" lazyload alt="image-20241228110909032"></p>
-<p>新建隧道，选择类型为本地转发。</p>
-<p><img src="/../img/image-20241228110932254.png" srcset="/img/loading.gif" lazyload alt="image-20241228110932254"></p>
-<p><strong>参考学习</strong>：</p>
-<p><a target="_blank" rel="noopener" href="https://www.cainiaojc.com/ssh/ssh-port-forwarding.html">SSH 端口转发</a></p>
-<h1 id="使用frp进行内网穿透"><a href="#使用frp进行内网穿透" class="headerlink" title="使用frp进行内网穿透"></a>使用frp进行内网穿透</h1><p>前者是在使用ssh命令的机器上可以访问到内网服务器上的一些服务，而使用frp有两个特点：</p>
-<ul>
-<li><strong>需要一个另外的公网服务器</strong>作为中介；</li>
-<li>与前者是在使用ssh命令的机器上可以访问到内网服务器上的一些服务有所不同，frp使得可以在外网所有地方直接访问内网服务。</li>
-</ul>
-<p><strong>使用方法</strong>：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">github地址</a></p>
-<p><a target="_blank" rel="noopener" href="https://gofrp.org/zh-cn/">文档地址</a></p>
-<p>下载frp（客户端与服务端），内容应该如下（linux版）：</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">frpc      //客户端程序<br>frpc.toml //客户端配置文件<br>frps      //服务端程序<br>frps.toml //服务端配置文件<br></code></pre></td></tr></table></figure>
+<h3 id="单文件组件"><a href="#单文件组件" class="headerlink" title="单文件组件"></a>单文件组件</h3><p>Vue 的单文件组件会将一个组件的逻辑 (JavaScript)，模板 (HTML) 和样式 (CSS) 封装在同一个文件里。</p>
+<p>示例可以改写成一个vue文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;script setup&gt;<br>import &#123; ref &#125; from &#x27;vue&#x27;<br>const count = ref(0)<br>&lt;/script&gt;<br><br>&lt;template&gt;<br>  &lt;button @click=&quot;count++&quot;&gt;Count is: &#123;&#123; count &#125;&#125;&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;style scoped&gt;<br>button &#123;<br>  font-weight: bold;<br>&#125;<br>&lt;/style&gt;<br></code></pre></td></tr></table></figure>
 
-<p>在公网server上启动frps（服务端程序）,或配置成service自动运行（参考官网文档）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./frps -c frps.toml <br></code></pre></td></tr></table></figure>
+<h3 id="API-风格"><a href="#API-风格" class="headerlink" title="API 风格"></a>API 风格</h3><p>选项式API 和 组合式API </p>
+<p>选项式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;script&gt;<br>export default &#123;<br>  // data() 返回的属性将会成为响应式的状态<br>  // 并且暴露在 `this` 上<br>  data() &#123;<br>    return &#123;<br>      count: 0<br>    &#125;<br>  &#125;,<br><br>  // methods 是一些用来更改状态与触发更新的函数<br>  // 它们可以在模板中作为事件处理器绑定<br>  methods: &#123;<br>    increment() &#123;<br>      this.count++<br>    &#125;<br>  &#125;,<br><br>  // 生命周期钩子会在组件生命周期的各个不同阶段被调用<br>  // 例如这个函数就会在组件挂载完成后被调用<br>  mounted() &#123;<br>    console.log(`The initial count is $&#123;this.count&#125;.`)<br>  &#125;<br>&#125;<br>&lt;/script&gt;<br><br>&lt;template&gt;<br>  &lt;button @click=&quot;increment&quot;&gt;Count is: &#123;&#123; count &#125;&#125;&lt;/button&gt;<br>&lt;/template&gt;<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-comment"># frps.toml</span><br><span class="hljs-attr">bindPort</span> = <span class="hljs-number">7070</span> <span class="hljs-comment"># 默认端口为7000，最好做修改</span><br><span class="hljs-attr">auth.token</span>=<span class="hljs-string">&quot;xxxxxx&quot;</span> <span class="hljs-comment"># 使用token鉴权</span><br></code></pre></td></tr></table></figure>
+<p>组合式：</p>
+<p>标志：<code>&lt;script setup&gt;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;script setup&gt;<br>import &#123; ref, onMounted &#125; from &#x27;vue&#x27;<br><br>// 响应式状态<br>const count = ref(0)<br><br>// 用来修改状态、触发更新的函数<br>function increment() &#123;<br>  count.value++<br>&#125;<br><br>// 生命周期钩子<br>onMounted(() =&gt; &#123;<br>  console.log(`The initial count is $&#123;count.value&#125;.`)<br>&#125;)<br>&lt;/script&gt;<br><br>&lt;template&gt;<br>  &lt;button @click=&quot;increment&quot;&gt;Count is: &#123;&#123; count &#125;&#125;&lt;/button&gt;<br>&lt;/template&gt;<br></code></pre></td></tr></table></figure>
 
-<p>在内网server上启动frpc</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./frpc -c frpc.toml <span class="hljs-comment"># windows:frpc.exe -c frpc.toml</span><br></code></pre></td></tr></table></figure>
+<p>（选项式 API 是在组合式 API 的基础上实现的）</p>
+<h2 id="创建vue应用"><a href="#创建vue应用" class="headerlink" title="创建vue应用"></a>创建vue应用</h2><p>每个 Vue 应用都是通过 createApp 函数创建一个新的 <strong>应用实例</strong>。</p>
+<h3 id="根组件"><a href="#根组件" class="headerlink" title="根组件"></a>根组件</h3><p><code>createApp</code> 的对象实际上是一个组件。每个应用都需要一个“根组件”，其他组件将作为其子组件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-comment">// 从一个单文件组件中导入根组件</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App.vue&#x27;</span><br><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">App</span>)<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-comment"># frpc.toml</span><br><span class="hljs-attr">serverAddr</span>=<span class="hljs-string">&quot;11.11.11.11&quot;</span> <span class="hljs-comment"># 运行frps的公网server的ip地址</span><br><span class="hljs-attr">serverPort</span>=<span class="hljs-number">7070</span> <span class="hljs-comment"># 与上面的端口对应</span><br><span class="hljs-attr">auth.token</span>=<span class="hljs-string">&quot;xxxxxx&quot;</span><br><span class="hljs-section">[[proxies]]</span><br><span class="hljs-attr">name</span>=<span class="hljs-string">&quot;minecraft&quot;</span><br><span class="hljs-attr">type</span>=<span class="hljs-string">&quot;tcp&quot;</span><br><span class="hljs-attr">localIP</span>=<span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-attr">localPort</span>=<span class="hljs-number">25565</span>   <span class="hljs-comment"># 本地要转发的端口</span><br><span class="hljs-attr">remotePort</span>=<span class="hljs-number">25565</span>  <span class="hljs-comment"># 映射到公网ip的端口</span><br></code></pre></td></tr></table></figure>
+<h3 id="挂载应用"><a href="#挂载应用" class="headerlink" title="挂载应用"></a>挂载应用</h3><p>应用实例必须在调用了 <code>.mount()</code> 方法后才会渲染出来。该方法接收一个“容器”参数，可以是一个实际的 DOM 元素或是一个 CSS 选择器字符串。</p>
+<p><code>.mount()</code> 方法应该始终在整个<strong>应用配置</strong>和<strong>资源注册</strong> <strong>完成后被调用</strong>。同时请注意，不同于其他资源注册方法，它的返回值是根组件实例而非应用实例。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">mount</span>(<span class="hljs-string">&#x27;#app&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="应用配置"><a href="#应用配置" class="headerlink" title="应用配置"></a>应用配置</h3><p>应用实例会暴露一个 <code>.config</code> 对象允许我们配置一些应用级的选项，例如定义一个应用级的错误处理器，用来捕获所有子组件上的错误。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-property">config</span>.<span class="hljs-property">errorHandler</span> = <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;  <span class="hljs-comment">/* 处理错误 */</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上代码注册了一个组件，这使得 <code>TodoDeleteButton</code> 在应用的任何地方都是可用的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;TodoDeleteButton&#x27;</span>, <span class="hljs-title class_">TodoDeleteButton</span>)<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -358,8 +345,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>访问内网服务器的服务</div>
-      <div>https://jiashi19.github.io/2024/12/22/sshlocalfoward/</div>
+      <div>vue-base</div>
+      <div>https://jiashi19.github.io/2025/04/26/vue-base/</div>
     </div>
     <div class="license-meta">
       
@@ -371,7 +358,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月22日</div>
+          <div>2025年4月26日</div>
         </div>
       
       
@@ -403,9 +390,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/26/vue-base/" title="vue-base">
+                      <a href="/2025/06/22/sbc-loadbalancer-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="CAS原子操作与实际源码分析">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">vue-base</span>
+                        <span class="hidden-mobile">CAS原子操作与实际源码分析</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -413,8 +400,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/28/springCloudStudy/" title="微服务Spring cloud框架简单总结">
-                        <span class="hidden-mobile">微服务Spring cloud框架简单总结</span>
+                      <a href="/2024/12/22/sshlocalfoward/" title="访问内网服务器的服务">
+                        <span class="hidden-mobile">访问内网服务器的服务</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

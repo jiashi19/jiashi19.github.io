@@ -16,26 +16,23 @@
   <meta name="author" content="JiAshi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文介绍两种方法来访问内网的服务。 用ssh访问内网服务器的服务情况：服务器是虚拟化分出来的，本身没有公网地址，ssh的22端口是通过端口转发&#x2F;映射到公网IP上的某个端口，可以ssh user@公网IP -p 33333，但想从外面访问服务器的一些服务（如3306的mysql，80的nginx），因为这些端口没有设置映射（自己没有权限），没有直接映射到公网上。 solv：ssh本地转">
+    <meta name="description" content="1、CAS操作原子计数器：AtomicInteger position 确保多线程环境下计数安全，线程安全，避免锁竞争；">
 <meta property="og:type" content="article">
-<meta property="og:title" content="访问内网服务器的服务">
-<meta property="og:url" content="https://jiashi19.github.io/2024/12/22/sshlocalfoward/index.html">
+<meta property="og:title" content="CAS原子操作与实际源码分析">
+<meta property="og:url" content="https://jiashi19.github.io/2025/06/22/sbc-loadbalancer-%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/index.html">
 <meta property="og:site_name" content="Blog from jiAshi19">
-<meta property="og:description" content="本文介绍两种方法来访问内网的服务。 用ssh访问内网服务器的服务情况：服务器是虚拟化分出来的，本身没有公网地址，ssh的22端口是通过端口转发&#x2F;映射到公网IP上的某个端口，可以ssh user@公网IP -p 33333，但想从外面访问服务器的一些服务（如3306的mysql，80的nginx），因为这些端口没有设置映射（自己没有权限），没有直接映射到公网上。 solv：ssh本地转">
+<meta property="og:description" content="1、CAS操作原子计数器：AtomicInteger position 确保多线程环境下计数安全，线程安全，避免锁竞争；">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jiashi19.github.io/img/image-20241228110909032.png">
-<meta property="og:image" content="https://jiashi19.github.io/img/image-20241228110932254.png">
-<meta property="article:published_time" content="2024-12-22T06:01:02.000Z">
-<meta property="article:modified_time" content="2025-01-16T13:41:38.583Z">
+<meta property="article:published_time" content="2025-06-22T13:50:08.000Z">
+<meta property="article:modified_time" content="2025-10-26T07:54:39.416Z">
 <meta property="article:author" content="JiAshi">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jiashi19.github.io/img/image-20241228110909032.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>访问内网服务器的服务 - Blog from jiAshi19</title>
+  <title>CAS原子操作与实际源码分析 - Blog from jiAshi19</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="访问内网服务器的服务"></span>
+            <span id="subtitle" data-typed-text="CAS原子操作与实际源码分析"></span>
           
         </div>
 
@@ -212,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-22 14:01" pubdate>
-          2024年12月22日 下午
+        <time datetime="2025-06-22 21:50" pubdate>
+          2025年6月22日 晚上
         </time>
       </span>
     
@@ -224,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          718 字
+          1.1k 字
         
       </span>
     
@@ -235,7 +232,7 @@
         
         
         
-          6 分钟
+          9 分钟
         
       </span>
     
@@ -272,53 +269,63 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">访问内网服务器的服务</h1>
+            <h1 id="seo-header">CAS原子操作与实际源码分析</h1>
             
             
               <div class="markdown-body">
                 
-                <span id="more"></span>
+                <h2 id="1、CAS操作"><a href="#1、CAS操作" class="headerlink" title="1、CAS操作"></a>1、CAS操作</h2><p><strong>原子计数器</strong>：<code>AtomicInteger position</code> 确保多线程环境下计数安全，<strong>线程安全</strong>，避免锁竞争；</p>
+<span id="more"></span>
 
-<p>本文介绍两种方法来访问内网的服务。</p>
-<h1 id="用ssh访问内网服务器的服务"><a href="#用ssh访问内网服务器的服务" class="headerlink" title="用ssh访问内网服务器的服务"></a>用ssh访问内网服务器的服务</h1><p>情况：服务器是虚拟化分出来的，本身没有公网地址，ssh的22端口是通过端口转发&#x2F;映射到公网IP上的某个端口，可以<code>ssh user@公网IP -p 33333</code>，但想从外面访问服务器的一些服务（如3306的mysql，80的nginx），因为这些端口没有设置映射（自己没有权限），没有直接映射到公网上。</p>
-<p>solv：<strong>ssh本地转发</strong>（-L 参数）。</p>
-<p>本地转发（local forwarding）指的是，SSH 服务器作为中介的跳板机，建立本地计算机与特定目标网站之间的加密连接。本地转发是在本地计算机的 SSH 客户端建立的转发规则。</p>
-<p>效果：指定一个本地端口（local-port），所有发向那个端口的请求，都会转发到 SSH 跳板机（tunnel-host），然后 SSH 跳板机作为中介，将收到的请求发到目标服务器（target-host）的目标端口（target-port）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -L local-port:target-host:target-port tunnel-host <br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">final</span> AtomicInteger position;<span class="hljs-comment">//原子性</span><br></code></pre></td></tr></table></figure>
 
-<p>实际应用如下，访问内网服务器的8080开放的http服务。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -L 8080:127.0.0.1:8080 user@222.222.222.222 -p 55322  -N<br><span class="hljs-comment">#222.222.222.222指代公网IP，55322是内网服务器映射的外网端口</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//例子：spring cloud lb部分源码--轮询策略</span><br><span class="hljs-type">int</span> <span class="hljs-variable">pos</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.position.incrementAndGet() &amp; Integer.MAX_VALUE;<br><span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> (ServiceInstance)instances.get(pos % instances.size());<br></code></pre></td></tr></table></figure>
 
+<p><strong>无状态</strong>：不依赖外部存储。</p>
+<p>分析：AtomicInteger为什么能保证线程安全？</p>
+<p>1、Unsafe类；</p>
+<p><code>Unsafe</code>类是Java中的一个底层类，提供了硬件级别的原子操作，这个类通常不直接暴露给普通Java应用开发者使用，而是被内部类如<code>AtomicInteger</code>所使用，<code>Unsafe</code>类提供了如<code>compareAndSwapInt</code>等方法，这些方法可以原子地更新内存中的值。</p>
+<p> 2、CAS（Compare-And-Swap）操作；</p>
+<p>CAS操作是一个原子操作，它包括三个操作数——内存位置（V）、预期原值（A）和新值（B），如果内存位置V的值与预期原值A相匹配，那么处理器会自动将该位置的值更新为新值B，否则，处理器不做任何操作；</p>
+<p>3、<strong>volatile</strong>内存可见性保障；</p>
+<p><code>AtomicInteger</code>中的值被声明为<code>volatile</code>，这意味着这个值的读取和写入操作会从主内存中直接进行，而不是从线程的本地缓存中进行，这确保了所有线程都能看到最新的值。</p>
+<p>from AI think：</p>
+<p>原子操作的关键在于CAS（Compare-And-Swap）机制。CAS是一种硬件级别的指令，用于实现多线程下的原子操作。在Java中，AtomicInteger使用了Unsafe类提供的CAS操作来保证变量的原子性。 当多个线程同时调用incrementAndGet()时，每个线程都会尝试用CAS更新值。假设初始值是0，线程A和线程B同时读取到0，然后各自加1得到1。线程A先执行CAS，比较当前值是否为0，是的话就设置为1，成功。线程B再执行CAS时，发现当前值已经是1，不等于它之前读到的0，所以操作失败，会重新读取当前值（现在是1），再加1得到2，再次尝试CAS，直到成功。 这样，虽然多个线程可能竞争，但最终每个incrementAndGet()都会正确执行，不会出现数据不一致的问题。这就是为什么AtomicInteger能保证线程安全。 另外，Java的内存模型（JMM）中，volatile关键字保证了变量的可见性。AtomicInteger内部的value被声明为volatile，所以当一个线程修改了值，其他线程能立即看到最新的值。结合CAS的原子性操作，就实现了线程安全。 </p>
+<h2 id="2、CAS在高并发下的分析"><a href="#2、CAS在高并发下的分析" class="headerlink" title="2、CAS在高并发下的分析"></a>2、CAS在高并发下的分析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Random</span> <span class="hljs-variable">random</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br></code></pre></td></tr></table></figure>
+
+<p>这个random会有并发问题吗：</p>
+<p>在Java中，使用 <code>private final Random random = new Random();</code> 的写法本身是线程安全的，因为 <code>Random</code> 类的实现通过CAS操作保证了内部状态的原子性。但在<strong>高并发场景下</strong>，这种方式<strong>可能存在性能问题</strong>，具体原因如下：</p>
+<ol>
+<li><p><strong>线程竞争问题</strong>：<br>当多个线程共享同一个 <code>Random</code> 实例时，它们会竞争内部的原子变量（如 <code>seed</code>），导致CAS操作频繁失败和重试，从而降低并发性能。尽管线程安全，但这种竞争会显著增加延迟，尤其在高并发场景中（如抢红包接口）可能成为性能瓶颈。</p>
+</li>
+<li><p><strong>替代方案推荐</strong>：  </p>
 <ul>
-<li><code>-N</code>参数，表示不在 SSH 跳板机执行远程命令，让 SSH 只充当隧道。</li>
-<li><code>-f</code>参数表示 SSH 连接在后台运行。</li>
+<li>**<code>ThreadLocalRandom</code>**（JDK 1.7+）：<br>每个线程持有独立的随机数生成器，避免竞争。通过 <code>ThreadLocalRandom.current()</code> 获取实例，性能更高且无需手动管理线程隔离。  </li>
+<li><strong><code>Random</code> 实例的线程隔离</strong>：<br>若需兼容旧版本，可通过 <code>ThreadLocal</code> 为每个线程分配独立的 <code>Random</code> 实例（需用 <code>static</code> 修饰防止内存泄漏）。  </li>
+<li><strong><code>Random.Shared</code>（JDK 17+）</strong>：<br>直接通过 <code>Random.Shared</code> 获取线程安全的共享实例，底层优化了并发性能。</li>
 </ul>
-<h2 id="使用finalshell配置本地转发"><a href="#使用finalshell配置本地转发" class="headerlink" title="使用finalshell配置本地转发"></a>使用finalshell配置本地转发</h2><p>编辑连接，配置ssh连接隧道。</p>
-<p><img src="/../img/image-20241228110909032.png" srcset="/img/loading.gif" lazyload alt="image-20241228110909032"></p>
-<p>新建隧道，选择类型为本地转发。</p>
-<p><img src="/../img/image-20241228110932254.png" srcset="/img/loading.gif" lazyload alt="image-20241228110932254"></p>
-<p><strong>参考学习</strong>：</p>
-<p><a target="_blank" rel="noopener" href="https://www.cainiaojc.com/ssh/ssh-port-forwarding.html">SSH 端口转发</a></p>
-<h1 id="使用frp进行内网穿透"><a href="#使用frp进行内网穿透" class="headerlink" title="使用frp进行内网穿透"></a>使用frp进行内网穿透</h1><p>前者是在使用ssh命令的机器上可以访问到内网服务器上的一些服务，而使用frp有两个特点：</p>
-<ul>
-<li><strong>需要一个另外的公网服务器</strong>作为中介；</li>
-<li>与前者是在使用ssh命令的机器上可以访问到内网服务器上的一些服务有所不同，frp使得可以在外网所有地方直接访问内网服务。</li>
-</ul>
-<p><strong>使用方法</strong>：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">github地址</a></p>
-<p><a target="_blank" rel="noopener" href="https://gofrp.org/zh-cn/">文档地址</a></p>
-<p>下载frp（客户端与服务端），内容应该如下（linux版）：</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">frpc      //客户端程序<br>frpc.toml //客户端配置文件<br>frps      //服务端程序<br>frps.toml //服务端配置文件<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>总结</strong>：<br>若代码中 <code>Random</code> 实例会被多线程共享（如单例Bean或静态变量），即使线程安全，也建议替换为 <code>ThreadLocalRandom</code> 或线程隔离的 <code>Random</code>，以避免高并发下的性能问题。若为单线程或低并发场景，当前写法没有问题。</p>
+<p>实际源码例子：</p>
+<p>spring cloud 的随机轮询用的是ThreadLocalRandom</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//例子：spring cloud lb部分源码--随机策略</span><br><span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> ThreadLocalRandom.current().nextInt(instances.size());<br><span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> (ServiceInstance)instances.get(index);<br></code></pre></td></tr></table></figure>
 
-<p>在公网server上启动frps（服务端程序）,或配置成service自动运行（参考官网文档）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./frps -c frps.toml <br></code></pre></td></tr></table></figure>
 
-<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-comment"># frps.toml</span><br><span class="hljs-attr">bindPort</span> = <span class="hljs-number">7070</span> <span class="hljs-comment"># 默认端口为7000，最好做修改</span><br><span class="hljs-attr">auth.token</span>=<span class="hljs-string">&quot;xxxxxx&quot;</span> <span class="hljs-comment"># 使用token鉴权</span><br></code></pre></td></tr></table></figure>
 
-<p>在内网server上启动frpc</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./frpc -c frpc.toml <span class="hljs-comment"># windows:frpc.exe -c frpc.toml</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-comment"># frpc.toml</span><br><span class="hljs-attr">serverAddr</span>=<span class="hljs-string">&quot;11.11.11.11&quot;</span> <span class="hljs-comment"># 运行frps的公网server的ip地址</span><br><span class="hljs-attr">serverPort</span>=<span class="hljs-number">7070</span> <span class="hljs-comment"># 与上面的端口对应</span><br><span class="hljs-attr">auth.token</span>=<span class="hljs-string">&quot;xxxxxx&quot;</span><br><span class="hljs-section">[[proxies]]</span><br><span class="hljs-attr">name</span>=<span class="hljs-string">&quot;minecraft&quot;</span><br><span class="hljs-attr">type</span>=<span class="hljs-string">&quot;tcp&quot;</span><br><span class="hljs-attr">localIP</span>=<span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-attr">localPort</span>=<span class="hljs-number">25565</span>   <span class="hljs-comment"># 本地要转发的端口</span><br><span class="hljs-attr">remotePort</span>=<span class="hljs-number">25565</span>  <span class="hljs-comment"># 映射到公网ip的端口</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 
@@ -358,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>访问内网服务器的服务</div>
-      <div>https://jiashi19.github.io/2024/12/22/sshlocalfoward/</div>
+      <div>CAS原子操作与实际源码分析</div>
+      <div>https://jiashi19.github.io/2025/06/22/sbc-loadbalancer-源码阅读/</div>
     </div>
     <div class="license-meta">
       
@@ -371,7 +378,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月22日</div>
+          <div>2025年6月22日</div>
         </div>
       
       
@@ -403,9 +410,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/26/vue-base/" title="vue-base">
+                      <a href="/2025/07/26/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="响应式编程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">vue-base</span>
+                        <span class="hidden-mobile">响应式编程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -413,8 +420,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/28/springCloudStudy/" title="微服务Spring cloud框架简单总结">
-                        <span class="hidden-mobile">微服务Spring cloud框架简单总结</span>
+                      <a href="/2025/04/26/vue-base/" title="vue-base">
+                        <span class="hidden-mobile">vue-base</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
